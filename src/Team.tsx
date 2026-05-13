@@ -65,11 +65,13 @@ const teamMembers = [
     ] 
   },
   { 
-    name: "Alade Abosede Mauyon", 
-    role: "FGIP Legal Counsel", 
+    name: "Shade Akanji", 
+    role: "Chief Financial Officer", 
     img: "/images/team-images/shade.png", 
     bio: [
-      "Alade Abosede is a partner at Silverhills Attorney and Solicitors and currently the lawyer/legal counsel to FGIP."
+      "Shade is a globally credentialed finance and risk executive with over 18 years of leadership experience across Fortune 500 companies and global consulting firms. As CFO of First Generation Homes LLC, she oversees financial strategy, compliance, and enterprise risk management, ensuring the organization operates with fiscal discipline and long-term resilience.",
+      "She holds designations as a Chartered Accountant (CA), Certified Internal Auditor (CIA), and Certified Information Systems Auditor (CISA). Her leadership journey includes senior roles such as Vice President, Global Audit & Operations for a global building materials company, and Director of Global Controls & Reporting at PepsiCo and Ernst & Young LLP.",
+      "Shade earned her MBA in Finance and Marketing from the Kellogg School of Management and holds a B.Sc. (Hons.) in Chemical Engineering from the University of Lagos. Her multidisciplinary expertise bridges finance, technology, and operations, positioning her as a strategic force in driving sustainable growth at First Generation Homes LLC."
     ] 
   },
   { 
@@ -124,6 +126,14 @@ const teamMembers = [
     bio: [
       "Engr. Azeez Opeyemi is a construction engineer specializing in site supervision, quality control, and the safe, efficient delivery of roads, bridges, and building projects. He ensures seamless coordination between design and field execution, keeping every project on schedule, within budget, and compliant with engineering standards."
     ] 
+  },
+  { 
+    name: "Alade Abosede Mauyon", 
+    role: "FGIP Legal Counsel", 
+    img: "", 
+    bio: [
+      "Alade Abosede is a partner at Silverhills Attorney and Solicitors and currently the lawyer/legal counsel to FGIP."
+    ] 
   }
 ];
 
@@ -164,13 +174,19 @@ export default function Team() {
             className="team-fade-up group cursor-pointer bg-white/40 backdrop-blur-md p-4 rounded-3xl border border-white/50 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
             onClick={() => setSelectedMember(member)}
           >
-            <div className="w-full aspect-[3/4] overflow-hidden rounded-[1.5rem] mb-6 relative shadow-inner">
-              <LazyLoadImage 
-                src={member.img} 
-                alt={member.name} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                wrapperClassName="w-full h-full"
-              />
+            <div className="w-full aspect-[3/4] overflow-hidden rounded-[1.5rem] mb-6 relative shadow-inner flex items-center justify-center bg-gray-200/50">
+              {member.img ? (
+                <LazyLoadImage 
+                  src={member.img} 
+                  alt={member.name} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                  wrapperClassName="w-full h-full"
+                />
+              ) : (
+                <div className="text-7xl font-heading text-brand-primary/30 group-hover:scale-105 transition-transform duration-700">
+                  {member.name.charAt(0)}
+                </div>
+              )}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div className="bg-brand-primary text-white p-4 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                   <ArrowUpRight className="w-8 h-8" />
@@ -197,13 +213,19 @@ export default function Team() {
             >
               <X className="w-6 h-6" />
             </button>
-            <div className="w-full md:w-2/5 h-64 md:h-auto shrink-0 relative">
-              <LazyLoadImage 
-                src={selectedMember.img} 
-                alt={selectedMember.name} 
-                className="w-full h-full object-cover absolute inset-0" 
-                wrapperClassName="w-full h-full"
-              />
+            <div className="w-full md:w-2/5 h-64 md:h-auto shrink-0 relative bg-gray-100 flex items-center justify-center">
+              {selectedMember.img ? (
+                <LazyLoadImage 
+                  src={selectedMember.img} 
+                  alt={selectedMember.name} 
+                  className="w-full h-full object-cover absolute inset-0" 
+                  wrapperClassName="w-full h-full"
+                />
+              ) : (
+                <div className="text-8xl lg:text-9xl font-heading text-brand-primary/20">
+                  {selectedMember.name.charAt(0)}
+                </div>
+              )}
             </div>
             <div className="p-6 md:p-8 lg:p-12 overflow-y-auto w-full">
               <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-2">Team Member</h3>

@@ -263,9 +263,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 fade-up">
             <div className="max-w-2xl px-4 lg:px-0">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-brand-primary mb-6 font-heading tracking-tight drop-shadow-sm">Featured Projects</h2>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-brand-primary mb-6 font-heading tracking-tight drop-shadow-sm">Flagship Project</h2>
               <p className="text-lg text-gray-800 font-medium leading-relaxed drop-shadow-sm">
-                Every distinct home in our diverse portfolio represents one uncommon commitment: Our determination to make your vision, experience and satisfaction the top priority. When you put people first, results follow—and these projects speak for themselves.
+                The FGIP Legacy Estate represents our absolute commitment to world-class infrastructure and community building. This master-planned development in Lagos, Nigeria, features diverse residential and commercial components designed for a modern, holistic lifestyle.
               </p>
             </div>
             <div className="shrink-0 px-4 lg:px-0">
@@ -277,47 +277,123 @@ export default function Home() {
         <div className="relative">
           {[
             { 
-              title: 'Modern 3-bedroom Estate', 
-              loc: 'Chicago, IL', 
-              tag: 'Luxury Estates', 
-              img: '/images/project-images/3-bedroom/3-bedroom2.jpg' 
+              title: 'Six Bedroom Duplex', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Flagship Residential', 
+              imgs: [
+                '/images/fgip%20legacy/6%20bedroom/6-bed1.png',
+                '/images/fgip%20legacy/6%20bedroom/6-bed2.png',
+                '/images/fgip%20legacy/6%20bedroom/6-bed3.png',
+                '/images/fgip%20legacy/6%20bedroom/6-bed4.png'
+              ] 
             },
             { 
-              title: 'Modern Custom Home Construction', 
-              loc: 'Chicago, IL', 
-              tag: 'Custom Homes', 
-              img: '/images/project-images/custom-home/custom1.jpg' 
+              title: 'Five Bedroom Duplex', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Flagship Residential', 
+              imgs: [
+                '/images/fgip%20legacy/5%20Bedroom/5-bed1.png',
+                '/images/fgip%20legacy/5%20Bedroom/5-bed2.png'
+              ] 
             },
             { 
-              title: 'FGIP Legacy Estate', 
-              loc: 'Lagos, Nigeria', 
-              tag: 'International & Investment Projects', 
-              img: '/images/project-images/fgip/fgip1.jpg' 
+              title: 'Three Bedroom Bungalow', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Flagship Residential', 
+              imgs: [
+                '/images/fgip%20legacy/3%20bedroom/3-bed1.png',
+                '/images/fgip%20legacy/3%20bedroom/3-bed2.png'
+              ] 
+            },
+            { 
+              title: 'Primary School', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Community Infrastructure', 
+              imgs: [
+                '/images/fgip%20legacy/primary%20school/school1.png',
+                '/images/fgip%20legacy/primary%20school/school2.png',
+                '/images/fgip%20legacy/primary%20school/school3.png',
+                '/images/fgip%20legacy/primary%20school/school4.png'
+              ] 
+            },
+            { 
+              title: 'Daycare Centre', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Community Infrastructure', 
+              imgs: [
+                '/images/fgip%20legacy/daycare/daycare1.png',
+                '/images/fgip%20legacy/daycare/daycare2.png'
+              ] 
+            },
+            { 
+              title: 'Business Centre', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Commercial Development', 
+              imgs: [
+                '/images/fgip%20legacy/Business%20Center/business1.png',
+                '/images/fgip%20legacy/Business%20Center/business2.png',
+                '/images/fgip%20legacy/Business%20Center/business3.png'
+              ] 
+            },
+            { 
+              title: 'Luxury Hotel', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Hospitality', 
+              imgs: [
+                '/images/fgip%20legacy/hotel/hotel1.png',
+                '/images/fgip%20legacy/hotel/hotel2.png',
+                '/images/fgip%20legacy/hotel/hotel3.png'
+              ] 
+            },
+            { 
+              title: 'Social Hall', 
+              loc: 'FGIP Legacy Estate • Lagos', 
+              tag: 'Civic Spaces', 
+              imgs: ['/images/services/materials.jpg'] 
             }
           ].map((proj, i) => (
             <div 
               key={i} 
-              className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group cursor-pointer pt-12 lg:pt-16 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
+              className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-16 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
               style={{ top: '80px', zIndex: i + 1 }}
-              onClick={() => handleNavigate('/portfolio')}
             >
               <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
                 <h3 className="text-3xl lg:text-5xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] group-hover:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
                 <p className="text-gray-800 mb-6 text-lg font-medium drop-shadow-sm">{proj.loc}</p>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                   <span className="inline-block border border-white/60 bg-white/40 backdrop-blur-md text-gray-800 font-medium text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">{proj.tag}</span>
-                  <div className="w-12 h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm">
+                  <div 
+                    onClick={() => handleNavigate('/portfolio')}
+                    className="w-12 h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm cursor-pointer"
+                  >
                     <ArrowRight className="w-6 h-6" />
                   </div>
                 </div>
               </div>
-              <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100">
-                <LazyLoadImage 
-                  src={proj.img} 
-                  alt={proj.title} 
-                  className="project-image absolute top-[-25%] left-0 w-full h-[140%] object-cover" 
-                  wrapperClassName="w-full h-full"
-                />
+              <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
+                <div className="project-image absolute top-[-20%] left-0 w-full h-[140%]">
+                  {proj.imgs.length === 1 ? (
+                    <img src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" />
+                  ) : proj.imgs.length === 2 ? (
+                    <div className="grid grid-cols-2 h-full w-full gap-1">
+                      {proj.imgs.map((img, idx) => (
+                        <img key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" />
+                      ))}
+                    </div>
+                  ) : proj.imgs.length === 3 ? (
+                    <div className="grid grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
+                      <img src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" />
+                      <img src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" />
+                      <img src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" />
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 h-full w-full gap-1">
+                      {proj.imgs.slice(0, 4).map((img, idx) => (
+                        <img key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           ))}

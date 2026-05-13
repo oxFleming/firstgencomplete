@@ -22,6 +22,113 @@ type Project = {
 
 const projects: Project[] = [
   {
+    id: "6",
+    title: "FGIP Legacy Estate: 6-Bedroom Duplex",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/6%20bedroom/6-bed1.png",
+    images: [
+      "/images/fgip%20legacy/6%20bedroom/6-bed1.png",
+      "/images/fgip%20legacy/6%20bedroom/6-bed2.png",
+      "/images/fgip%20legacy/6%20bedroom/6-bed3.png",
+      "/images/fgip%20legacy/6%20bedroom/6-bed4.png"
+    ],
+    comingSoon: true,
+    description: "Premium large-scale residential unit within the FGIP masterplan, featuring smart home integration and sustainable design."
+  },
+  {
+    id: "9",
+    title: "FGIP Legacy Estate: 5-Bedroom Duplex",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/5%20Bedroom/5-bed1.png",
+    images: [
+      "/images/fgip%20legacy/5%20Bedroom/5-bed1.png",
+      "/images/fgip%20legacy/5%20Bedroom/5-bed2.png"
+    ],
+    comingSoon: true,
+    description: "Luxury family housing with modern architectural finishes and optimized spatial flow."
+  },
+  {
+    id: "10",
+    title: "FGIP Legacy Estate: 3-Bedroom Bungalow",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/3%20bedroom/3-bed1.png",
+    images: [
+      "/images/fgip%20legacy/3%20bedroom/3-bed1.png",
+      "/images/fgip%20legacy/3%20bedroom/3-bed2.png"
+    ],
+    comingSoon: true,
+    description: "Efficient and elegant executive living spaces designed for modern convenience and comfort."
+  },
+  {
+    id: "11",
+    title: "FGIP Legacy Estate: Primary School",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/primary%20school/school1.png",
+    images: [
+      "/images/fgip%20legacy/primary%20school/school1.png",
+      "/images/fgip%20legacy/primary%20school/school2.png",
+      "/images/fgip%20legacy/primary%20school/school3.png",
+      "/images/fgip%20legacy/primary%20school/school4.png"
+    ],
+    comingSoon: true,
+    description: "State-of-the-art educational facility integrated into the community to support local growth and learning."
+  },
+  {
+    id: "12",
+    title: "FGIP Legacy Estate: Daycare Centre",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/daycare/daycare1.png",
+    images: [
+      "/images/fgip%20legacy/daycare/daycare1.png",
+      "/images/fgip%20legacy/daycare/daycare2.png"
+    ],
+    comingSoon: true,
+    description: "A secure and nurturing environment for the estate's youngest residents, built with high safety standards."
+  },
+  {
+    id: "13",
+    title: "FGIP Legacy Estate: Business Centre",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/Business%20Center/business1.png",
+    images: [
+      "/images/fgip%20legacy/Business%20Center/business1.png",
+      "/images/fgip%20legacy/Business%20Center/business2.png",
+      "/images/fgip%20legacy/Business%20Center/business3.png"
+    ],
+    comingSoon: true,
+    description: "A centralized hub for professional services and corporate initiatives within the estate."
+  },
+  {
+    id: "14",
+    title: "FGIP Legacy Estate: Luxury Hotel",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/hotel/hotel1.png",
+    images: [
+      "/images/fgip%20legacy/hotel/hotel1.png",
+      "/images/fgip%20legacy/hotel/hotel2.png",
+      "/images/fgip%20legacy/hotel/hotel3.png"
+    ],
+    comingSoon: true,
+    description: "Premier hospitality destination providing world-class services to visitors and residents alike."
+  },
+  {
+    id: "15",
+    title: "FGIP Legacy Estate: Social Hall",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/services/materials.jpg",
+    images: ["/images/services/materials.jpg"],
+    comingSoon: true,
+    description: "A versatile community space for events, gatherings, and social interaction."
+  },
+  {
     id: "1",
     title: "Modern 3-bedroom Estate",
     location: "Chicago, IL",
@@ -97,20 +204,52 @@ const projects: Project[] = [
       "/images/project-images/interior/interior5.jpg"
     ],
     description: "Curated interior decorating services focusing on clean lines, minimalist layouts, and sophisticated monochromatic or highly contrasted color palettes.\n\nOur modern decor projects emphasize utilizing negative space, bringing in natural light, and selecting low-profile, high-impact furniture pieces that serve both function and form. We integrate cutting-edge materials like polished concrete, glass, and brushed steel alongside plush, comfortable textiles to ensure the space never feels clinical.\n\nThe result is a highly tailored, uncluttered living environment that looks visually striking while remaining exceptionally livable for the modern homeowner."
-  },
-  {
-    id: "6",
-    title: "FGIP Legacy Estate",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/project-images/fgip/fgip1.jpg",
-    images: [
-      "/images/project-images/fgip/fgip1.jpg"
-    ],
-    comingSoon: true,
-    description: "A premier luxury estate development located in the heart of Lagos, Nigeria, delivering world-class infrastructure and high-tech secure residential living.\n\nThe project is designed with a focus on long-term investment value, merging modern architectural standards with optimized commercial real estate frameworks. It serves both domestic homebuyers and international portfolio investors.\n\nThe development includes expansive green spaces, advanced integrated security systems, and premium community amenities. Site surveying, topographic engineering, and structural development are actively progressing toward a slated 2026 completion."
   }
 ];
+
+function ProjectCollage({ images, title }: { images: string[], title: string }) {
+  if (!images || images.length <= 1) {
+    return (
+      <LazyLoadImage 
+        src={images?.[0]} 
+        alt={title} 
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+        wrapperClassName="w-full h-full"
+      />
+    );
+  }
+
+  // Define different grid layouts based on image count
+  if (images.length === 2) {
+    return (
+      <div className="grid grid-cols-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
+        {images.map((img, i) => (
+          <img key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" />
+        ))}
+      </div>
+    );
+  }
+
+  if (images.length === 3) {
+    return (
+      <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
+        <img src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover row-span-2" />
+        <img src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" />
+        <img src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" />
+      </div>
+    );
+  }
+
+  // 4 or more
+  const displayImages = images.slice(0, 4);
+  return (
+    <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
+      {displayImages.map((img, i) => (
+        <img key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" />
+      ))}
+    </div>
+  );
+}
 
 export default function Portfolio() {
   const location = useLocation();
@@ -201,12 +340,10 @@ export default function Portfolio() {
             className="group cursor-pointer block relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
             onClick={() => openProject(featuredProject)}
           >
-            <div className="overflow-hidden relative rounded-2xl mb-4">
-              <LazyLoadImage 
-                src={featuredProject.image} 
-                alt={featuredProject.title} 
-                className="w-full h-[300px] md:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105" 
-                wrapperClassName="w-full"
+            <div className="overflow-hidden relative rounded-2xl mb-4 bg-gray-100 flex aspect-[16/9] md:aspect-auto md:h-[500px]">
+              <ProjectCollage
+                images={featuredProject.images && featuredProject.category === "International & Investment Projects" ? featuredProject.images : [featuredProject.image]} 
+                title={featuredProject.title} 
               />
               {featuredProject.comingSoon && (
                 <div className="absolute top-6 right-6 bg-brand-dark/90 text-white px-4 py-2 font-bold tracking-widest text-sm uppercase rounded-lg z-10 pointer-events-none">
@@ -241,12 +378,10 @@ export default function Portfolio() {
             className="portfolio-fade-up group cursor-pointer transition-all duration-500 hover:-translate-y-1"
             onClick={() => openProject(project)}
           >
-            <div className="relative overflow-hidden rounded-2xl mb-4">
-              <LazyLoadImage 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" 
-                wrapperClassName="w-full"
+            <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[4/3]">
+              <ProjectCollage
+                images={project.images && project.category === "International & Investment Projects" ? project.images : [project.image]} 
+                title={project.title} 
               />
               <div className="absolute bottom-0 right-0 bg-brand-primary p-4 text-white group-hover:bg-brand-dark transition-colors z-20 rounded-tl-2xl">
                 <ArrowRight className="w-6 h-6" />
