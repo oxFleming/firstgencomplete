@@ -124,8 +124,8 @@ export default function Home() {
             We build<br />around <span className="italic font-light">you</span>
           </h1>
           <p className="text-xl md:text-2xl text-white mb-10 font-light font-medium drop-shadow-md">Client Focused. Community First.</p>
-          <button onClick={() => { document.getElementById('contact-form-section')?.scrollIntoView({ behavior: 'smooth' }); }} className="bg-white/95 backdrop-blur-md text-brand-dark rounded-full px-8 py-4 font-bold tracking-wide flex items-center gap-3 hover:bg-white transition-colors cursor-pointer w-max shadow-xl">
-            Contact Us Now <ArrowRight className="w-5 h-5 text-brand-primary" />
+          <button onClick={() => handleNavigate('/invest')} className="bg-white/95 backdrop-blur-md text-brand-dark rounded-full px-8 py-4 font-bold tracking-wide flex items-center gap-3 hover:bg-white transition-colors cursor-pointer w-max shadow-xl">
+            Invest in Legacy Estate <ArrowRight className="w-5 h-5 text-brand-primary" />
           </button>
         </div>
 
@@ -268,8 +268,9 @@ export default function Home() {
                 The FGIP Legacy Estate represents our absolute commitment to world-class infrastructure and community building. This master-planned development in Lagos, Nigeria, features diverse residential and commercial components designed for a modern, holistic lifestyle.
               </p>
             </div>
-            <div className="shrink-0 px-4 lg:px-0">
-              <Button onClick={() => handleNavigate('/portfolio')} className="backdrop-blur-md bg-white/80 hover:bg-white text-brand-dark transition-all shadow-lg border border-white">View Portfolio</Button>
+            <div className="shrink-0 px-4 lg:px-0 flex flex-col sm:flex-row gap-4">
+              <Button onClick={() => handleNavigate('/invest')} className="backdrop-blur-md bg-brand-primary hover:bg-brand-dark text-white transition-all shadow-lg border border-brand-primary font-medium tracking-tight">Invest in FGIP Legacy Estate</Button>
+              <Button onClick={() => handleNavigate('/portfolio')} className="backdrop-blur-md bg-white/80 hover:bg-white text-brand-dark transition-all shadow-lg border border-white font-medium tracking-tight">View Portfolio</Button>
             </div>
           </div>
         </div>
@@ -358,7 +359,7 @@ export default function Home() {
               style={{ top: '80px', zIndex: i + 1 }}
             >
               <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
-                <h3 className="text-3xl lg:text-5xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] group-hover:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
+                <h3 className="text-3xl lg:text-5xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
                 <p className="text-gray-800 mb-6 text-lg font-medium drop-shadow-sm">{proj.loc}</p>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                   <span className="inline-block border border-white/60 bg-white/40 backdrop-blur-md text-gray-800 font-medium text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">{proj.tag}</span>
@@ -373,23 +374,23 @@ export default function Home() {
               <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
                 <div className="project-image absolute top-[-20%] left-0 w-full h-[140%]">
                   {proj.imgs.length === 1 ? (
-                    <img src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" />
+                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                   ) : proj.imgs.length === 2 ? (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.map((img, idx) => (
-                        <img key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                       ))}
                     </div>
                   ) : proj.imgs.length === 3 ? (
                     <div className="grid grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      <img src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" />
-                      <img src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" />
-                      <img src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.slice(0, 4).map((img, idx) => (
-                        <img key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                       ))}
                     </div>
                   )}

@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { Menu, ArrowRight, X, MessageCircle } from 'lucide-react';
-import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import Services from './Services';
-import Portfolio from './Portfolio';
-import Team from './Team';
-import Home from './Home';
-import FAQ from './FAQ';
+
+// Lazy load components for performance
+const Home = lazy(() => import('./Home'));
+const Services = lazy(() => import('./Services'));
+const Portfolio = lazy(() => import('./Portfolio'));
+const Team = lazy(() => import('./Team'));
+const FAQ = lazy(() => import('./FAQ'));
+const Invest = lazy(() => import('./Invest'));
+
+// Loading component for Suspense
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-white/30 backdrop-blur-3xl">
+    <div className="w-12 h-12 border-4 border-brand-primary/20 border-t-brand-primary rounded-full animate-spin"></div>
+  </div>
+);
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -124,6 +134,7 @@ function App() {
             <Link to="/services" onClick={() => handleNavClick('/services')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Services</Link>
             <Link to="/portfolio" onClick={() => handleNavClick('/portfolio')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Portfolio</Link>
             <Link to="/team" onClick={() => handleNavClick('/team')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Team</Link>
+            <Link to="/invest" onClick={() => handleNavClick('/invest')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Invest</Link>
             <Link to="/faq" onClick={() => handleNavClick('/faq')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>FAQ</Link>
           </div>
 
@@ -133,94 +144,16 @@ function App() {
         </div>
       </header>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/faq" element={<FAQ />} />
-      </Routes>
-
-      {/* Footer CTA & Contact Form */}
-      <section className="px-6 py-24 border-t border-white/40 bg-white/30 backdrop-blur-3xl relative z-10" id="contact-form-section">
-        <div className="max-w-3xl mx-auto bg-white/60 backdrop-blur-2xl p-8 lg:p-12 rounded-[2rem] shadow-2xl border border-white/50">
-          <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-4xl lg:text-5xl font-heading mb-4 text-brand-dark tracking-tight">Let's get started</h2>
-            <p className="text-gray-700 text-lg">Fill out the form below and our team will get back to you shortly.</p>
-          </div>
-          <form onSubmit={handleFormSubmit} className="space-y-6" noValidate>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-800 mb-1">Name *</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  value={formData.name}
-                  onChange={(e) => {
-                    setFormData({...formData, name: e.target.value});
-                    if (formErrors.name) setFormErrors({...formErrors, name: ''});
-                  }}
-                  className={`w-full px-4 py-3 rounded-md border ${formErrors.name ? 'border-red-500 bg-red-50' : 'border-white/60 bg-white/50'} focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-colors shadow-sm`}
-                  placeholder="Your Name"
-                />
-                {formErrors.name && <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>}
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-800 mb-1">Email *</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  value={formData.email}
-                  onChange={(e) => {
-                    setFormData({...formData, email: e.target.value});
-                    if (formErrors.email) setFormErrors({...formErrors, email: ''});
-                  }}
-                  className={`w-full px-4 py-3 rounded-md border ${formErrors.email ? 'border-red-500 bg-red-50' : 'border-white/60 bg-white/50'} focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-colors shadow-sm`}
-                  placeholder="your@email.com"
-                />
-                {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
-              </div>
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-800 mb-1">Message *</label>
-              <textarea 
-                id="message" 
-                rows={4}
-                value={formData.message}
-                onChange={(e) => {
-                  setFormData({...formData, message: e.target.value});
-                  if (formErrors.message) setFormErrors({...formErrors, message: ''});
-                }}
-                className={`w-full px-4 py-3 rounded-md border ${formErrors.message ? 'border-red-500 bg-red-50' : 'border-white/60 bg-white/50'} focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition-colors shadow-sm`}
-                placeholder="How can we help you?"
-              ></textarea>
-              {formErrors.message && <p className="text-red-500 text-xs mt-1">{formErrors.message}</p>}
-            </div>
-            <div className="flex flex-col xl:flex-row items-center justify-between gap-6">
-              <div className="flex flex-col sm:flex-row items-center gap-6 w-full xl:w-auto">
-                <button type="submit" className="w-full sm:w-auto bg-brand-primary text-white px-8 py-3 rounded-md font-medium hover:bg-brand-dark transition-colors flex items-center justify-center gap-2 shadow-md lg:text-lg whitespace-nowrap">
-                  Send Message <ArrowRight className="w-4 h-4" />
-                </button>
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
-                  <span className="text-gray-600 font-medium text-[15px] whitespace-nowrap">Contact us directly on Whatsapp:</span>
-                  <a 
-                    href="https://wa.me/2347037412354" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="bg-[#25D366] text-white p-2 md:p-2.5 rounded-full hover:bg-[#20bd5a] transition-all hover:scale-105 shadow-md flex items-center justify-center cursor-pointer shrink-0 group"
-                    title="Chat on WhatsApp"
-                  >
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-              {formStatus && <p className="text-green-600 font-medium">{formStatus}</p>}
-            </div>
-          </form>
-        </div>
-      </section>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/invest" element={<Invest />} />
+          <Route path="/faq" element={<FAQ />} />
+        </Routes>
+      </Suspense>
 
       {/* Footer */}
       <footer className="w-full bg-white/40 backdrop-blur-3xl border-t border-white/50 text-brand-dark font-sans flex flex-col justify-between h-auto lg:h-[calc(100vh-86px)] min-h-[calc(100vh-86px)] pt-10 lg:pt-8 pb-3 md:pb-5 relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
@@ -257,6 +190,7 @@ function App() {
                   <div className="flex flex-col gap-2 lg:gap-1.5 text-[13px] lg:text-[14px] text-gray-600 font-light">
                     <Link to="/team" onClick={() => window.scrollTo(0,0)} className="hover:text-brand-primary transition-colors text-gray-800 font-medium pb-1 md:pb-0.5 text-[15px]">About</Link>
                     <Link to="/services" onClick={() => window.scrollTo(0,0)} className="hover:text-brand-primary transition-colors">Services</Link>
+                    <Link to="/invest" onClick={() => window.scrollTo(0,0)} className="hover:text-brand-primary transition-colors">Invest in FGIP Legacy Estate</Link>
                     <Link to="/team" onClick={() => window.scrollTo(0,0)} className="hover:text-brand-primary transition-colors">Team</Link>
                     <Link to="/faq" onClick={() => window.scrollTo(0,0)} className="hover:text-brand-primary transition-colors">FAQ</Link>
                     <Link to="/" onClick={() => window.scrollTo(0,0)} className="hover:text-brand-primary transition-colors">Contact</Link>
@@ -324,6 +258,7 @@ function App() {
             <Link to="/services" onClick={() => handleNavClick('/services')} className="hover:text-brand-primary transition-colors">Services</Link>
             <Link to="/portfolio" onClick={() => handleNavClick('/portfolio')} className="hover:text-brand-primary transition-colors">Portfolio</Link>
             <Link to="/team" onClick={() => handleNavClick('/team')} className="hover:text-brand-primary transition-colors">Team</Link>
+            <Link to="/invest" onClick={() => handleNavClick('/invest')} className="hover:text-brand-primary transition-colors">Invest in FGIP Legacy Estate</Link>
             <Link to="/faq" onClick={() => handleNavClick('/faq')} className="hover:text-brand-primary transition-colors">FAQ</Link>
           </div>
         </div>
