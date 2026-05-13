@@ -88,20 +88,20 @@ export default function Home() {
       });
     });
 
-    // Refresh ScrollTrigger after a short delay
-    const timeoutId = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 500);
+      // Refresh ScrollTrigger after a short delay and after images load
+      const refresh = () => ScrollTrigger.refresh();
+      window.addEventListener('load', refresh);
+      const timeoutId = setTimeout(refresh, 1500);
 
-    return () => {
-      clearTimeout(timeoutId);
-      ctx.revert();
-    };
+      return () => {
+        window.removeEventListener('load', refresh);
+        clearTimeout(timeoutId);
+        ctx.revert();
+      };
   }, []);
 
   const handleNavigate = (path: string) => {
     navigate(path);
-    window.scrollTo(0,0);
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Highlight, Button } from './components/ui';
@@ -30,6 +31,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
 };
 
 export default function Services() {
+  const navigate = useNavigate();
   useEffect(() => {
     const ctx = gsap.context(() => {
       const fadeElements = document.querySelectorAll('.services-fade-up');
@@ -71,7 +73,7 @@ export default function Services() {
           ))}
         </ul>
         <div className="mb-0">
-          <Button onClick={() => { document.getElementById('contact-form-section')?.scrollIntoView({ behavior: 'smooth' }); }}>Get Started</Button>
+          <Button onClick={() => navigate('/contact')}>Get Started</Button>
         </div>
       </div>
       {Array.isArray(img) ? (

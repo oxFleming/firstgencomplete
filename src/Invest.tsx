@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, CheckCircle2, TrendingUp, ShieldCheck, Landmark } from 'lucide-react';
@@ -179,14 +180,12 @@ export default function Invest() {
             Contact our investment team to learn more about participation in the Lagos–Ogun growth corridor.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a 
-              href="https://wa.me/2347037412354" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Link 
+              to="/contact" 
               className="px-10 py-5 bg-white text-brand-primary rounded-full font-bold hover:bg-white/90 transition-colors flex items-center gap-3 shadow-xl"
             >
               Contact Us <ArrowRight className="w-5 h-5" />
-            </a>
+            </Link>
             <a 
               href="mailto:matthew.kalesanwo@fgipgroup.net" 
               className="px-10 py-5 border-2 border-white/50 text-white rounded-full font-bold hover:bg-white/10 transition-all flex items-center gap-3"

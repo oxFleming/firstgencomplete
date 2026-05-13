@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
 
 export default function FAQ() {
+  const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
@@ -91,7 +93,7 @@ export default function FAQ() {
         <h3 className="text-2xl font-heading mb-4 text-brand-dark">Still have questions?</h3>
         <p className="text-gray-600 mb-6">Our team is ready to discuss your next construction or renovation project.</p>
         <button 
-          onClick={() => { window.location.href = '/#contact'; }} 
+          onClick={() => { navigate('/contact'); }} 
           className="bg-brand-primary text-white px-8 py-3 rounded-full font-medium hover:bg-brand-dark transition-colors shadow-lg"
         >
           Contact our Team
