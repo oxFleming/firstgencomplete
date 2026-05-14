@@ -356,24 +356,24 @@ export default function Home() {
           ].map((proj, i) => (
             <div 
               key={i} 
-              className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-16 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
+              className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-6 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
               style={{ top: '80px', zIndex: i + 1 }}
             >
-              <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
-                <h3 className="text-3xl lg:text-5xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
-                <p className="text-gray-800 mb-6 text-lg font-medium drop-shadow-sm">{proj.loc}</p>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+              <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-2">
+                <h3 className="text-3xl lg:text-4xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
+                <p className="text-gray-800 mb-4 text-base lg:text-lg font-medium drop-shadow-sm">{proj.loc}</p>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
                   <span className="inline-block border border-white/60 bg-white/40 backdrop-blur-md text-gray-800 font-medium text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">{proj.tag}</span>
                   <div 
                     onClick={() => handleNavigate('/portfolio')}
-                    className="w-12 h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm cursor-pointer"
+                    className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm cursor-pointer"
                   >
-                    <ArrowRight className="w-6 h-6" />
+                    <ArrowRight className="w-5 h-5 lg:w-6 lg:h-6" />
                   </div>
                 </div>
               </div>
-              <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
-                <div className="project-image absolute top-[-20%] left-0 w-full h-[140%]">
+              <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[70vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
+                <div className="project-image absolute top-[-25%] left-0 w-full h-[150%]">
                   {proj.imgs.length === 1 ? (
                     <LazyLoadImage src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
                   ) : proj.imgs.length === 2 ? (
