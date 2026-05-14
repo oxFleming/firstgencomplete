@@ -10,6 +10,31 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    // List of critical images to preload
+    const criticalImages = [
+      '/images/mission/our-mission1.jpg',
+      '/images/mission/our-mission2.jpg',
+      '/images/fgip%20legacy/6%20bedroom/6-bed1.png',
+      '/images/services/header.jpg',
+      '/images/team-images/remy.png',
+      '/images/team-images/matthew.png',
+      '/images/team-images/olufolake.png',
+      '/images/team-images/sandra.jpeg',
+      '/images/mission/footer.jpg'
+    ];
+
+    let preloadedCount = 0;
+    criticalImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        preloadedCount++;
+        if (preloadedCount === criticalImages.length) {
+          // This doesn't strictly block progress but helps the logic know when things are ready
+        }
+      };
+    });
+
     const duration = 2500; // 2.5 seconds base duration
     const intervalTime = 40;
     const totalSteps = duration / intervalTime;
