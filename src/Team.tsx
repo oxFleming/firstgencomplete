@@ -176,11 +176,11 @@ export default function Team() {
           >
             <div className="w-full aspect-[3/4] overflow-hidden rounded-[1.5rem] mb-6 relative shadow-inner flex items-center justify-center bg-gray-200/50">
               {member.img ? (
-                <LazyLoadImage 
+                <img 
                   src={member.img} 
                   alt={member.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                  wrapperClassName="w-full h-full"
+                  loading="lazy"
                 />
               ) : (
                 <div className="text-7xl font-heading text-brand-primary/30 group-hover:scale-105 transition-transform duration-700">
@@ -215,11 +215,11 @@ export default function Team() {
             </button>
             <div className="w-full md:w-2/5 h-64 md:h-auto shrink-0 relative bg-gray-100 flex items-center justify-center">
               {selectedMember.img ? (
-                <LazyLoadImage 
+                <img 
                   src={selectedMember.img} 
                   alt={selectedMember.name} 
                   className="w-full h-full object-cover absolute inset-0" 
-                  wrapperClassName="w-full h-full"
+                  loading="eager"
                 />
               ) : (
                 <div className="text-8xl lg:text-9xl font-heading text-brand-primary/20">

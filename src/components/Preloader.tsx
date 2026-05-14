@@ -24,46 +24,45 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     ];
 
     let preloadedCount = 0;
+    let preloadingComplete = false;
     criticalImages.forEach(src => {
       const img = new Image();
       img.src = src;
-      img.onload = () => {
+      const onImageLoad = () => {
         preloadedCount++;
         if (preloadedCount === criticalImages.length) {
-          // This doesn't strictly block progress but helps the logic know when things are ready
+          preloadingComplete = true;
         }
       };
+      img.onload = onImageLoad;
+      img.onerror = onImageLoad; // Don't block on errors
     });
 
-    const duration = 2500; // 2.5 seconds base duration
+    const duration = 3500; // Increased to 3.5s for better balance
     const intervalTime = 40;
     const totalSteps = duration / intervalTime;
     const baseIncrement = 100 / totalSteps;
 
-    let imagesLoaded = false;
-    const handleLoad = () => { imagesLoaded = true; };
-    window.addEventListener('load', handleLoad);
-
     const interval = setInterval(() => {
       setProgress((prev) => {
-        // Slow down near the end if images aren't definitely loaded
-        const slowdownThreshold = 85;
+        // Slow down if images aren't ready
+        const slowdownThreshold = 80;
         let actualIncrement = baseIncrement;
         
-        if (prev > slowdownThreshold && !imagesLoaded) {
-          actualIncrement = (100 - prev) * 0.1; // Asymptotic approach to 100
+        if (prev > slowdownThreshold && !preloadingComplete) {
+          actualIncrement = (99 - prev) * 0.05; // Very slow crawl
         }
 
         const next = prev + actualIncrement;
 
-        if (next >= 99.9) {
+        if (next >= 99.5) {
           clearInterval(interval);
           setTimeout(() => {
             setProgress(100);
             setTimeout(() => {
               setIsVisible(false);
-              setTimeout(onComplete, 800);
-            }, 400);
+              setTimeout(onComplete, 500);
+            }, 300);
           }, 200);
           return 100;
         }
@@ -71,10 +70,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       });
     }, intervalTime);
 
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('load', handleLoad);
-    };
+    return () => clearInterval(interval);
   }, [onComplete]);
 
   return (

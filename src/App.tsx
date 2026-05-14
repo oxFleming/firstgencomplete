@@ -94,7 +94,7 @@ function App() {
         <div className="blob blob-4"></div>
       </div>
 
-      <div className={`transition-all duration-1000 ease-out flex flex-col min-h-screen ${isLoading ? 'blur-2xl opacity-0' : 'blur-0 opacity-100'}`}>
+      <div className={`transition-all duration-700 ease-out flex flex-col min-h-screen ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         {/* Header */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-white/70 backdrop-blur-2xl shadow-sm border-b border-white/50' : 'bg-transparent'}`}>
           <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4 lg:py-5 lg:px-12">
@@ -144,7 +144,7 @@ function App() {
                  
                  {/* Sketch Image */}
                  <div className="w-[calc(100%+3rem)] -mx-6 lg:mx-0 lg:w-full relative opacity-80 mix-blend-multiply contrast-125 flex-1 min-h-[220px] max-h-[260px] lg:max-h-[320px] shrink-0 mb-6 lg:mb-8 -mt-10 lg:mt-3 lg:bg-transparent">
-                   <LazyLoadImage src="/images/mission/footer.jpg" alt="Architectural Sketch" className="absolute inset-0 w-full h-full object-cover lg:object-contain lg:object-left object-center grayscale" wrapperClassName="w-full h-full" />
+                   <img src="/images/mission/footer.jpg" alt="Architectural Sketch" className="absolute inset-0 w-full h-full object-cover lg:object-contain lg:object-left object-center grayscale" loading="lazy" />
                  </div>
 
                  {/* Regional Contacts */}
