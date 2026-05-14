@@ -55,7 +55,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact-section" className="py-24 px-6 max-w-7xl mx-auto">
+    <section id="contact-section" className="py-24 px-6 max-w-[1440px] mx-auto">
       <div className="bg-white/60 backdrop-blur-3xl rounded-[3rem] p-8 md:p-16 border border-white/50 shadow-2xl overflow-hidden relative">
         {/* Background Decorative Blob */}
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-brand-primary/10 rounded-full blur-[100px] pointer-events-none"></div>

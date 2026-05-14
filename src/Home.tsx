@@ -122,7 +122,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#9D84B7] via-[#ff9a9e] to-[#fecfef] opacity-20 mix-blend-multiply z-[1]"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 z-[2]"></div>
         
-        <div className="relative z-10 fade-up max-w-7xl mx-auto w-full drop-shadow-lg">
+        <div className="relative z-10 fade-up max-w-[1440px] mx-auto w-full drop-shadow-lg">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-medium text-white leading-[1] mb-6 font-heading tracking-tight drop-shadow-md">
             We build<br />around <span className="italic font-light">you</span>
           </h1>
@@ -143,7 +143,7 @@ export default function Home() {
 
       {/* Merged Redesign */}
       <section className="px-6 py-16 lg:py-20 flex items-center bg-white/40 backdrop-blur-3xl relative overflow-hidden border-b border-white/20">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           
           {/* Text Side (Left) */}
           <div className="order-2 lg:order-1 fade-up pr-0 lg:pr-8">
@@ -180,7 +180,7 @@ export default function Home() {
 
       {/* Our Mission */}
       <section className="px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           <div className="order-2 lg:order-1 relative h-[500px] lg:h-[600px] fade-up">
             <img 
               src="/images/mission/our-mission1.jpg" 
@@ -212,7 +212,7 @@ export default function Home() {
 
       {/* Services (Moved Up) */}
       <section className="px-6 py-24 bg-white/40 backdrop-blur-3xl border-y border-white/30 shadow-[0_0_40px_rgba(0,0,0,0.02)] relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <div className="sticky top-32">
               <SectionHeader 
@@ -273,7 +273,7 @@ export default function Home() {
 
       {/* Featured Projects */}
       <section className="pt-24 bg-white/30 backdrop-blur-2xl relative z-10 w-full">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1440px] mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 fade-up">
             <div className="max-w-2xl px-4 lg:px-0">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-brand-primary mb-6 font-heading tracking-tight drop-shadow-sm">Flagship Project</h2>
@@ -371,7 +371,7 @@ export default function Home() {
               className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-16 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
               style={{ top: '80px', zIndex: i + 1 }}
             >
-              <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
+              <div className="max-w-[1440px] mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
                 <h3 className="text-3xl lg:text-5xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
                 <p className="text-gray-800 mb-6 text-lg font-medium drop-shadow-sm">{proj.loc}</p>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
@@ -454,7 +454,7 @@ export default function Home() {
 
       {/* Our Reach (Moved Down) */}
       <section className="px-6 py-24 bg-white/40 backdrop-blur-md border-t border-white/40 mt-12 relative z-10 w-full drop-shadow-sm">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-10">OUR REACH</h3>
           <div className="border-t border-gray-300 fade-up">
             <AccordionItem 
@@ -485,7 +485,7 @@ export default function Home() {
       </section>
 
       {/* Building for the best */}
-      <section className="px-6 py-24 lg:py-32 text-center max-w-7xl mx-auto relative z-10">
+      <section className="px-6 py-24 lg:py-32 text-center max-w-[1440px] mx-auto relative z-10">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 fade-up font-heading tracking-tight drop-shadow-md">
           Building for the <Highlight>best</Highlight>
         </h2>
@@ -527,11 +527,11 @@ export default function Home() {
       {/* Our Team - Horizontal Scroll */}
       <section ref={teamWrapperRef} className="bg-transparent pt-24 pb-24 lg:pt-32 lg:pb-32 overflow-hidden w-full relative z-10">
         <div className="w-full">
-          <div className="px-6 mb-8 lg:mb-10 fade-up max-w-7xl mx-auto w-full">
+          <div className="px-6 mb-8 lg:mb-10 fade-up max-w-[1440px] mx-auto w-full">
             <h3 className="text-brand-primary text-[10px] font-bold tracking-widest uppercase mb-2">LEADERSHIP</h3>
             <h2 className="text-3xl lg:text-4xl font-light leading-tight text-brand-dark">Meet the <Highlight>Executives</Highlight></h2>
           </div>
-          <div ref={teamContainerRef} className="flex gap-4 lg:gap-5 px-6 lg:px-auto max-w-7xl mx-auto w-max lg:w-full">
+          <div ref={teamContainerRef} className="flex gap-4 lg:gap-5 px-6 lg:px-auto max-w-[1440px] mx-auto w-max lg:w-full">
             {[
               { name: "Remy Okunbena", role: "Managing Director", img: "remy.png" },
               { name: "Mathew Kalesanwo", role: "VP, Revenue Growth & Business Development", img: "matthew.png" },

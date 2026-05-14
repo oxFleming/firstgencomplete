@@ -20,7 +20,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       '/images/team-images/matthew.png',
       '/images/team-images/olufolake.png',
       '/images/team-images/sandra.jpeg',
-      '/images/mission/footer.jpg'
+      '/images/mission/our-mission2.jpg'
     ];
 
     let preloadedCount = 0;

@@ -158,7 +158,7 @@ export default function Team() {
   }, []);
 
   return (
-    <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
+    <div className="pt-32 pb-24 max-w-[1440px] mx-auto px-6">
       <div className="mb-16 lg:mb-24 team-fade-up max-w-4xl bg-white/40 backdrop-blur-xl p-8 lg:p-12 rounded-[2rem] border border-white/60 shadow-xl relative z-10">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR PEOPLE</h3>
         <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight drop-shadow-sm">Meet the Team</h1>

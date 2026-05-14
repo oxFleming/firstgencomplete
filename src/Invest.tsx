@@ -47,7 +47,7 @@ export default function Invest() {
 
       {/* Intro Section */}
       <section className="px-6 py-20 lg:py-32 bg-white/40 backdrop-blur-3xl relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="fade-up">
             <SectionHeader 
               subtitle="THE VISION" 
@@ -85,7 +85,7 @@ export default function Invest() {
 
       {/* Strategic Value Section */}
       <section className="px-6 py-24 bg-brand-dark/5 backdrop-blur-xl border-y border-white/40">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16 fade-up">
             <h2 className="text-4xl lg:text-5xl font-heading mb-6 tracking-tight">Addressing Modern Demand</h2>
             <p className="text-gray-600 text-lg leading-relaxed">
@@ -129,7 +129,7 @@ export default function Invest() {
 
       {/* Lifestyle & Amenities */}
       <section className="px-6 py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 fade-up">
               <img src="/images/fgip%20legacy/5%20Bedroom/5-bed1.png" alt="5 Bedroom" className="rounded-xl shadow-lg aspect-square object-cover" loading="lazy" />

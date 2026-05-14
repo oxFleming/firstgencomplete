@@ -307,7 +307,7 @@ export default function Portfolio() {
   }, [activeFilter]);
 
   return (
-    <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
+    <div className="pt-32 pb-24 max-w-[1440px] mx-auto px-6">
       <div className="mb-12 lg:mb-20 portfolio-fade-up max-w-4xl">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR WORK</h3>
         <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Portfolio</h1>
