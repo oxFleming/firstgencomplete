@@ -27,7 +27,8 @@ export default function Home() {
   useEffect(() => {
     // Preload hero background or critical images
     preloadImage("/images/mission/our-mission1.jpg");
-    preloadImage("https://picsum.photos/seed/home-crane/2400/1200");
+    preloadImage("/images/mission/our-mission2.jpg");
+    preloadImage("/images/services/header.jpg");
     
     const ctx = gsap.context(() => {
       // Stats Counter Animation
@@ -193,19 +194,19 @@ export default function Home() {
       {/* Our Mission */}
       <section className="px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-          <div className="order-2 lg:order-1 relative h-[500px] lg:h-[600px] fade-up">
+          <div className="order-2 lg:order-1 relative h-[400px] sm:h-[500px] lg:h-[600px] fade-up">
             <LazyLoadImage 
               src="/images/mission/our-mission1.jpg" 
               alt="Team members" 
-              effect="blur"
-              className="w-[80%] lg:w-3/4 h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg" 
+              threshold={300}
+              className="w-[85%] lg:w-3/4 h-[350px] sm:h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg rounded-sm" 
               wrapperClassName="w-full h-full" 
             />
             <LazyLoadImage 
               src="/images/mission/our-mission2.jpg" 
               alt="Team with truck" 
-              effect="blur"
-              className="w-[70%] lg:w-2/3 h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10" 
+              threshold={300}
+              className="w-[75%] lg:w-2/3 h-[220px] sm:h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10 border-4 border-white/50 rounded-sm" 
               wrapperClassName="w-full h-full" 
             />
           </div>
@@ -398,26 +399,26 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
+              <div className="w-full aspect-[4/3] sm:aspect-video lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
                 <div className="project-image absolute top-[-20%] left-0 w-full h-[140%]">
                   {proj.imgs.length === 1 ? (
-                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} effect="blur" className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} threshold={300} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                   ) : proj.imgs.length === 2 ? (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.map((img, idx) => (
-                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} effect="blur" className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} threshold={300} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                       ))}
                     </div>
                   ) : proj.imgs.length === 3 ? (
                     <div className="grid grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} effect="blur" className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
-                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} effect="blur" className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
-                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} effect="blur" className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} threshold={300} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} threshold={300} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} threshold={300} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.slice(0, 4).map((img, idx) => (
-                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} effect="blur" className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} threshold={300} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                       ))}
                     </div>
                   )}

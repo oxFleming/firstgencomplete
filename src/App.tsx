@@ -134,7 +134,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent font-sans selection:bg-brand-primary selection:text-white relative">
+    <div className="min-h-screen bg-transparent font-sans selection:bg-brand-primary selection:text-white relative overflow-x-hidden">
       
       <Preloader onComplete={handlePreloaderComplete} />
 
@@ -149,14 +149,14 @@ function App() {
       <div className={`transition-all duration-1000 ease-out flex flex-col min-h-screen ${isLoading ? 'blur-2xl opacity-0' : 'blur-0 opacity-100'}`}>
         {/* Header */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-white/70 backdrop-blur-2xl shadow-sm border-b border-white/50' : 'bg-transparent'}`}>
-          <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4 lg:py-5 lg:px-12">
+          <div className="max-w-[1600px] mx-auto flex justify-between items-center px-4 sm:px-6 py-4 lg:py-5 lg:px-12">
             <Link to="/" onClick={() => handleNavClick('/')} className={`flex flex-col items-start leading-none font-heading select-none cursor-pointer transition-colors duration-300 ${headerSolid ? 'text-brand-dark' : 'text-white'}`}>
-              <span className="text-base md:text-lg font-light tracking-[0.15em] uppercase">First</span>
-              <span className={`text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-300 ${headerSolid ? 'text-brand-primary' : 'text-white'}`}>Generation</span>
-              <span className={`text-[0.5rem] md:text-[0.55rem] font-medium tracking-[0.5em] uppercase mt-1 transition-colors duration-300 ${headerSolid ? 'text-gray-500' : 'text-white/80'}`}>Homes</span>
+              <span className="text-sm sm:text-base md:text-lg font-light tracking-[0.15em] uppercase">First</span>
+              <span className={`text-base sm:text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-300 ${headerSolid ? 'text-brand-primary' : 'text-white'}`}>Generation</span>
+              <span className={`text-[0.45rem] sm:text-[0.5rem] md:text-[0.55rem] font-medium tracking-[0.5em] uppercase mt-1 transition-colors duration-300 ${headerSolid ? 'text-gray-500' : 'text-white/80'}`}>Homes</span>
             </Link>
             
-            <div className="hidden lg:flex items-center gap-12 text-sm font-medium tracking-widest uppercase">
+            <div className="hidden lg:flex items-center gap-10 xl:gap-12 text-[11px] xl:text-[13px] font-bold tracking-[0.2em] uppercase">
               <Link to="/" onClick={() => handleNavClick('/')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Home</Link>
               <Link to="/services" onClick={() => handleNavClick('/services')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Services</Link>
               <Link to="/portfolio" onClick={() => handleNavClick('/portfolio')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Portfolio</Link>
@@ -166,22 +166,24 @@ function App() {
             </div>
 
             <button onClick={() => setIsMenuOpen(true)} className={`lg:hidden p-2 transition-colors duration-300 ${headerSolid ? 'text-brand-dark hover:text-brand-primary' : 'text-white hover:text-white/80'}`}>
-              <Menu className="w-7 h-7" />
+              <Menu className="w-6 h-6 sm:w-7 sm:h-7" />
             </button>
           </div>
         </header>
 
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/invest" element={<Invest />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </Suspense>
+        <div className="flex-1 w-full max-w-[2000px] mx-auto">
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/invest" element={<Invest />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </Suspense>
+        </div>
 
         {/* Footer */}
         <footer className="w-full bg-white/40 backdrop-blur-3xl border-t border-white/50 text-brand-dark font-sans flex flex-col justify-between min-h-[calc(100vh-86px)] pt-10 lg:pt-8 pb-3 md:pb-5 relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">

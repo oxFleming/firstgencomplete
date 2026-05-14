@@ -57,8 +57,8 @@ export default function Services() {
 
   const ServiceSection = ({ id, title, quote, text, highlight, listTitle, list, img }: any) => (
     <div id={id} className="pt-24 border-t border-gray-200 mt-12 services-fade-up scroll-mt-40 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-      <div>
-        <h2 className="text-4xl font-light mb-6 font-heading">{title}</h2>
+      <div className="order-2 lg:order-1">
+        <h2 className="text-3xl sm:text-4xl font-light mb-6 font-heading">{title}</h2>
         {quote && <p className="text-xl text-gray-600 mb-6 font-light">"{quote}"</p>}
         <p className="text-lg text-gray-700 leading-relaxed mb-8">
           {text.split(highlight).map((part: string, i: number, arr: any[]) => 
@@ -78,17 +78,19 @@ export default function Services() {
           <Button onClick={() => navigate('/contact')}>Get Started</Button>
         </div>
       </div>
-      {Array.isArray(img) ? (
-        <ImageCarousel images={img} />
-      ) : (
-        <LazyLoadImage 
-          src={img} 
-          alt={title} 
-          effect="blur"
-          className="w-full aspect-[4/3] lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" 
-          wrapperClassName="w-full" 
-        />
-      )}
+      <div className="order-1 lg:order-2">
+        {Array.isArray(img) ? (
+          <ImageCarousel images={img} />
+        ) : (
+          <LazyLoadImage 
+            src={img} 
+            alt={title} 
+            threshold={300}
+            className="w-full aspect-[4/5] sm:aspect-video lg:aspect-square xl:aspect-video object-cover rounded-xl sticky top-32 shadow-xl border border-white/50" 
+            wrapperClassName="w-full" 
+          />
+        )}
+      </div>
     </div>
   );
 
