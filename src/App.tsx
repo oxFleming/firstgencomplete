@@ -3,7 +3,6 @@ import { Menu, ArrowRight, X, MessageCircle } from 'lucide-react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Preloader from './components/Preloader';
-import ContactSection from './components/ContactSection';
 
 // Lazy load components for performance
 const Home = lazy(() => import('./Home'));
@@ -36,8 +35,60 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formErrors, setFormErrors] = useState({ name: '', email: '', message: '' });
+  const [formStatus, setFormStatus] = useState('');
+
   const isHome = location.pathname === '/';
   const headerSolid = isScrolled || !isHome;
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    let valid = true;
+    const errors = { name: '', email: '', message: '' };
+
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required';
+      valid = false;
+    }
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = 'Invalid email format';
+      valid = false;
+    }
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+      valid = false;
+    }
+
+    setFormErrors(errors);
+
+    if (valid) {
+      setFormStatus('Sending message...');
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setFormStatus('Message sent successfully!');
+          setFormData({ name: '', email: '', message: '' });
+          setTimeout(() => setFormStatus(''), 5000);
+        } else {
+          setFormStatus(result.error || 'Failed to send message.');
+        }
+      } catch (error) {
+        console.error(error);
+        setFormStatus('Failed to send message. Please try again.');
+      }
+    }
+  };
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -94,10 +145,10 @@ function App() {
         <div className="blob blob-4"></div>
       </div>
 
-      <div className={`transition-all duration-700 ease-out flex flex-col min-h-screen ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`transition-all duration-1000 ease-out flex flex-col min-h-screen ${isLoading ? 'blur-2xl opacity-0' : 'blur-0 opacity-100'}`}>
         {/* Header */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-white/70 backdrop-blur-2xl shadow-sm border-b border-white/50' : 'bg-transparent'}`}>
-          <div className="max-w-[1440px] mx-auto flex justify-between items-center px-6 py-4 lg:py-5 lg:px-12">
+          <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4 lg:py-5 lg:px-12">
             <Link to="/" onClick={() => handleNavClick('/')} className={`flex flex-col items-start leading-none font-heading select-none cursor-pointer transition-colors duration-300 ${headerSolid ? 'text-brand-dark' : 'text-white'}`}>
               <span className="text-base md:text-lg font-light tracking-[0.15em] uppercase">First</span>
               <span className={`text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-300 ${headerSolid ? 'text-brand-primary' : 'text-white'}`}>Generation</span>
@@ -131,12 +182,9 @@ function App() {
           </Routes>
         </Suspense>
 
-        {/* Global Contact Section (Visible on scroll) */}
-        {location.pathname !== '/contact' && <ContactSection />}
-
         {/* Footer */}
-        <footer className="w-full bg-white/40 backdrop-blur-3xl border-t border-white/50 text-brand-dark font-sans flex flex-col pt-10 lg:pt-20 pb-3 md:pb-5 relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 w-full flex-1 flex flex-col justify-between h-full">
+        <footer className="w-full bg-white/40 backdrop-blur-3xl border-t border-white/50 text-brand-dark font-sans flex flex-col justify-between min-h-[calc(100vh-86px)] pt-10 lg:pt-8 pb-3 md:pb-5 relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
+          <div className="max-w-[85rem] mx-auto px-6 lg:px-12 w-full flex-1 flex flex-col justify-between h-full">
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 flex-1 min-h-0">
                {/* Left Column: Sketch & Contact */}
@@ -144,7 +192,7 @@ function App() {
                  
                  {/* Sketch Image */}
                  <div className="w-[calc(100%+3rem)] -mx-6 lg:mx-0 lg:w-full relative opacity-80 mix-blend-multiply contrast-125 flex-1 min-h-[220px] max-h-[260px] lg:max-h-[320px] shrink-0 mb-6 lg:mb-8 -mt-10 lg:mt-3 lg:bg-transparent">
-                   <img src="/images/mission/our-mission2.jpg" alt="Architectural Sketch" className="absolute inset-0 w-full h-full object-cover lg:object-contain lg:object-left object-center grayscale" loading="lazy" />
+                   <LazyLoadImage src="/images/mission/footer.jpg" alt="Architectural Sketch" className="absolute inset-0 w-full h-full object-cover lg:object-contain lg:object-left object-center grayscale" wrapperClassName="w-full h-full" />
                  </div>
 
                  {/* Regional Contacts */}

@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, ArrowLeft, X } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ContactSection from './components/ContactSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -213,7 +214,6 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
       <LazyLoadImage 
         src={images?.[0]} 
         alt={title} 
-        threshold={1500}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
         wrapperClassName="w-full h-full"
       />
@@ -225,7 +225,7 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
     return (
       <div className="grid grid-cols-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
         {images.map((img, i) => (
-          <LazyLoadImage threshold={1500} key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+          <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
         ))}
       </div>
     );
@@ -234,9 +234,9 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
   if (images.length === 3) {
     return (
       <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
-        <LazyLoadImage threshold={1500} src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover row-span-2" wrapperClassName="w-full h-full row-span-2" />
-        <LazyLoadImage threshold={1500} src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
-        <LazyLoadImage threshold={1500} src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+        <LazyLoadImage src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover row-span-2" wrapperClassName="w-full h-full row-span-2" />
+        <LazyLoadImage src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+        <LazyLoadImage src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
       </div>
     );
   }
@@ -246,7 +246,7 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
   return (
     <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
       {displayImages.map((img, i) => (
-        <LazyLoadImage threshold={1500} key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+        <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
       ))}
     </div>
   );
@@ -262,9 +262,6 @@ export default function Portfolio() {
   useEffect(() => {
     if (location.state && (location.state as any).category) {
       setActiveFilter((location.state as any).category);
-    } else if (location.pathname === '/portfolio' && !location.state) {
-      // Optional: reset if explicitly navigated without state
-      // setActiveFilter("All"); 
     }
   }, [location]);
 
@@ -307,108 +304,112 @@ export default function Portfolio() {
   }, [activeFilter]);
 
   return (
-    <div className="pt-32 pb-24 max-w-[1440px] mx-auto px-6">
-      <div className="mb-12 lg:mb-20 portfolio-fade-up max-w-4xl">
-        <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR WORK</h3>
-        <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Portfolio</h1>
-        <p className="text-lg text-gray-700 leading-relaxed mb-10">
-          From modern coastal retreats to sprawling mountain estates, our portfolio offers a swift yet in-depth look at our team's expertise, the enduring quality of our work, and our commitment to details that reflect the <span className="bg-brand-primary text-white px-1">vision of our clients.</span> Explore our custom home portfolio below.
-        </p>
+    <div className="pt-32 pb-24 w-full overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-12 lg:mb-20 portfolio-fade-up max-w-4xl text-left">
+          <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR WORK</h3>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Portfolio</h1>
+          <p className="text-lg text-gray-700 leading-relaxed mb-10">
+            From modern coastal retreats to sprawling mountain estates, our portfolio offers a swift yet in-depth look at our team's expertise, the enduring quality of our work, and our commitment to details that reflect the <span className="bg-brand-primary text-white px-1">vision of our clients.</span> Explore our custom home portfolio below.
+          </p>
 
-        <div className="mb-8">
-          <h4 className="text-gray-500 mb-4">Filters</h4>
-          <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide">
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setActiveFilter(category)}
-                className={`rounded-full px-5 py-2 text-sm whitespace-nowrap border transition-colors ${
-                  activeFilter === category 
-                    ? 'bg-brand-primary text-white border-brand-primary' 
-                    : 'bg-transparent text-gray-600 border-gray-300 hover:border-brand-primary'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+          <div className="mb-8">
+            <h4 className="text-gray-500 mb-4">Filters</h4>
+            <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide -mx-2 px-2">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setActiveFilter(category)}
+                  className={`rounded-full px-5 py-2 text-sm whitespace-nowrap border transition-colors ${
+                    activeFilter === category 
+                      ? 'bg-brand-primary text-white border-brand-primary' 
+                      : 'bg-transparent text-gray-600 border-gray-300 hover:border-brand-primary'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {featuredProject && (
-        <div className="mb-16 portfolio-fade-up relative z-10">
-          <div 
-            className="group cursor-pointer block relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
-            onClick={() => openProject(featuredProject)}
-          >
-            <div className="overflow-hidden relative rounded-2xl mb-4 bg-gray-100 flex aspect-[16/9] md:aspect-auto md:h-[500px]">
-              <ProjectCollage
-                images={featuredProject.images && featuredProject.category === "International & Investment Projects" ? featuredProject.images : [featuredProject.image]} 
-                title={featuredProject.title} 
-              />
-              {featuredProject.comingSoon && (
-                <div className="absolute top-6 right-6 bg-brand-dark/90 text-white px-4 py-2 font-bold tracking-widest text-sm uppercase rounded-lg z-10 pointer-events-none">
-                  Coming soon in 2026
+        {featuredProject && (
+          <div className="mb-16 portfolio-fade-up relative z-10 w-full">
+            <div 
+              className="group cursor-pointer block relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
+              onClick={() => openProject(featuredProject)}
+            >
+              <div className="overflow-hidden relative rounded-2xl mb-4 bg-gray-100 flex aspect-[4/3] sm:aspect-[16/9] md:aspect-auto md:h-[500px] w-full">
+                <ProjectCollage
+                  images={featuredProject.images && featuredProject.category === "International & Investment Projects" ? featuredProject.images : [featuredProject.image]} 
+                  title={featuredProject.title} 
+                />
+                {featuredProject.comingSoon && (
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-brand-dark/90 text-white px-3 py-1.5 sm:px-4 sm:py-2 font-bold tracking-widest text-[10px] sm:text-sm uppercase rounded-lg z-10 pointer-events-none">
+                    Coming soon in 2026
+                  </div>
+                )}
+              </div>
+              <div className="bg-transparent flex flex-col md:flex-row justify-between items-start transition-colors px-2 gap-4">
+                <div className="flex-1 pr-0 md:pr-6">
+                  <h2 className="text-2xl sm:text-3xl font-medium mb-2 text-brand-dark group-hover:text-brand-primary transition-colors font-heading leading-tight">{featuredProject.title}</h2>
+                  <div className="flex flex-wrap items-center gap-2 mb-3 text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium">
+                    <span className="text-brand-primary uppercase tracking-wider">{featuredProject.category}</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="opacity-70">{featuredProject.location}</span>
+                  </div>
+                  <p className="text-gray-700 text-sm sm:text-base line-clamp-3 md:line-clamp-2 max-w-3xl leading-relaxed">
+                    {featuredProject.description}
+                  </p>
                 </div>
-              )}
+                <div className="text-brand-primary bg-brand-primary/10 rounded-full p-3 sm:p-4 group-hover:bg-brand-primary group-hover:text-white transition-all shrink-0 self-end md:self-start">
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                </div>
+              </div>
             </div>
-            <div className="bg-transparent flex justify-between items-start transition-colors px-2">
-              <div className="flex-1 pr-6">
-                <h2 className="text-3xl font-medium mb-2 text-brand-dark group-hover:text-brand-primary transition-colors font-heading">{featuredProject.title}</h2>
-                <div className="flex items-center gap-2 mb-3 text-gray-600 text-sm font-medium">
-                  <span className="text-brand-primary">{featuredProject.category}</span>
-                  <span>•</span>
-                  <span>{featuredProject.location}</span>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-24 relative z-10 w-full">
+          {remainingProjects.map(project => (
+            <div 
+              key={project.id} 
+              className="portfolio-fade-up group cursor-pointer transition-all duration-500 hover:-translate-y-1 w-full"
+              onClick={() => openProject(project)}
+            >
+              <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[4/3] w-full">
+                <ProjectCollage
+                  images={project.images && project.category === "International & Investment Projects" ? project.images : [project.image]} 
+                  title={project.title} 
+                />
+                <div className="absolute bottom-0 right-0 bg-brand-primary p-3 sm:p-4 text-white group-hover:bg-brand-dark transition-colors z-20 rounded-tl-2xl">
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <p className="text-gray-700 text-base line-clamp-2 max-w-3xl leading-relaxed">
-                  {featuredProject.description}
+                {project.comingSoon && (
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-brand-dark/90 text-white px-2 py-1 font-bold tracking-widest text-[9px] sm:text-[10px] uppercase rounded-lg z-20 pointer-events-none">
+                    Coming soon in 2026
+                  </div>
+                )}
+              </div>
+              <div className="py-2 px-1">
+                <h3 className="text-xl sm:text-2xl font-medium text-brand-dark mb-2 group-hover:text-brand-primary transition-colors leading-tight">{project.title}</h3>
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span className="text-[9px] sm:text-[10px] text-brand-primary font-bold uppercase tracking-widest">
+                    {project.category}
+                  </span>
+                  <span className="text-gray-400 text-xs hidden sm:inline">•</span>
+                  <p className="text-gray-500 font-medium text-xs sm:text-sm">{project.location}</p>
+                </div>
+                <p className="text-gray-700 text-sm sm:text-base mb-4 line-clamp-3 leading-relaxed pr-2 opacity-80">
+                  {project.description}
                 </p>
               </div>
-              <div className="text-brand-primary bg-brand-primary/10 rounded-full p-4 group-hover:bg-brand-primary group-hover:text-white transition-all shrink-0">
-                <ArrowRight className="w-6 h-6" />
-              </div>
             </div>
-          </div>
+          ))}
         </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-24 relative z-10">
-        {remainingProjects.map(project => (
-          <div 
-            key={project.id} 
-            className="portfolio-fade-up group cursor-pointer transition-all duration-500 hover:-translate-y-1"
-            onClick={() => openProject(project)}
-          >
-            <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[4/3]">
-              <ProjectCollage
-                images={project.images && project.category === "International & Investment Projects" ? project.images : [project.image]} 
-                title={project.title} 
-              />
-              <div className="absolute bottom-0 right-0 bg-brand-primary p-4 text-white group-hover:bg-brand-dark transition-colors z-20 rounded-tl-2xl">
-                <ArrowRight className="w-6 h-6" />
-              </div>
-              {project.comingSoon && (
-                <div className="absolute top-4 right-4 bg-brand-dark/90 text-white px-3 py-1 font-bold tracking-widest text-[10px] uppercase rounded-lg z-20 pointer-events-none">
-                  Coming soon in 2026
-                </div>
-              )}
-            </div>
-            <div className="py-2 px-1">
-              <h3 className="text-2xl font-medium text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">{project.title}</h3>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs text-brand-primary font-bold uppercase tracking-wider">
-                  {project.category}
-                </span>
-                <span className="text-gray-400 text-xs">•</span>
-                <p className="text-gray-600 font-medium text-sm">{project.location}</p>
-              </div>
-              <p className="text-gray-700 text-base mb-4 line-clamp-3 leading-relaxed pr-2">
-                {project.description}
-              </p>
-            </div>
-          </div>
-        ))}
       </div>
+
+      <ContactSection />
 
       {/* Project Details Modal - Small Window Split Design */}
       {selectedProject && (
@@ -448,7 +449,7 @@ export default function Portfolio() {
                     />
                     
                     {selectedProject.comingSoon && (
-                      <div className="absolute top-6 left-6 bg-brand-dark/90 backdrop-blur-sm text-white px-4 py-2 font-bold tracking-widest text-xs md:text-sm uppercase shadow-xl rounded-sm z-30 pointer-events-none">
+                      <div className="absolute top-6 left-6 bg-brand-dark/90 backdrop-blur-sm text-white px-4 py-2 font-bold tracking-widest text-[10px] md:text-xs uppercase shadow-xl rounded-sm z-30 pointer-events-none">
                         Coming soon in 2026
                       </div>
                     )}
@@ -481,7 +482,7 @@ export default function Portfolio() {
                         {gallery.map((_, idx) => (
                           <div 
                             key={idx} 
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentModalImageIdx ? 'bg-brand-primary w-6' : 'bg-white/70'}`}
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === currentModalImageIdx ? 'bg-brand-primary w-4' : 'bg-white/70'}`}
                           />
                         ))}
                       </div>
@@ -493,25 +494,25 @@ export default function Portfolio() {
 
             {/* Right Side: Details */}
             <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto min-h-0 bg-white">
-              <div className="flex flex-wrap items-center gap-3 mb-4 text-xs font-bold tracking-widest text-gray-400 uppercase shrink-0">
+              <div className="flex flex-wrap items-center gap-3 mb-4 text-[10px] font-bold tracking-widest text-gray-400 uppercase shrink-0">
                 <span className="text-brand-primary">{selectedProject.category}</span>
                 <span>•</span>
                 <span>{selectedProject.location}</span>
               </div>
               
-              <h2 className="text-3xl md:text-4xl font-heading mb-6 text-brand-dark leading-tight shrink-0">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading mb-6 text-brand-dark leading-tight shrink-0">
                 {selectedProject.title}
               </h2>
               
               <div className="w-12 h-1 bg-brand-primary mb-6 flex-shrink-0"></div>
               
-              <div className="text-base text-gray-600 leading-relaxed whitespace-pre-wrap mb-8 flex-shrink-0">
+              <div className="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-wrap mb-8 flex-shrink-0">
                 {selectedProject.description}
               </div>
               
-              <div className="mt-auto pt-6 flex gap-4 text-sm font-medium border-t border-gray-100 shrink-0">
+              <div className="mt-auto pt-6 flex gap-4 text-xs sm:text-sm font-medium border-t border-gray-100 shrink-0">
                 <div className="flex flex-col">
-                  <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Status</span>
+                  <span className="text-gray-400 text-[10px] uppercase tracking-wider mb-1">Status</span>
                   <span className="text-brand-dark">
                     {selectedProject.comingSoon ? "Expected 2026" : "Completed"}
                   </span>

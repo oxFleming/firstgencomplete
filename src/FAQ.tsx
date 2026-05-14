@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
+import ContactSection from './components/ContactSection';
 
 export default function FAQ() {
   const navigate = useNavigate();
@@ -99,6 +100,8 @@ export default function FAQ() {
           Contact our Team
         </button>
       </div>
+
+      <ContactSection />
     </div>
   );
 }

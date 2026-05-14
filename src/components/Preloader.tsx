@@ -10,59 +10,35 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // List of critical images to preload
-    const criticalImages = [
-      '/images/mission/our-mission1.jpg',
-      '/images/mission/our-mission2.jpg',
-      '/images/fgip%20legacy/6%20bedroom/6-bed1.png',
-      '/images/services/header.jpg',
-      '/images/team-images/remy.png',
-      '/images/team-images/matthew.png',
-      '/images/team-images/olufolake.png',
-      '/images/team-images/sandra.jpeg',
-      '/images/mission/our-mission2.jpg'
-    ];
-
-    let preloadedCount = 0;
-    let preloadingComplete = false;
-    criticalImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-      const onImageLoad = () => {
-        preloadedCount++;
-        if (preloadedCount === criticalImages.length) {
-          preloadingComplete = true;
-        }
-      };
-      img.onload = onImageLoad;
-      img.onerror = onImageLoad; // Don't block on errors
-    });
-
-    const duration = 3500; // Increased to 3.5s for better balance
+    const duration = 2500; // 2.5 seconds base duration
     const intervalTime = 40;
     const totalSteps = duration / intervalTime;
     const baseIncrement = 100 / totalSteps;
 
+    let imagesLoaded = false;
+    const handleLoad = () => { imagesLoaded = true; };
+    window.addEventListener('load', handleLoad);
+
     const interval = setInterval(() => {
       setProgress((prev) => {
-        // Slow down if images aren't ready
-        const slowdownThreshold = 80;
+        // Slow down near the end if images aren't definitely loaded
+        const slowdownThreshold = 85;
         let actualIncrement = baseIncrement;
         
-        if (prev > slowdownThreshold && !preloadingComplete) {
-          actualIncrement = (99 - prev) * 0.05; // Very slow crawl
+        if (prev > slowdownThreshold && !imagesLoaded) {
+          actualIncrement = (100 - prev) * 0.1; // Asymptotic approach to 100
         }
 
         const next = prev + actualIncrement;
 
-        if (next >= 99.5) {
+        if (next >= 99.9) {
           clearInterval(interval);
           setTimeout(() => {
             setProgress(100);
             setTimeout(() => {
               setIsVisible(false);
-              setTimeout(onComplete, 500);
-            }, 300);
+              setTimeout(onComplete, 800);
+            }, 400);
           }, 200);
           return 100;
         }
@@ -70,7 +46,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       });
     }, intervalTime);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('load', handleLoad);
+    };
   }, [onComplete]);
 
   return (

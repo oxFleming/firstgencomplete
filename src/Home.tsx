@@ -5,6 +5,7 @@ import { ArrowRight, Play } from 'lucide-react';
 import { Highlight, Button, SectionHeader, AccordionItem } from './components/ui';
 import { useNavigate } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ContactSection from './components/ContactSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -107,22 +108,19 @@ export default function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex flex-col justify-center px-6 overflow-hidden bg-brand-dark">
+      <section className="relative h-screen min-h-[600px] flex flex-col justify-center px-6 overflow-hidden">
         <video 
+          src="/videos/hero.mp4" 
           autoPlay 
           muted 
           loop 
           playsInline
-          poster="/images/mission/our-mission1.jpg"
           className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="/videos/Hero-video.mp4" type="video/mp4" />
-          <source src="/videos/hero.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#9D84B7] via-[#ff9a9e] to-[#fecfef] opacity-20 mix-blend-multiply z-[1]"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 z-[2]"></div>
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#9D84B7] via-[#ff9a9e] to-[#fecfef] opacity-20 mix-blend-multiply z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 z-0"></div>
         
-        <div className="relative z-10 fade-up max-w-[1440px] mx-auto w-full drop-shadow-lg">
+        <div className="relative z-10 fade-up max-w-7xl mx-auto w-full drop-shadow-lg">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-medium text-white leading-[1] mb-6 font-heading tracking-tight drop-shadow-md">
             We build<br />around <span className="italic font-light">you</span>
           </h1>
@@ -143,7 +141,7 @@ export default function Home() {
 
       {/* Merged Redesign */}
       <section className="px-6 py-16 lg:py-20 flex items-center bg-white/40 backdrop-blur-3xl relative overflow-hidden border-b border-white/20">
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           
           {/* Text Side (Left) */}
           <div className="order-2 lg:order-1 fade-up pr-0 lg:pr-8">
@@ -180,20 +178,10 @@ export default function Home() {
 
       {/* Our Mission */}
       <section className="px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           <div className="order-2 lg:order-1 relative h-[500px] lg:h-[600px] fade-up">
-            <img 
-              src="/images/mission/our-mission1.jpg" 
-              alt="Team members" 
-              className="w-[80%] lg:w-3/4 h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg" 
-              loading="lazy"
-            />
-            <img 
-              src="/images/mission/our-mission2.jpg" 
-              alt="Team with truck" 
-              className="w-[70%] lg:w-2/3 h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10" 
-              loading="lazy"
-            />
+            <LazyLoadImage src="/images/mission/our-mission1.jpg" alt="Team members" className="w-[80%] lg:w-3/4 h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg" wrapperClassName="w-full h-full" />
+            <LazyLoadImage src="/images/mission/our-mission2.jpg" alt="Team with truck" className="w-[70%] lg:w-2/3 h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10" wrapperClassName="w-full h-full" />
           </div>
           <div className="order-1 lg:order-2">
             <SectionHeader 
@@ -212,7 +200,7 @@ export default function Home() {
 
       {/* Services (Moved Up) */}
       <section className="px-6 py-24 bg-white/40 backdrop-blur-3xl border-y border-white/30 shadow-[0_0_40px_rgba(0,0,0,0.02)] relative z-10">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <div className="sticky top-32">
               <SectionHeader 
@@ -273,7 +261,7 @@ export default function Home() {
 
       {/* Featured Projects */}
       <section className="pt-24 bg-white/30 backdrop-blur-2xl relative z-10 w-full">
-        <div className="max-w-[1440px] mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 fade-up">
             <div className="max-w-2xl px-4 lg:px-0">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-brand-primary mb-6 font-heading tracking-tight drop-shadow-sm">Flagship Project</h2>
@@ -371,7 +359,7 @@ export default function Home() {
               className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-16 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
               style={{ top: '80px', zIndex: i + 1 }}
             >
-              <div className="max-w-[1440px] mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
+              <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-6">
                 <h3 className="text-3xl lg:text-5xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
                 <p className="text-gray-800 mb-6 text-lg font-medium drop-shadow-sm">{proj.loc}</p>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
@@ -387,61 +375,23 @@ export default function Home() {
               <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
                 <div className="project-image absolute top-[-20%] left-0 w-full h-[140%]">
                   {proj.imgs.length === 1 ? (
-                    <img 
-                      src={proj.imgs[0]} 
-                      alt={proj.title} 
-                      className="w-full h-full object-cover" 
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                   ) : proj.imgs.length === 2 ? (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.map((img, idx) => (
-                        <img 
-                          key={idx} 
-                          src={img} 
-                          alt={`${proj.title} ${idx+1}`} 
-                          className="w-full h-full object-cover" 
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                       ))}
                     </div>
                   ) : proj.imgs.length === 3 ? (
                     <div className="grid grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      <img 
-                        src={proj.imgs[0]} 
-                        alt={`${proj.title} 1`} 
-                        className="w-full h-full object-cover lg:col-span-1" 
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <img 
-                        src={proj.imgs[1]} 
-                        alt={`${proj.title} 2`} 
-                        className="w-full h-full object-cover lg:col-span-1" 
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <img 
-                        src={proj.imgs[2]} 
-                        alt={`${proj.title} 3`} 
-                        className="w-full h-full object-cover lg:col-span-1" 
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.slice(0, 4).map((img, idx) => (
-                        <img 
-                          key={idx} 
-                          src={img} 
-                          alt={`${proj.title} ${idx+1}`} 
-                          className="w-full h-full object-cover" 
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
                       ))}
                     </div>
                   )}
@@ -454,7 +404,7 @@ export default function Home() {
 
       {/* Our Reach (Moved Down) */}
       <section className="px-6 py-24 bg-white/40 backdrop-blur-md border-t border-white/40 mt-12 relative z-10 w-full drop-shadow-sm">
-        <div className="max-w-[1440px] mx-auto">
+        <div className="max-w-7xl mx-auto">
           <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-10">OUR REACH</h3>
           <div className="border-t border-gray-300 fade-up">
             <AccordionItem 
@@ -481,11 +431,11 @@ export default function Home() {
 
       {/* Large Image */}
       <section className="w-full h-[60vh] relative z-10 drop-shadow-xl overflow-hidden">
-        <LazyLoadImage threshold={1000} src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" wrapperClassName="w-full h-full" />
+        <LazyLoadImage src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" wrapperClassName="w-full h-full" />
       </section>
 
       {/* Building for the best */}
-      <section className="px-6 py-24 lg:py-32 text-center max-w-[1440px] mx-auto relative z-10">
+      <section className="px-6 py-24 lg:py-32 text-center max-w-7xl mx-auto relative z-10">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 fade-up font-heading tracking-tight drop-shadow-md">
           Building for the <Highlight>best</Highlight>
         </h2>
@@ -496,12 +446,7 @@ export default function Home() {
 
       {/* Stats */}
       <section ref={statsRef} className="relative h-[60vh] flex items-center justify-center overflow-hidden z-10">
-        <img 
-          src="https://picsum.photos/seed/home-workers/1200/800" 
-          alt="Workers" 
-          className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" 
-          loading="lazy"
-        />
+        <LazyLoadImage src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" wrapperClassName="w-full h-full absolute inset-0" />
         <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-0"></div>
         <div className="relative z-10 text-center px-16 py-12">
           <div className="text-8xl md:text-[12rem] font-light text-brand-primary tracking-tighter leading-none font-heading drop-shadow-md">
@@ -527,11 +472,11 @@ export default function Home() {
       {/* Our Team - Horizontal Scroll */}
       <section ref={teamWrapperRef} className="bg-transparent pt-24 pb-24 lg:pt-32 lg:pb-32 overflow-hidden w-full relative z-10">
         <div className="w-full">
-          <div className="px-6 mb-8 lg:mb-10 fade-up max-w-[1440px] mx-auto w-full">
+          <div className="px-6 mb-8 lg:mb-10 fade-up max-w-7xl mx-auto w-full">
             <h3 className="text-brand-primary text-[10px] font-bold tracking-widest uppercase mb-2">LEADERSHIP</h3>
             <h2 className="text-3xl lg:text-4xl font-light leading-tight text-brand-dark">Meet the <Highlight>Executives</Highlight></h2>
           </div>
-          <div ref={teamContainerRef} className="flex gap-4 lg:gap-5 px-6 lg:px-auto max-w-[1440px] mx-auto w-max lg:w-full">
+          <div ref={teamContainerRef} className="flex gap-4 lg:gap-5 px-6 lg:px-auto max-w-7xl mx-auto w-max lg:w-full">
             {[
               { name: "Remy Okunbena", role: "Managing Director", img: "remy.png" },
               { name: "Mathew Kalesanwo", role: "VP, Revenue Growth & Business Development", img: "matthew.png" },
@@ -539,12 +484,7 @@ export default function Home() {
               { name: "Arc. Sandra Airunugba", role: "Senior Architect and Supervisory Project Manager", img: "sandra.jpeg" }
             ].map((exec, i) => (
               <div key={i} className="w-[80vw] sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] relative group shrink-0 rounded-xl overflow-hidden shadow-lg border border-brand-primary/10">
-                <img 
-                  src={`/images/team-images/${exec.img}`} 
-                  alt={exec.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" 
-                  loading="lazy"
-                />
+                <LazyLoadImage src={`/images/team-images/${exec.img}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" wrapperClassName="w-full h-full" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white">
                   <h3 className="text-lg font-heading mb-1">{exec.name}</h3>
                   <p className="text-brand-primary tracking-widest uppercase text-[9px] font-bold leading-tight line-clamp-2">{exec.role}</p>
@@ -561,6 +501,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ContactSection />
     </main>
   );
 }

@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Highlight, Button } from './components/ui';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ContactSection from './components/ContactSection';
 
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +22,6 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
         <LazyLoadImage 
           key={i}
           src={src} 
-          threshold={1500}
           alt={`Slide ${i + 1}`}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === currentIndex ? 'opacity-100' : 'opacity-0'}`}
           wrapperClassName="w-full h-full absolute inset-0"
@@ -80,13 +80,13 @@ export default function Services() {
       {Array.isArray(img) ? (
         <ImageCarousel images={img} />
       ) : (
-        <LazyLoadImage threshold={1200} src={img} alt={title} className="w-full aspect-[4/3] lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" wrapperClassName="w-full" />
+        <LazyLoadImage src={img} alt={title} className="w-full aspect-[4/3] lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" wrapperClassName="w-full" />
       )}
     </div>
   );
 
   return (
-    <div className="pt-32 pb-24 max-w-[1440px] mx-auto px-6">
+    <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
       <div className="max-w-4xl">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-6 services-fade-up">SERVICES</h3>
         <h1 className="text-5xl md:text-7xl font-light leading-tight mb-12 font-heading tracking-tight services-fade-up">From blueprint to<br/>ribbon-cutting</h1>
@@ -104,7 +104,7 @@ export default function Services() {
         <p>We solve problems others can't or won't with creativity. We build <Highlight>lasting relationships</Highlight> with candor. And we specialize in details that reflect the modern lifestyle and market demands, both in the US and internationally.</p>
       </div>
 
-      <LazyLoadImage threshold={1200} src="/images/services/header.jpg" alt="Ribbon cutting" className="w-full aspect-[21/9] object-cover rounded-sm mb-12 services-fade-up" wrapperClassName="w-full" />
+      <LazyLoadImage src="/images/services/header.jpg" alt="Ribbon cutting" className="w-full aspect-[21/9] object-cover rounded-sm mb-12 services-fade-up" wrapperClassName="w-full" />
 
       <ServiceSection 
         id="custom-homes"
@@ -185,8 +185,8 @@ export default function Services() {
           We join the customer's journey, take on their goals, guide them through the design phase and deliver a building that will best <Highlight>accomplish those goals.</Highlight>
         </h3>
         <div className="relative h-[600px] mt-12 bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 shadow-xl">
-          <LazyLoadImage threshold={1200} src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-2/3 h-[450px] object-cover rounded-xl absolute right-8 top-8" wrapperClassName="w-full h-full" />
-          <LazyLoadImage threshold={1200} src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-2/3 h-[300px] object-cover rounded-xl absolute left-8 bottom-8 border-8 border-white/40 shadow-2xl backdrop-blur-sm" wrapperClassName="w-full h-full" />
+          <LazyLoadImage src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-2/3 h-[450px] object-cover rounded-xl absolute right-8 top-8" wrapperClassName="w-full h-full" />
+          <LazyLoadImage src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-2/3 h-[300px] object-cover rounded-xl absolute left-8 bottom-8 border-8 border-white/40 shadow-2xl backdrop-blur-sm" wrapperClassName="w-full h-full" />
         </div>
       </div>
 
@@ -198,6 +198,8 @@ export default function Services() {
         <p className="font-medium text-lg">Julius A</p>
         <p className="text-gray-600">CEO Leadway Pharmacy</p>
       </div>
+
+      <ContactSection />
     </div>
   );
 }

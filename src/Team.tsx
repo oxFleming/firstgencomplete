@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, X } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ContactSection from './components/ContactSection';
 
 const teamMembers = [
   { 
@@ -158,7 +159,7 @@ export default function Team() {
   }, []);
 
   return (
-    <div className="pt-32 pb-24 max-w-[1440px] mx-auto px-6">
+    <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
       <div className="mb-16 lg:mb-24 team-fade-up max-w-4xl bg-white/40 backdrop-blur-xl p-8 lg:p-12 rounded-[2rem] border border-white/60 shadow-xl relative z-10">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR PEOPLE</h3>
         <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight drop-shadow-sm">Meet the Team</h1>
@@ -176,11 +177,11 @@ export default function Team() {
           >
             <div className="w-full aspect-[3/4] overflow-hidden rounded-[1.5rem] mb-6 relative shadow-inner flex items-center justify-center bg-gray-200/50">
               {member.img ? (
-                <img 
+                <LazyLoadImage 
                   src={member.img} 
                   alt={member.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                  loading="lazy"
+                  wrapperClassName="w-full h-full"
                 />
               ) : (
                 <div className="text-7xl font-heading text-brand-primary/30 group-hover:scale-105 transition-transform duration-700">
@@ -215,11 +216,11 @@ export default function Team() {
             </button>
             <div className="w-full md:w-2/5 h-64 md:h-auto shrink-0 relative bg-gray-100 flex items-center justify-center">
               {selectedMember.img ? (
-                <img 
+                <LazyLoadImage 
                   src={selectedMember.img} 
                   alt={selectedMember.name} 
                   className="w-full h-full object-cover absolute inset-0" 
-                  loading="eager"
+                  wrapperClassName="w-full h-full"
                 />
               ) : (
                 <div className="text-8xl lg:text-9xl font-heading text-brand-primary/20">
@@ -242,6 +243,8 @@ export default function Team() {
           </div>
         </div>
       )}
+
+      <ContactSection />
     </div>
   );
 }
