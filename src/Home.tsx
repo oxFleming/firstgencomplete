@@ -375,23 +375,23 @@ export default function Home() {
               <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[65vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
                 <div className="project-image absolute top-[-20%] left-0 w-full h-[140%]">
                   {proj.imgs.length === 1 ? (
-                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
                   ) : proj.imgs.length === 2 ? (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.map((img, idx) => (
-                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
                       ))}
                     </div>
                   ) : proj.imgs.length === 3 ? (
                     <div className="grid grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
-                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
-                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" />
+                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" threshold={1200} effect="opacity" />
+                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" threshold={1200} effect="opacity" />
+                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" threshold={1200} effect="opacity" />
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.slice(0, 4).map((img, idx) => (
-                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
                       ))}
                     </div>
                   )}
@@ -431,7 +431,7 @@ export default function Home() {
 
       {/* Large Image */}
       <section className="w-full h-[60vh] relative z-10 drop-shadow-xl overflow-hidden">
-        <LazyLoadImage src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" wrapperClassName="w-full h-full" />
+        <LazyLoadImage src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
       </section>
 
       {/* Building for the best */}
@@ -446,7 +446,7 @@ export default function Home() {
 
       {/* Stats */}
       <section ref={statsRef} className="relative h-[60vh] flex items-center justify-center overflow-hidden z-10">
-        <LazyLoadImage src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" wrapperClassName="w-full h-full absolute inset-0" />
+        <LazyLoadImage src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" wrapperClassName="w-full h-full absolute inset-0" threshold={1200} effect="opacity" />
         <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-0"></div>
         <div className="relative z-10 text-center px-16 py-12">
           <div className="text-8xl md:text-[12rem] font-light text-brand-primary tracking-tighter leading-none font-heading drop-shadow-md">
@@ -484,7 +484,7 @@ export default function Home() {
               { name: "Arc. Sandra Airunugba", role: "Senior Architect and Supervisory Project Manager", img: "sandra.jpeg" }
             ].map((exec, i) => (
               <div key={i} className="w-[80vw] sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] relative group shrink-0 rounded-xl overflow-hidden shadow-lg border border-brand-primary/10">
-                <LazyLoadImage src={`/images/team-images/${exec.img}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" wrapperClassName="w-full h-full" />
+                <LazyLoadImage src={`/images/team-images/${exec.img}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white">
                   <h3 className="text-lg font-heading mb-1">{exec.name}</h3>
                   <p className="text-brand-primary tracking-widest uppercase text-[9px] font-bold leading-tight line-clamp-2">{exec.role}</p>

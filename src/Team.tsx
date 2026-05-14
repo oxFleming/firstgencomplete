@@ -182,6 +182,8 @@ export default function Team() {
                   alt={member.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                   wrapperClassName="w-full h-full"
+                  threshold={1200}
+                  effect="opacity"
                 />
               ) : (
                 <div className="text-7xl font-heading text-brand-primary/30 group-hover:scale-105 transition-transform duration-700">
@@ -221,6 +223,8 @@ export default function Team() {
                   alt={selectedMember.name} 
                   className="w-full h-full object-cover absolute inset-0" 
                   wrapperClassName="w-full h-full"
+                  threshold={1200}
+                  effect="opacity"
                 />
               ) : (
                 <div className="text-8xl lg:text-9xl font-heading text-brand-primary/20">

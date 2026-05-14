@@ -1,5 +1,8 @@
 {
   "name": "First Generation Homes",
   "description": "First Generation Homes LLC - High-end real estate development, custom residential construction, and modernization in the US and Africa.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

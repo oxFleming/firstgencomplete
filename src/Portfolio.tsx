@@ -216,6 +216,8 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
         alt={title} 
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
         wrapperClassName="w-full h-full"
+        threshold={1200}
+        effect="opacity"
       />
     );
   }
@@ -225,7 +227,7 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
     return (
       <div className="grid grid-cols-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
         {images.map((img, i) => (
-          <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+          <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
         ))}
       </div>
     );
@@ -234,9 +236,9 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
   if (images.length === 3) {
     return (
       <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
-        <LazyLoadImage src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover row-span-2" wrapperClassName="w-full h-full row-span-2" />
-        <LazyLoadImage src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
-        <LazyLoadImage src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+        <LazyLoadImage src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover row-span-2" wrapperClassName="w-full h-full row-span-2" threshold={1200} effect="opacity" />
+        <LazyLoadImage src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+        <LazyLoadImage src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
       </div>
     );
   }
@@ -246,7 +248,7 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
   return (
     <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
       {displayImages.map((img, i) => (
-        <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+        <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
       ))}
     </div>
   );
@@ -439,12 +441,14 @@ export default function Portfolio() {
                   
                 return (
                   <>
-                    <LazyLoadImage 
+                  <LazyLoadImage 
                       src={gallery[currentModalImageIdx]} 
                       alt={`${selectedProject.title} view ${currentModalImageIdx + 1}`} 
                       className="w-full h-full absolute inset-0 object-cover animate-in fade-in duration-500" 
                       wrapperClassName="w-full h-full absolute inset-0"
                       key={currentModalImageIdx}
+                      threshold={1200}
+                      effect="opacity"
                     />
                     
                     {selectedProject.comingSoon && (

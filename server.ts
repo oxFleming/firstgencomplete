@@ -63,11 +63,24 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Production delivery of built client
-    const distPath = path.join(process.cwd(), "dist");
+    // The bundled server.cjs is located inside the dist folder
+    const distPath = __dirname;
+    
+    // Serve static files from the dist directory
     app.use(express.static(distPath));
+
     // Serve index.html for all unknown paths (SPA)
     app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
+      // Avoid infinite loops for missing static files with extensions
+      if (req.path.includes(".")) {
+         return res.status(404).send("Not Found");
+      }
+      res.sendFile(path.join(distPath, "index.html"), (err) => {
+        if (err) {
+          console.error("Error sending index.html:", err);
+          res.status(500).send("Error loading application");
+        }
+      });
     });
   }
 

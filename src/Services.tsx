@@ -25,6 +25,8 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
           alt={`Slide ${i + 1}`}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === currentIndex ? 'opacity-100' : 'opacity-0'}`}
           wrapperClassName="w-full h-full absolute inset-0"
+          threshold={1200}
+          effect="opacity"
         />
       ))}
     </div>
@@ -80,7 +82,7 @@ export default function Services() {
       {Array.isArray(img) ? (
         <ImageCarousel images={img} />
       ) : (
-        <LazyLoadImage src={img} alt={title} className="w-full aspect-[4/3] lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" wrapperClassName="w-full" />
+        <LazyLoadImage src={img} alt={title} className="w-full aspect-[4/3] lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" wrapperClassName="w-full" threshold={1200} effect="opacity" />
       )}
     </div>
   );
@@ -185,8 +187,8 @@ export default function Services() {
           We join the customer's journey, take on their goals, guide them through the design phase and deliver a building that will best <Highlight>accomplish those goals.</Highlight>
         </h3>
         <div className="relative h-[600px] mt-12 bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 shadow-xl">
-          <LazyLoadImage src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-2/3 h-[450px] object-cover rounded-xl absolute right-8 top-8" wrapperClassName="w-full h-full" />
-          <LazyLoadImage src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-2/3 h-[300px] object-cover rounded-xl absolute left-8 bottom-8 border-8 border-white/40 shadow-2xl backdrop-blur-sm" wrapperClassName="w-full h-full" />
+          <LazyLoadImage src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-2/3 h-[450px] object-cover rounded-xl absolute right-8 top-8" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+          <LazyLoadImage src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-2/3 h-[300px] object-cover rounded-xl absolute left-8 bottom-8 border-8 border-white/40 shadow-2xl backdrop-blur-sm" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
         </div>
       </div>
 
