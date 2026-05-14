@@ -149,7 +149,7 @@ function App() {
       <div className={`transition-all duration-1000 ease-out flex flex-col min-h-screen ${isLoading ? 'blur-2xl opacity-0' : 'blur-0 opacity-100'}`}>
         {/* Header */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-white/70 backdrop-blur-2xl shadow-sm border-b border-white/50' : 'bg-transparent'}`}>
-          <div className="max-w-[1600px] mx-auto flex justify-between items-center px-4 sm:px-6 py-4 lg:py-5 lg:px-12">
+          <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-4 lg:py-5 lg:px-12">
             <Link to="/" onClick={() => handleNavClick('/')} className={`flex flex-col items-start leading-none font-heading select-none cursor-pointer transition-colors duration-300 ${headerSolid ? 'text-brand-dark' : 'text-white'}`}>
               <span className="text-sm sm:text-base md:text-lg font-light tracking-[0.15em] uppercase">First</span>
               <span className={`text-base sm:text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-300 ${headerSolid ? 'text-brand-primary' : 'text-white'}`}>Generation</span>
@@ -171,7 +171,7 @@ function App() {
           </div>
         </header>
 
-        <div className="flex-1 w-full max-w-[2000px] mx-auto">
+        <div className="flex-1 w-full">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -187,7 +187,7 @@ function App() {
 
         {/* Footer */}
         <footer className="w-full bg-white/40 backdrop-blur-3xl border-t border-white/50 text-brand-dark font-sans flex flex-col justify-between min-h-[calc(100vh-86px)] pt-10 lg:pt-8 pb-3 md:pb-5 relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
-          <div className="max-w-[85rem] mx-auto px-6 lg:px-12 w-full flex-1 flex flex-col justify-between h-full">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full flex-1 flex flex-col justify-between h-full">
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 flex-1 min-h-0">
                {/* Left Column: Sketch & Contact */}

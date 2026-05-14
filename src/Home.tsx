@@ -119,7 +119,7 @@ export default function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex flex-col justify-center px-6 overflow-hidden bg-brand-dark/20">
+      <section className="relative h-screen min-h-[600px] w-full flex flex-col justify-center px-6 overflow-hidden bg-brand-dark/20">
         <video 
           src="/videos/hero.mp4" 
           autoPlay 
@@ -129,6 +129,7 @@ export default function Home() {
           preload="auto"
           poster="https://picsum.photos/seed/hero-poster/1920/1080"
           className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{ width: '100%', height: '100%' }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[#9D84B7] via-[#ff9a9e] to-[#fecfef] opacity-20 mix-blend-multiply z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 z-0"></div>
@@ -198,14 +199,16 @@ export default function Home() {
             <LazyLoadImage 
               src="/images/mission/our-mission1.jpg" 
               alt="Team members" 
-              threshold={300}
+              threshold={500}
+              scrollPosition={window.scrollY}
               className="w-[85%] lg:w-3/4 h-[350px] sm:h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg rounded-sm" 
               wrapperClassName="w-full h-full" 
             />
             <LazyLoadImage 
               src="/images/mission/our-mission2.jpg" 
               alt="Team with truck" 
-              threshold={300}
+              threshold={500}
+              scrollPosition={window.scrollY}
               className="w-[75%] lg:w-2/3 h-[220px] sm:h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10 border-4 border-white/50 rounded-sm" 
               wrapperClassName="w-full h-full" 
             />
