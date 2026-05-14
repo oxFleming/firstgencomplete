@@ -63,9 +63,11 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Production delivery of built client
-    const distPath = path.join(process.cwd(), "dist");
+    // When running from dist/server.cjs, __dirname is the dist folder
+    const distPath = __dirname;
     app.use(express.static(distPath));
-    // Serve index.html for all unknown paths (SPA)
+    
+    // Serve index.html for all unknown paths (SPA fallback)
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });

@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useState, lazy, Suspense, useCallbac
 import { Menu, ArrowRight, X, MessageCircle } from 'lucide-react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import Preloader from './components/Preloader';
 
 // Lazy load components for performance
