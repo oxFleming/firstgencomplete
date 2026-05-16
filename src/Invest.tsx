@@ -14,7 +14,7 @@ export default function Invest() {
       // Fade up elements
       const fadeElements = document.querySelectorAll('.fade-up');
       fadeElements.forEach((el) => {
-        gsap.fromTo(el, 
+        gsap.fromTo(el,
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } }
         );
@@ -28,9 +28,9 @@ export default function Invest() {
     <main className="pt-20 lg:pt-24">
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-        <LazyLoadImage 
-          src="/images/fgip%20legacy/hotel/hotel1.png" 
-          alt="FGIP Legacy Estate" 
+        <LazyLoadImage
+          src="/images/fgip%20legacy/hotel/hotel1.webp"
+          alt="FGIP Legacy Estate"
           className="absolute inset-0 w-full h-full object-cover z-0 brightness-50"
           wrapperClassName="w-full h-full absolute inset-0"
         />
@@ -49,12 +49,12 @@ export default function Invest() {
       <section className="px-6 py-20 lg:py-32 bg-white/40 backdrop-blur-3xl relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="fade-up">
-            <SectionHeader 
-              subtitle="THE VISION" 
-              title={<>Strategic Sponsorship & <Highlight>Development Partnership</Highlight></>} 
+            <SectionHeader
+              subtitle="THE VISION"
+              title={<>Strategic Sponsorship & <Highlight>Development Partnership</Highlight></>}
             />
             <p className="text-gray-800 text-lg leading-relaxed mb-6 font-medium">
-              First Generation Homes LLC is proud to serve as a strategic sponsor and development partner of FGIP Legacy Luxury Estate — a large-scale, infrastructure-led residential development located within the Lagos–Ogun growth corridor in Ogun State, Nigeria.
+              First Generation Homes LLC is proud to serve as a strategic sponsor and development partner of FGIP Legacy Luxury Estate - a large-scale, infrastructure-led residential development located within the Lagos-Ogun growth corridor in Ogun State, Nigeria.
             </p>
             <p className="text-gray-600 leading-relaxed mb-8">
               Designed as a fully integrated residential community, the project spans approximately 160 acres and is planned to deliver 1,500 residential units through a structured, phased development model.
@@ -76,7 +76,7 @@ export default function Invest() {
           </div>
           <div className="relative fade-up">
             <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl skew-x-1 hover:skew-x-0 transition-transform duration-700">
-              <LazyLoadImage src="/images/fgip%20legacy/6%20bedroom/6-bed1.png" alt="Estate Architecture" className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
+              <LazyLoadImage src="/images/fgip%20legacy/6%20bedroom/6-bed1.webp" alt="Estate Architecture" className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
             </div>
             <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl -z-10"></div>
           </div>
@@ -132,21 +132,21 @@ export default function Invest() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 fade-up">
-              <LazyLoadImage src="/images/fgip%20legacy/5%20Bedroom/5-bed1.png" className="rounded-xl shadow-lg aspect-square object-cover" />
-              <LazyLoadImage src="/images/fgip%20legacy/primary%20school/school1.png" className="rounded-xl shadow-lg aspect-square object-cover mt-12" />
-              <LazyLoadImage src="/images/fgip%20legacy/Business%20Center/business1.png" className="rounded-xl shadow-lg aspect-square object-cover -mt-12" />
-              <LazyLoadImage src="/images/fgip%20legacy/3%20bedroom/3-bed1.png" className="rounded-xl shadow-lg aspect-square object-cover" />
+              <LazyLoadImage src="/images/fgip%20legacy/5%20Bedroom/5-bed1.webp" className="rounded-xl shadow-lg aspect-square object-cover" />
+              <LazyLoadImage src="/images/fgip%20legacy/primary%20school/school1.webp" className="rounded-xl shadow-lg aspect-square object-cover mt-12" />
+              <LazyLoadImage src="/images/fgip%20legacy/Business%20Center/business1.webp" className="rounded-xl shadow-lg aspect-square object-cover -mt-12" />
+              <LazyLoadImage src="/images/fgip%20legacy/3%20bedroom/3-bed1.webp" className="rounded-xl shadow-lg aspect-square object-cover" />
             </div>
             <div className="order-1 lg:order-2 fade-up">
-              <SectionHeader 
-                subtitle="DIVERSIFIED OFFERING" 
-                title={<>Modern Living <Highlight>Integrated</Highlight></>} 
+              <SectionHeader
+                subtitle="DIVERSIFIED OFFERING"
+                title={<>Modern Living <Highlight>Integrated</Highlight></>}
               />
               <p className="text-gray-800 text-lg leading-relaxed mb-6">
                 The development features a diversified residential offering, including luxury villas, executive residences, family-focused housing, and community-centered amenities.
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Designed to contribute meaningfully to the future of organized urban development, FGIP Legacy is more than a housing project — it is a scalable residential platform.
+                Designed to contribute meaningfully to the future of organized urban development, FGIP Legacy is more than a housing project - it is a scalable residential platform.
               </p>
               <ul className="space-y-4">
                 {[
@@ -174,20 +174,20 @@ export default function Invest() {
         <div className="max-w-5xl mx-auto bg-brand-primary/90 backdrop-blur-2xl rounded-[3rem] p-12 lg:p-20 text-center text-white relative overflow-hidden shadow-2xl fade-up">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
-          
+
           <h2 className="text-4xl lg:text-6xl font-heading mb-8 tracking-tight">Join the Future of Urban Development</h2>
           <p className="text-xl text-white/90 font-light mb-12 max-w-2xl mx-auto">
-            Contact our investment team to learn more about participation in the Lagos–Ogun growth corridor.
+            Contact our investment team to learn more about participation in the Lagos-Ogun growth corridor.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link 
-              to="/contact" 
+            <Link
+              to="/contact"
               className="px-10 py-5 bg-white text-brand-primary rounded-full font-bold hover:bg-white/90 transition-colors flex items-center gap-3 shadow-xl"
             >
               Contact Us <ArrowRight className="w-5 h-5" />
             </Link>
-            <a 
-              href="mailto:matthew.kalesanwo@fgipgroup.net" 
+            <a
+              href="mailto:matthew.kalesanwo@fgipgroup.net"
               className="px-10 py-5 border-2 border-white/50 text-white rounded-full font-bold hover:bg-white/10 transition-all flex items-center gap-3"
             >
               Email Us <ArrowRight className="w-5 h-5" />

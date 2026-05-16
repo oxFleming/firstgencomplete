@@ -65,13 +65,13 @@ async function startServer() {
     // Production delivery of built client
     // The bundled server.cjs is located inside the dist folder
     const distPath = __dirname;
-    
+
     // Serve static files from the dist directory with aggressive caching for assets
     app.use(express.static(distPath, {
-      maxAge: '1y',
+      maxAge: "1y",
       setHeaders: (res, filePath) => {
-        if (filePath.match(/\.(jpg|jpeg|png|gif|svg|webp|mp4|webm|woff2|woff)$/)) {
-          res.setHeader('Cache-Control', 'public, maxAge=31536000, immutable');
+        if (filePath.match(/\.(avif|jpg|jpeg|png|gif|svg|webp|mp4|webm|woff2|woff)$/)) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
         }
       }
     }));
@@ -82,6 +82,7 @@ async function startServer() {
       if (req.path.includes(".")) {
          return res.status(404).send("Not Found");
       }
+      res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
       res.sendFile(path.join(distPath, "index.html"), (err) => {
         if (err) {
           console.error("Error sending index.html:", err);

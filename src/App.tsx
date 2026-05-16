@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, lazy, Suspense, useCallback } from 'react';
-import { Menu, ArrowRight, X, MessageCircle } from 'lucide-react';
+import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Preloader from './components/Preloader';
@@ -110,6 +110,111 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const imageFallbacks = ['.jpg', '.png', '.jpeg'];
+    const optimizeImage = (image: HTMLImageElement) => {
+      if (image.dataset.optimizedSrc || !image.src) return;
+
+      const url = new URL(image.src, window.location.href);
+      if (url.origin !== window.location.origin || !url.pathname.startsWith('/images/')) return;
+      if (!/\.(jpg|jpeg|png)$/i.test(url.pathname)) return;
+
+      image.dataset.originalSrc = image.src;
+      image.dataset.optimizedSrc = 'true';
+      image.src = `${url.pathname.replace(/\.(jpg|jpeg|png)$/i, '.webp')}${url.search}`;
+    };
+
+    const optimizeVideo = (video: HTMLVideoElement) => {
+      if (video.dataset.optimizedSrc) return;
+
+      const currentSrc = video.currentSrc || video.src;
+      const fallbackSrc = currentSrc.includes('/videos/Hero-video.mp4') || currentSrc.includes('/videos/hero.mp4')
+        ? '/videos/hero-optimized.mp4'
+        : currentSrc.includes('/videos/about-video.mp4')
+          ? '/videos/about-video-optimized.mp4'
+          : '';
+
+      if (fallbackSrc) {
+        video.dataset.originalSrc = currentSrc;
+        video.dataset.optimizedSrc = 'true';
+        video.src = fallbackSrc;
+        video.load();
+      }
+
+      const poster = video.getAttribute('poster');
+      if (poster && /\.(jpg|jpeg|png)$/i.test(poster)) {
+        video.setAttribute('poster', poster.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+      }
+    };
+
+    const optimizeMedia = (root: ParentNode = document) => {
+      root.querySelectorAll('img').forEach(optimizeImage);
+      root.querySelectorAll('video').forEach(optimizeVideo);
+    };
+
+    const handleMediaError = (event: Event) => {
+      const target = event.target;
+
+      if (target instanceof HTMLImageElement) {
+        const currentSrc = target.currentSrc || target.src;
+        if (!currentSrc.includes('.webp')) return;
+
+        const attempt = Number(target.dataset.fallbackAttempt || '0');
+        if (attempt >= imageFallbacks.length) return;
+
+        target.dataset.fallbackAttempt = String(attempt + 1);
+        const originalSrc = target.dataset.originalSrc;
+        if (attempt === 0 && originalSrc) {
+          target.src = originalSrc;
+          return;
+        }
+
+        target.src = currentSrc.replace(/\.webp(\?.*)?$/i, `${imageFallbacks[attempt]}$1`);
+      }
+
+      if (target instanceof HTMLVideoElement) {
+        const currentSrc = target.currentSrc || target.src;
+        if (target.dataset.fallbackAttempt) return;
+
+        const fallbackSrc = target.dataset.originalSrc || (currentSrc.includes('/videos/hero-optimized.mp4')
+          ? '/videos/Hero-video.mp4'
+          : currentSrc.includes('/videos/about-video-optimized.mp4')
+            ? '/videos/about-video.mp4'
+            : '');
+
+        if (fallbackSrc) {
+          target.dataset.fallbackAttempt = '1';
+          target.src = fallbackSrc;
+          target.load();
+        }
+      }
+    };
+
+    optimizeMedia();
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes') {
+          if (mutation.target instanceof HTMLImageElement) optimizeImage(mutation.target);
+          if (mutation.target instanceof HTMLVideoElement) optimizeVideo(mutation.target);
+          return;
+        }
+
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLImageElement) optimizeImage(node);
+          if (node instanceof HTMLVideoElement) optimizeVideo(node);
+          if (node instanceof HTMLElement) optimizeMedia(node);
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'poster'] });
+    document.addEventListener('error', handleMediaError, true);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('error', handleMediaError, true);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isLoading) {
       // Refresh ScrollTrigger after the transition and initial load are complete
       // to ensure all heights and pin positions are calculated correctly
@@ -133,8 +238,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent font-sans selection:bg-brand-primary selection:text-white relative">
-      
+    <div className="min-h-screen w-full max-w-full overflow-x-clip bg-transparent font-sans selection:bg-brand-primary selection:text-white relative">
+
       <Preloader onComplete={handlePreloaderComplete} />
 
       {/* Global Colorful Mesh Background */}
@@ -145,16 +250,16 @@ function App() {
         <div className="blob blob-4"></div>
       </div>
 
-      <div className={`transition-all duration-1000 ease-out flex flex-col min-h-screen ${isLoading ? 'blur-2xl opacity-0' : 'blur-0 opacity-100'}`}>
+      <div className={`transition-all duration-700 ease-out flex flex-col min-h-screen w-full max-w-full overflow-x-clip ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         {/* Header */}
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-white/70 backdrop-blur-2xl shadow-sm border-b border-white/50' : 'bg-transparent'}`}>
-          <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4 lg:py-5 lg:px-12">
+          <div className="max-w-7xl mx-auto flex justify-between items-center px-5 sm:px-6 py-4 lg:py-5 lg:px-12">
             <Link to="/" onClick={() => handleNavClick('/')} className={`flex flex-col items-start leading-none font-heading select-none cursor-pointer transition-colors duration-300 ${headerSolid ? 'text-brand-dark' : 'text-white'}`}>
               <span className="text-base md:text-lg font-light tracking-[0.15em] uppercase">First</span>
               <span className={`text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-300 ${headerSolid ? 'text-brand-primary' : 'text-white'}`}>Generation</span>
               <span className={`text-[0.5rem] md:text-[0.55rem] font-medium tracking-[0.5em] uppercase mt-1 transition-colors duration-300 ${headerSolid ? 'text-gray-500' : 'text-white/80'}`}>Homes</span>
             </Link>
-            
+
             <div className="hidden lg:flex items-center gap-12 text-sm font-medium tracking-widest uppercase">
               <Link to="/" onClick={() => handleNavClick('/')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Home</Link>
               <Link to="/services" onClick={() => handleNavClick('/services')} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>Services</Link>
@@ -184,15 +289,15 @@ function App() {
 
         {/* Footer */}
         <footer className="w-full bg-white/40 backdrop-blur-3xl border-t border-white/50 text-brand-dark font-sans flex flex-col justify-between min-h-[calc(100vh-86px)] pt-10 lg:pt-8 pb-3 md:pb-5 relative z-10 overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
-          <div className="max-w-[85rem] mx-auto px-6 lg:px-12 w-full flex-1 flex flex-col justify-between h-full">
-            
+          <div className="max-w-[85rem] mx-auto px-5 sm:px-6 lg:px-12 w-full flex-1 flex flex-col justify-between h-full">
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 flex-1 min-h-0">
                {/* Left Column: Sketch & Contact */}
                <div className="lg:col-span-4 flex flex-col justify-between pr-0 lg:pr-8 min-h-0 pb-2 mb-4 lg:mb-0">
-                 
+
                  {/* Sketch Image */}
-                 <div className="w-[calc(100%+3rem)] -mx-6 lg:mx-0 lg:w-full relative opacity-80 mix-blend-multiply contrast-125 flex-1 min-h-[220px] max-h-[260px] lg:max-h-[320px] shrink-0 mb-6 lg:mb-8 -mt-10 lg:mt-3 lg:bg-transparent">
-                   <LazyLoadImage src="/images/mission/footer.jpg" alt="Architectural Sketch" className="absolute inset-0 w-full h-full object-cover lg:object-contain lg:object-left object-center grayscale" wrapperClassName="w-full h-full" />
+                 <div className="w-full relative opacity-80 mix-blend-multiply contrast-125 flex-1 min-h-[220px] max-h-[260px] lg:max-h-[320px] shrink-0 mb-6 lg:mb-8 -mt-6 lg:mt-3 lg:bg-transparent overflow-hidden">
+                   <LazyLoadImage src="/images/mission/our-mission2.webp" alt="Architectural Sketch" className="absolute inset-0 w-full h-full object-cover lg:object-contain lg:object-left object-center grayscale" wrapperClassName="w-full h-full" />
                  </div>
 
                  {/* Regional Contacts */}
@@ -204,7 +309,7 @@ function App() {
 
                {/* Right Column: Links & Locations */}
                <div className="lg:col-span-8 flex flex-col justify-between pl-0 lg:pl-12 xl:pl-16 min-h-0 pb-2">
-                  
+
                   {/* 3 Columns of Links */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-4 lg:mb-4 pt-4 lg:pt-0 shrink-0">
                     <div className="flex flex-col gap-2 lg:gap-1.5 text-[13px] lg:text-[14px] text-gray-600 font-light">
@@ -259,7 +364,7 @@ function App() {
             {/* Bottom Section (Copyright Edge) */}
             <div className="flex flex-col lg:flex-row justify-between items-center text-[12px] text-gray-500 pt-5 lg:pt-3 mt-4 border-t border-gray-300 w-full shrink-0 text-center lg:text-left pb-4 lg:pb-0">
                <div className="flex flex-col lg:flex-row items-center gap-2 md:gap-6">
-                 <p>Copyright © 2026 First Generation Homes, Inc. All rights reserved.</p>
+                 <p>Copyright � 2026 First Generation Homes, Inc. All rights reserved.</p>
                  <a href="#" className="hover:text-brand-dark transition-colors">Privacy Policy</a>
                </div>
                <p className="mt-3 lg:mt-0 font-medium tracking-wide">Powered by FGIP</p>
@@ -269,8 +374,8 @@ function App() {
 
         {/* Full Screen Menu */}
         {isMenuOpen && (
-          <div className="fixed inset-0 bg-white z-[60] flex flex-col">
-            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
+          <div className="fixed inset-0 bg-white z-[60] flex flex-col overflow-x-hidden">
+            <div className="flex justify-between items-center px-5 sm:px-6 py-4 border-b border-gray-200">
               <div className="flex flex-col items-start leading-none font-heading select-none text-brand-dark">
                 <span className="text-lg md:text-xl font-light tracking-[0.15em] uppercase">First</span>
                 <span className="text-xl md:text-2xl font-bold tracking-tight uppercase text-brand-primary">Generation</span>
@@ -280,24 +385,24 @@ function App() {
                 <X className="w-8 h-8" />
               </button>
             </div>
-            <div className="flex-1 flex flex-col justify-center items-center gap-8 text-3xl font-heading font-light">
-              <Link to="/" onClick={() => handleNavClick('/')} className="hover:text-brand-primary transition-colors">Home</Link>
-              <Link to="/services" onClick={() => handleNavClick('/services')} className="hover:text-brand-primary transition-colors">Services</Link>
-              <Link to="/portfolio" onClick={() => handleNavClick('/portfolio')} className="hover:text-brand-primary transition-colors">Portfolio</Link>
-              <Link to="/team" onClick={() => handleNavClick('/team')} className="hover:text-brand-primary transition-colors">Team</Link>
-              <Link to="/invest" onClick={() => handleNavClick('/invest')} className="hover:text-brand-primary transition-colors">Invest in FGIP Legacy Estate</Link>
-              <Link to="/faq" onClick={() => handleNavClick('/faq')} className="hover:text-brand-primary transition-colors">FAQ</Link>
-              <Link to="/contact" onClick={() => handleNavClick('/contact')} className="hover:text-brand-primary transition-colors">Contact</Link>
+            <div className="flex-1 flex flex-col justify-center items-center gap-7 text-3xl font-heading font-light text-center px-6">
+              <Link to="/" onClick={() => handleNavClick('/')} className="hover:text-brand-primary transition-colors max-w-full">Home</Link>
+              <Link to="/services" onClick={() => handleNavClick('/services')} className="hover:text-brand-primary transition-colors max-w-full">Services</Link>
+              <Link to="/portfolio" onClick={() => handleNavClick('/portfolio')} className="hover:text-brand-primary transition-colors max-w-full">Portfolio</Link>
+              <Link to="/team" onClick={() => handleNavClick('/team')} className="hover:text-brand-primary transition-colors max-w-full">Team</Link>
+              <Link to="/invest" onClick={() => handleNavClick('/invest')} className="hover:text-brand-primary transition-colors max-w-full leading-tight">Invest in FGIP Legacy Estate</Link>
+              <Link to="/faq" onClick={() => handleNavClick('/faq')} className="hover:text-brand-primary transition-colors max-w-full">FAQ</Link>
+              <Link to="/contact" onClick={() => handleNavClick('/contact')} className="hover:text-brand-primary transition-colors max-w-full">Contact</Link>
             </div>
           </div>
         )}
 
         {/* Floating WhatsApp Button */}
-        <a 
-          href="https://wa.me/2347037412354" 
-          target="_blank" 
+        <a
+          href="https://wa.me/2347037412354"
+          target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-[200] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center"
+          className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[200] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center"
           aria-label="Contact us on WhatsApp"
         >
           <MessageCircle className="w-7 h-7" />
