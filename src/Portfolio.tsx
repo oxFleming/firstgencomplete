@@ -50,6 +50,20 @@ const projects: Project[] = [
     description: "Luxury family housing with modern architectural finishes and optimized spatial flow."
   },
   {
+    id: "16",
+    title: "FGIP Legacy Estate: 4-Bedroom Duplex",
+    location: "Lagos, Nigeria",
+    category: "International & Investment Projects",
+    image: "/images/fgip%20legacy/4%20bedroom/4-bed1.webp",
+    images: [
+      "/images/fgip%20legacy/4%20bedroom/4-bed1.webp",
+      "/images/fgip%20legacy/4%20bedroom/4-bed2.webp",
+      "/images/fgip%20legacy/4%20bedroom/4-bed3.webp"
+    ],
+    comingSoon: true,
+    description: "Modern family duplex within the FGIP Legacy Estate masterplan, designed for spacious everyday living, premium finishes, and long-term residential value."
+  },
+  {
     id: "10",
     title: "FGIP Legacy Estate: 3-Bedroom Bungalow",
     location: "Lagos, Nigeria",
