@@ -1,143 +1,170 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
-import { Highlight, Button, SectionHeader, AccordionItem } from './components/ui';
+import { ArrowRight, Building2, CheckCircle2, Globe2, Landmark, MapPin } from 'lucide-react';
+import { Highlight, Button } from './components/ui';
 import { useNavigate } from 'react-router-dom';
 import ContactSection from './components/ContactSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const authorityMetrics = [
+  { value: '$549M', label: 'Total development value for FGIP Legacy Luxury Estate' },
+  { value: '1,500', label: 'Planned residential units in the masterplan' },
+  { value: '$285M', label: 'Phase 1 development cost' },
+  { value: '3', label: 'Operating touchpoints across Chicago, Houston, and Lagos' }
+];
+
+const servicePaths = [
+  {
+    title: 'Build a Custom Home',
+    text: 'Residential construction, architectural coordination, structural delivery, interiors, and landscaping integration for clients who want a home built around real life.',
+    action: 'Start a Home Consultation',
+    path: '/contact'
+  },
+  {
+    title: 'Modernize a Property',
+    text: 'Kitchen remodels, bathroom renovations, structural upgrades, interior redesign, and exterior modernization to improve comfort and long-term asset value.',
+    action: 'Discuss a Renovation',
+    path: '/contact'
+  },
+  {
+    title: 'Develop Real Estate',
+    text: 'Development planning, construction coordination, project management, procurement, and consulting for residential or mixed-use opportunities.',
+    action: 'Explore Services',
+    path: '/services'
+  },
+  {
+    title: 'Invest or Partner',
+    text: 'Cross-border development knowledge, U.S. operating credibility, and FGIP ecosystem support for investors, lenders, landowners, and strategic partners.',
+    action: 'Explore Legacy Estate',
+    path: '/invest'
+  }
+];
+
+const structureNodes = [
+  {
+    title: 'First Generation Homes LLC',
+    eyebrow: 'United States',
+    body: 'Chicago-headquartered real estate development and construction company with residential delivery, renovation, procurement, and advisory capability.'
+  },
+  {
+    title: 'FGIP Group',
+    eyebrow: 'Nigeria',
+    body: 'Development ecosystem and operating platform supporting real estate initiatives, partnerships, and local execution capacity.'
+  },
+  {
+    title: 'FGIP Legacy Luxury Estate',
+    eyebrow: 'Ogun State, Lagos Growth Corridor',
+    body: 'A 1,500-unit infrastructure-led residential development planned as a self-sustaining estate ecosystem.'
+  }
+];
+
+const estateMetrics = [
+  'Independent power, water, roads, drainage, and security systems',
+  'Phase 1 establishes core infrastructure and premium residential clusters',
+  'Located in Ogun State within the Lagos growth corridor',
+  'Designed for housing, commercial activity, and community infrastructure'
+];
+
+const projectCards = [
+  {
+    title: 'Six Bedroom Duplex',
+    loc: 'FGIP Legacy Estate - Ogun State',
+    tag: 'Flagship Residential',
+    imgs: [
+      '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
+      '/images/fgip%20legacy/6%20bedroom/6-bed2.webp',
+      '/images/fgip%20legacy/6%20bedroom/6-bed3.webp',
+      '/images/fgip%20legacy/6%20bedroom/6-bed4.webp'
+    ]
+  },
+  {
+    title: 'Five Bedroom Duplex',
+    loc: 'FGIP Legacy Estate - Ogun State',
+    tag: 'Flagship Residential',
+    imgs: [
+      '/images/fgip%20legacy/5%20Bedroom/5-bed1.webp',
+      '/images/fgip%20legacy/5%20Bedroom/5-bed2.webp'
+    ]
+  },
+  {
+    title: 'Three Bedroom Bungalow',
+    loc: 'FGIP Legacy Estate - Ogun State',
+    tag: 'Residential Cluster',
+    imgs: [
+      '/images/fgip%20legacy/3%20bedroom/3-bed1.webp',
+      '/images/fgip%20legacy/3%20bedroom/3-bed2.webp'
+    ]
+  },
+  {
+    title: 'Primary School',
+    loc: 'FGIP Legacy Estate - Ogun State',
+    tag: 'Community Infrastructure',
+    imgs: [
+      '/images/fgip%20legacy/primary%20school/school1.webp',
+      '/images/fgip%20legacy/primary%20school/school2.webp',
+      '/images/fgip%20legacy/primary%20school/school3.webp',
+      '/images/fgip%20legacy/primary%20school/school4.webp'
+    ]
+  }
+];
+
+const leadership = [
+  { name: 'Remy Okunbena', role: 'Managing Director', img: 'remy.webp' },
+  { name: 'Mathew Kalesanwo', role: 'VP, Revenue Growth & Business Development', img: 'matthew.webp' },
+  { name: 'Olufolake Olumogba', role: 'Director of Project Development & Infrastructure', img: 'olufolake.webp' },
+  { name: 'Arc. Sandra Airunugba', role: 'Senior Architect and Supervisory Project Manager', img: 'sandra.webp' }
+];
+
 export default function Home() {
-  const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
-  const [activeReachAccordion, setActiveReachAccordion] = useState<number | null>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-  const numberRef = useRef<HTMLSpanElement>(null);
-  const teamWrapperRef = useRef<HTMLDivElement>(null);
-  const teamContainerRef = useRef<HTMLDivElement>(null);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const aboutVideoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
   const [shouldLoadAboutVideo, setShouldLoadAboutVideo] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+      if (!isDesktop) return;
 
-      // Stats Counter Animation
-      if (statsRef.current && numberRef.current) {
-        gsap.to(numberRef.current, {
-          innerHTML: 99.9,
-          duration: 2,
-          snap: { innerHTML: 0.1 },
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: "top 75%",
-          },
-          onUpdate: function() {
-            if (numberRef.current) {
-              numberRef.current.innerHTML = Number(this.targets()[0].innerHTML).toFixed(1);
-            }
-          }
-        });
-      }
-
-      // Horizontal Scroll Team
-      if (isDesktop && teamWrapperRef.current && teamContainerRef.current) {
-        gsap.to(teamContainerRef.current, {
-          x: () => -(teamContainerRef.current!.scrollWidth - window.innerWidth),
-          ease: "none",
-          scrollTrigger: {
-            trigger: teamWrapperRef.current,
-            pin: true,
-            scrub: 1,
-            invalidateOnRefresh: true,
-            end: () => "+=" + teamContainerRef.current!.scrollWidth
-          }
-        });
-      }
-
-      // Featured Projects Parallax & Active State
-      const projectCards = document.querySelectorAll('.project-card');
-      projectCards.forEach((card) => {
-        const img = card.querySelector('.project-image');
-        if (isDesktop && img) {
-          gsap.to(img, {
-            yPercent: 20,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            }
-          });
-        }
-
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top center",
-          end: "bottom center",
-          toggleClass: "is-active",
-        });
+      document.querySelectorAll('.fade-up').forEach((el) => {
+        gsap.fromTo(el,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } }
+        );
       });
-
-      // Fade up elements
-      const fadeElements = document.querySelectorAll('.fade-up');
-      if (isDesktop) {
-        fadeElements.forEach((el) => {
-          gsap.fromTo(el,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } }
-          );
-        });
-      }
     });
 
-      // Refresh ScrollTrigger after a short delay and after images load
-      const refresh = () => ScrollTrigger.refresh();
-      window.addEventListener('load', refresh);
-      const timeoutId = setTimeout(refresh, 1500);
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener('load', refresh);
+    const timeoutId = setTimeout(refresh, 1500);
 
-      return () => {
-        window.removeEventListener('load', refresh);
-        clearTimeout(timeoutId);
-        ctx.revert();
-      };
-  }, []);
-
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
-    const updateViewport = () => setIsMobileViewport(query.matches);
-
-    updateViewport();
-    query.addEventListener("change", updateViewport);
-    return () => query.removeEventListener("change", updateViewport);
-  }, []);
-
-  useEffect(() => {
-    const allowVideo = () => {
-      const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-      return (
-        window.matchMedia("(min-width: 768px)").matches &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-        !connection?.saveData
-      );
+    return () => {
+      window.removeEventListener('load', refresh);
+      clearTimeout(timeoutId);
+      ctx.revert();
     };
+  }, []);
 
-    if (!allowVideo()) return;
+  useEffect(() => {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    const canUseVideo =
+      window.matchMedia('(min-width: 768px)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+      !connection?.saveData;
 
-    const loadHeroVideo = () => setShouldLoadHeroVideo(true);
-    let timeoutId: number | undefined;
-    let idleId: number | undefined;
+    if (!canUseVideo) return;
 
     const idleWindow = window as Window & {
       requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
       cancelIdleCallback?: (id: number) => void;
     };
+
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    const loadHeroVideo = () => setShouldLoadHeroVideo(true);
 
     if (idleWindow.requestIdleCallback) {
       idleId = idleWindow.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
@@ -146,12 +173,8 @@ export default function Home() {
     }
 
     return () => {
-      if (idleId !== undefined && idleWindow.cancelIdleCallback) {
-        idleWindow.cancelIdleCallback(idleId);
-      }
-      if (timeoutId !== undefined) {
-        window.clearTimeout(timeoutId);
-      }
+      if (idleId !== undefined && idleWindow.cancelIdleCallback) idleWindow.cancelIdleCallback(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
     };
   }, []);
 
@@ -166,13 +189,13 @@ export default function Home() {
 
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const canUseVideo =
-      window.matchMedia("(min-width: 768px)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      window.matchMedia('(min-width: 768px)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
       !connection?.saveData;
 
     if (!canUseVideo) return;
 
-    if (!("IntersectionObserver" in window)) {
+    if (!('IntersectionObserver' in window)) {
       setShouldLoadAboutVideo(true);
       return;
     }
@@ -184,7 +207,7 @@ export default function Home() {
           observer.disconnect();
         }
       },
-      { rootMargin: "300px 0px" }
+      { rootMargin: '300px 0px' }
     );
 
     observer.observe(video);
@@ -197,8 +220,7 @@ export default function Home() {
 
   return (
     <main className="w-full max-w-full overflow-x-clip">
-      {/* Hero Section */}
-      <section className="relative min-h-[100svh] md:min-h-[720px] flex flex-col justify-center px-5 sm:px-6 pt-24 pb-20 overflow-hidden">
+      <section className="relative min-h-[100svh] md:min-h-[760px] flex flex-col justify-center px-5 sm:px-6 pt-28 pb-24 overflow-hidden">
         <img
           src="/images/services/header.webp"
           alt=""
@@ -209,7 +231,7 @@ export default function Home() {
         />
         <video
           ref={heroVideoRef}
-          src={shouldLoadHeroVideo ? "/videos/hero-optimized.mp4" : undefined}
+          src={shouldLoadHeroVideo ? '/videos/hero-optimized.mp4' : undefined}
           autoPlay
           muted
           loop
@@ -218,435 +240,228 @@ export default function Home() {
           poster="/images/services/header.webp"
           className={`absolute inset-0 w-full h-full object-cover object-center z-0 transition-opacity duration-700 ${shouldLoadHeroVideo ? 'opacity-100' : 'opacity-0'}`}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#9D84B7] via-[#ff9a9e] to-[#fecfef] opacity-20 mix-blend-multiply z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 z-0"></div>
+        <div className="absolute inset-0 bg-black/55 z-0" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent z-0" />
 
-        <div className="relative z-10 fade-up max-w-7xl mx-auto w-full drop-shadow-lg">
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium text-white leading-[1] mb-6 font-heading tracking-tight drop-shadow-md">
-            We build<br />around <span className="italic font-light">you</span>
+        <div className="relative z-10 fade-up max-w-7xl mx-auto w-full text-white">
+          <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Chicago-headquartered real estate development and construction</p>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium leading-[0.98] mb-7 font-heading tracking-tight max-w-5xl drop-shadow-md">
+            A U.S. platform for residential construction and cross-border development.
           </h1>
-          <p className="text-xl md:text-2xl text-white mb-10 font-light font-medium drop-shadow-md">Client Focused. Community First.</p>
-          <button onClick={() => handleNavigate('/invest')} className="bg-white/95 backdrop-blur-md text-brand-dark rounded-full px-6 sm:px-8 py-4 font-bold tracking-wide flex items-center gap-3 hover:bg-white transition-colors cursor-pointer w-fit max-w-full text-left shadow-xl">
-            Invest in Legacy Estate <ArrowRight className="w-5 h-5 text-brand-primary" />
-          </button>
-        </div>
-
-        <div className="absolute bottom-6 sm:bottom-8 lg:bottom-12 left-5 right-5 lg:left-12 lg:right-12 flex items-center justify-between gap-2 text-white/90 text-[10px] sm:text-xs tracking-[0.16em] sm:tracking-[0.2em] uppercase font-bold fade-up z-10 drop-shadow-md">
-          <span>People</span>
-          <span className="w-4 h-[1px] bg-white/70 my-auto shadow-sm flex-1 max-w-8"></span>
-          <span>Principles</span>
-          <span className="w-4 h-[1px] bg-white/70 my-auto shadow-sm flex-1 max-w-8"></span>
-          <span>Progress</span>
-        </div>
-      </section>
-
-      {/* Merged Redesign */}
-      <section className="px-5 sm:px-6 py-14 lg:py-20 flex items-center bg-white/40 backdrop-blur-3xl relative overflow-hidden border-b border-white/20">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-
-          {/* Text Side (Left) */}
-          <div className="order-2 lg:order-1 fade-up pr-0 lg:pr-8">
-            <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-medium leading-[1.1] mb-5 text-gray-800 tracking-tight font-heading">
-              Real Estate Development &amp;<br className="hidden lg:block"/> Construction the <span className="bg-brand-primary text-white px-3 py-1 inline-block mt-2 leading-[1.1]">Right Way</span>
-            </h2>
-            <p className="text-base text-gray-800 leading-relaxed mb-6 max-w-lg font-medium drop-shadow-sm">
-              First Generation Homes LLC is a U.S.-based real estate development and construction company headquartered in Chicago, Illinois. Operating as part of the broader FGIP ecosystem, we focus on residential construction, renovation, and development projects while also supporting international real estate initiatives.
-            </p>
-            <button onClick={() => handleNavigate('/team')} className="border border-brand-primary/50 text-gray-800 rounded-full px-6 py-2.5 font-medium flex items-center gap-3 hover:bg-brand-primary hover:text-white transition-colors cursor-pointer w-max text-sm group bg-white/40 backdrop-blur-sm shadow-sm">
-              About Us <ArrowRight className="w-4 h-4 text-gray-800 group-hover:text-white transition-colors" />
+          <p className="text-lg md:text-2xl text-white/90 mb-10 max-w-3xl leading-relaxed drop-shadow-md">
+            First Generation Homes LLC connects custom home delivery, renovation, procurement, and development advisory with the FGIP ecosystem supporting large-scale projects across the United States and Nigeria.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <button onClick={() => handleNavigate('/contact')} className="bg-white text-brand-dark rounded-full px-6 sm:px-8 py-4 font-bold tracking-wide flex items-center justify-center gap-3 hover:bg-white/90 transition-colors cursor-pointer shadow-xl">
+              Book a Project Consultation <ArrowRight className="w-5 h-5 text-brand-primary" />
+            </button>
+            <button onClick={() => handleNavigate('/invest')} className="bg-brand-primary text-white rounded-full px-6 sm:px-8 py-4 font-bold tracking-wide flex items-center justify-center gap-3 hover:bg-brand-dark transition-colors cursor-pointer shadow-xl">
+              Explore FGIP Legacy Estate <ArrowRight className="w-5 h-5" />
             </button>
           </div>
-
-          {/* Video Side (Right) */}
-          <div className="order-1 lg:order-2 relative fade-up mt-6 lg:mt-0">
-             {/* Floating Line attached to Image */}
-             <div className="absolute top-8 lg:top-16 -left-6 lg:-left-12 w-16 lg:w-24 h-[2px] bg-brand-primary z-10 hidden md:block"></div>
-
-             <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-video w-full shadow-lg group select-none overflow-hidden rounded-sm bg-black">
-                <img
-                  src="/images/mission/our-mission1.webp"
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <video
-                  ref={aboutVideoRef}
-                  src={shouldLoadAboutVideo ? "/videos/about-video-optimized.mp4" : undefined}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="none"
-                  poster="/images/mission/our-mission1.webp"
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${shouldLoadAboutVideo ? 'opacity-100' : 'opacity-0'}`}
-                />
-             </div>
-          </div>
-
         </div>
-      </section>
 
-      {/* Our Mission */}
-      <section className="px-5 sm:px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-          <div className="order-2 lg:order-1 relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] max-h-[600px] fade-up">
-            <img
-              src="/images/mission/our-mission1.webp"
-              alt="Team members"
-              className="w-[80%] lg:w-3/4 h-[72%] lg:h-[82%] object-cover absolute left-0 top-0 shadow-lg"
-              loading="lazy"
-              width="600"
-              height="400"
-            />
-            <img
-              src="/images/mission/our-mission2.webp"
-              alt="Team with truck"
-              className="w-[70%] lg:w-2/3 h-[42%] lg:h-[50%] object-cover absolute right-0 bottom-0 shadow-2xl z-10"
-              loading="lazy"
-              width="500"
-              height="300"
-            />
-          </div>
-          <div className="order-1 lg:order-2">
-            <SectionHeader
-              subtitle="OUR MISSION"
-              title={<>We are dedicated to providing exceptional service defined by excellence, integrity, and genuine care, ensuring every interaction leaves a <Highlight>lasting positive impression</Highlight>.</>}
-            />
-            {/* Custom Purple Arrow */}
-            <div className="mt-12 flex justify-center lg:justify-start fade-up">
-              <div className="w-16 h-16 rounded-full border-2 border-brand-primary/50 bg-white/60 backdrop-blur-md flex items-center justify-center cursor-pointer hover:bg-brand-primary group transition-all shadow-sm">
-                <ArrowRight className="w-6 h-6 text-brand-primary group-hover:text-white transition-colors rotate-90" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services (Moved Up) */}
-      <section className="px-5 sm:px-6 py-24 bg-white/40 backdrop-blur-3xl border-y border-white/30 shadow-[0_0_40px_rgba(0,0,0,0.02)] relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-            <div className="sticky top-32">
-              <SectionHeader
-                subtitle="SERVICES"
-                title={<>Full-circle, <Highlight>proven</Highlight> building services at an unmatched <Highlight>value</Highlight>.</>}
-              />
-              <div className="mb-16 fade-up">
-                <Button onClick={() => handleNavigate('/services')}>View Services</Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 border-t border-gray-300 fade-up">
-          <AccordionItem
-            title="Custom Residential Construction"
-            content="We design and construct custom homes tailored to client specifications. Projects typically involve architectural design collaboration, structural construction, interior finishing, and landscaping integration."
-            isOpen={activeAccordion === 0}
-            onClick={() => setActiveAccordion(activeAccordion === 0 ? null : 0)}
-          />
-          <AccordionItem
-            title="Home Renovation & Modernization"
-            content="We undertake full-scale residential renovation projects aimed at upgrading existing homes and increasing property value, including kitchen remodels, bathroom renovations, and structural upgrades."
-            isOpen={activeAccordion === 1}
-            onClick={() => setActiveAccordion(activeAccordion === 1 ? null : 1)}
-          />
-          <AccordionItem
-            title="Building Development"
-            content="Transforming land into residential or mixed-use developments. Activities include development planning, building construction, project management, and development consulting."
-            isOpen={activeAccordion === 2}
-            onClick={() => setActiveAccordion(activeAccordion === 2 ? null : 2)}
-          />
-          <AccordionItem
-            title="Materials & Finishing"
-            content="We support construction projects through sourcing and installation of building finishing materials, including tile products, wood flooring, kitchen fixtures, and interior finishing materials."
-            isOpen={activeAccordion === 3}
-            onClick={() => setActiveAccordion(activeAccordion === 3 ? null : 3)}
-          />
-          </div>
-        </div>
-      </section>
-
-      {/* Trusted By - Infinite Marquee */}
-      <section className="py-16 bg-white/40 backdrop-blur-xl overflow-hidden border-y border-white/40 shadow-sm relative z-10">
-        <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-10 text-center">TRUSTED BY</h3>
-        <div className="flex w-max max-w-none animate-marquee opacity-60 hover:opacity-100 transition-opacity duration-500">
-          {[1, 2].map((set) => (
-            <div key={set} className="flex justify-around items-center gap-12 sm:gap-16 lg:gap-24 px-6 md:px-12 shrink-0">
-              <div className="font-bold text-2xl md:text-3xl font-heading tracking-tighter shrink-0">LUMINA</div>
-              <div className="font-serif italic text-xl md:text-2xl shrink-0">Oak & Stone</div>
-              <div className="font-bold text-xl md:text-2xl tracking-widest shrink-0">VERTEX</div>
-              <div className="font-light text-2xl md:text-3xl font-heading shrink-0">NEXUS</div>
-              <div className="font-bold text-xl md:text-2xl shrink-0">ELEVATE</div>
-              <div className="font-serif text-xl md:text-2xl shrink-0">Crestview</div>
+        <div className="absolute bottom-6 sm:bottom-8 lg:bottom-10 left-5 right-5 lg:left-12 lg:right-12 grid grid-cols-2 md:grid-cols-4 gap-3 text-white z-10">
+          {authorityMetrics.map((metric) => (
+            <div key={metric.value} className="bg-white/12 border border-white/20 backdrop-blur-md px-4 py-3 rounded-xl">
+              <p className="text-2xl md:text-3xl font-heading font-medium leading-none">{metric.value}</p>
+              <p className="text-[10px] md:text-xs text-white/80 leading-snug mt-2">{metric.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Featured Projects */}
-      <section className="pt-20 lg:pt-24 bg-white/30 backdrop-blur-2xl relative z-10 w-full overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 fade-up">
-            <div className="max-w-2xl px-0 lg:px-0">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-brand-primary mb-6 font-heading tracking-tight drop-shadow-sm">Flagship Project</h2>
-              <p className="text-lg text-gray-800 font-medium leading-relaxed drop-shadow-sm">
-                The FGIP Legacy Estate represents our absolute commitment to world-class infrastructure and community building. This master-planned development in Lagos, Nigeria, features diverse residential and commercial components designed for a modern, holistic lifestyle.
-              </p>
-            </div>
-            <div className="shrink-0 px-0 lg:px-0 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-              <Button onClick={() => handleNavigate('/invest')} className="backdrop-blur-md bg-brand-primary hover:bg-brand-dark text-white transition-all shadow-lg border border-brand-primary font-medium tracking-tight">Invest in FGIP Legacy Estate</Button>
-              <Button onClick={() => handleNavigate('/portfolio')} className="backdrop-blur-md bg-white/80 hover:bg-white text-brand-dark transition-all shadow-lg border border-white font-medium tracking-tight">View Portfolio</Button>
-            </div>
+      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-white/50 backdrop-blur-3xl border-b border-white/30 relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-5 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CORPORATE POSITIONING</p>
+            <h2 className="text-4xl md:text-5xl font-light leading-tight font-heading tracking-tight mb-6">
+              More than a builder. A <Highlight>development platform</Highlight> with U.S. credibility and international reach.
+            </h2>
+            <p className="text-gray-700 leading-relaxed mb-8">
+              The strongest idea behind First Generation Homes is not just construction. It is the ability to connect U.S. residential delivery standards, supplier networks, and development knowledge with cross-border real estate opportunities.
+            </p>
+            <Button onClick={() => handleNavigate('/team')}>Meet the Leadership</Button>
           </div>
-        </div>
-
-        <div className="relative">
-          {[
-            {
-              title: 'Six Bedroom Duplex',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Flagship Residential',
-              imgs: [
-                '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
-                '/images/fgip%20legacy/6%20bedroom/6-bed2.webp',
-                '/images/fgip%20legacy/6%20bedroom/6-bed3.webp',
-                '/images/fgip%20legacy/6%20bedroom/6-bed4.webp'
-              ]
-            },
-            {
-              title: 'Five Bedroom Duplex',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Flagship Residential',
-              imgs: [
-                '/images/fgip%20legacy/5%20Bedroom/5-bed1.webp',
-                '/images/fgip%20legacy/5%20Bedroom/5-bed2.webp'
-              ]
-            },
-            {
-              title: 'Three Bedroom Bungalow',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Flagship Residential',
-              imgs: [
-                '/images/fgip%20legacy/3%20bedroom/3-bed1.webp',
-                '/images/fgip%20legacy/3%20bedroom/3-bed2.webp'
-              ]
-            },
-            {
-              title: 'Primary School',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Community Infrastructure',
-              imgs: [
-                '/images/fgip%20legacy/primary%20school/school1.webp',
-                '/images/fgip%20legacy/primary%20school/school2.webp',
-                '/images/fgip%20legacy/primary%20school/school3.webp',
-                '/images/fgip%20legacy/primary%20school/school4.webp'
-              ]
-            },
-            {
-              title: 'Daycare Centre',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Community Infrastructure',
-              imgs: [
-                '/images/fgip%20legacy/daycare/daycare1.webp',
-                '/images/fgip%20legacy/daycare/daycare2.webp'
-              ]
-            },
-            {
-              title: 'Business Centre',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Commercial Development',
-              imgs: [
-                '/images/fgip%20legacy/Business%20Center/business1.webp',
-                '/images/fgip%20legacy/Business%20Center/business2.webp',
-                '/images/fgip%20legacy/Business%20Center/business3.webp'
-              ]
-            },
-            {
-              title: 'Luxury Hotel',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Hospitality',
-              imgs: [
-                '/images/fgip%20legacy/hotel/hotel1.webp',
-                '/images/fgip%20legacy/hotel/hotel2.webp',
-                '/images/fgip%20legacy/hotel/hotel3.webp'
-              ]
-            },
-            {
-              title: 'Social Hall',
-              loc: 'FGIP Legacy Estate - Lagos',
-              tag: 'Civic Spaces',
-              imgs: ['/images/services/materials.webp']
-            }
-          ].map((proj, i) => {
-            const projectImages = isMobileViewport ? proj.imgs.slice(0, 1) : proj.imgs;
-
-            return (
-            <div
-              key={i}
-              className="project-card md:sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-6 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
-              style={{ top: '80px', zIndex: i + 1 }}
-            >
-              <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pb-4 lg:pb-2">
-                <h3 className="text-3xl lg:text-4xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
-                <p className="text-gray-800 mb-4 text-base lg:text-lg font-medium drop-shadow-sm">{proj.loc}</p>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-block border border-white/60 bg-white/40 backdrop-blur-md text-gray-800 font-medium text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">{proj.tag}</span>
-                    <span className="inline-flex items-center gap-2 border border-green-200 bg-green-50/80 backdrop-blur-md text-green-700 font-bold text-[10px] px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                      </span>
-                      Ongoing Project
-                    </span>
-                  </div>
-                  <div
-                    onClick={() => handleNavigate('/portfolio')}
-                    className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm cursor-pointer"
-                  >
-                    <ArrowRight className="w-5 h-5 lg:w-6 lg:h-6" />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full aspect-[4/5] sm:aspect-[16/11] lg:aspect-[16/9] lg:max-h-[680px] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
-                <div className="project-image mobile-no-parallax absolute top-[-12%] left-0 w-full h-[124%]">
-                  {projectImages.length === 1 ? (
-                    <img
-                      src={projectImages[0]}
-                      alt={proj.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : projectImages.length === 2 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-1">
-                      {projectImages.map((img, idx) => (
-                        <img
-                          key={idx}
-                          src={img}
-                          alt={`${proj.title} ${idx+1}`}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      ))}
-                    </div>
-                  ) : projectImages.length === 3 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      {projectImages.map((img, idx) => (
-                        <img
-                          key={idx}
-                          src={img}
-                          alt={`${proj.title} ${idx+1}`}
-                          className={`w-full h-full object-cover ${idx === 0 ? 'lg:col-span-1' : 'lg:col-span-1'}`}
-                          loading="lazy"
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-1">
-                      {projectImages.slice(0, 4).map((img, idx) => (
-                        <img
-                          key={idx}
-                          src={img}
-                          alt={`${proj.title} ${idx+1}`}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )})}
-        </div>
-      </section>
-
-      {/* Our Reach (Moved Down) */}
-      <section className="px-5 sm:px-6 py-24 bg-white/40 backdrop-blur-md border-t border-white/40 mt-12 relative z-10 w-full drop-shadow-sm">
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-10">OUR REACH</h3>
-          <div className="border-t border-gray-300 fade-up">
-            <AccordionItem
-              title="USA"
-              content="Headquartered in Chicago, Illinois, we deliver premium residential construction, renovation, and development projects across the United States, adhering to the highest standards of quality and modern lifestyle demands."
-              isOpen={activeReachAccordion === 0}
-              onClick={() => setActiveReachAccordion(activeReachAccordion === 0 ? null : 0)}
-            />
-            <AccordionItem
-              title="Europe"
-              content="Our European operations focus on strategic real estate initiatives, bringing our expertise in design, construction management, and premium finishing products to select international markets."
-              isOpen={activeReachAccordion === 1}
-              onClick={() => setActiveReachAccordion(activeReachAccordion === 1 ? null : 1)}
-            />
-            <AccordionItem
-              title="Africa"
-              content="We support international real estate development across Africa, leveraging the broader FGIP ecosystem to provide strategic expertise in residential development planning and infrastructure."
-              isOpen={activeReachAccordion === 2}
-              onClick={() => setActiveReachAccordion(activeReachAccordion === 2 ? null : 2)}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Large Image */}
-      <section className="w-full h-[60vh] relative z-10 drop-shadow-xl overflow-hidden">
-        <img src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" loading="lazy" />
-      </section>
-
-      {/* Building for the best */}
-      <section className="px-5 sm:px-6 py-24 lg:py-32 text-center max-w-7xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 fade-up font-heading tracking-tight drop-shadow-md">
-          Building for the <Highlight>best</Highlight>
-        </h2>
-        <p className="text-lg text-gray-600 max-w-md lg:max-w-2xl mx-auto fade-up backdrop-blur-sm bg-white/30 p-4 rounded-xl shadow-sm border border-white/20">
-          Our passion is building homes, improving communities, and growing relationships.
-        </p>
-      </section>
-
-      {/* Stats */}
-      <section ref={statsRef} className="relative h-[60vh] flex items-center justify-center overflow-hidden z-10">
-        <img src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" loading="lazy" />
-        <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-0"></div>
-        <div className="relative z-10 text-center px-5 sm:px-8 md:px-16 py-12 w-full">
-          <div className="text-7xl sm:text-8xl md:text-[12rem] font-light text-brand-primary tracking-tighter leading-none font-heading drop-shadow-md">
-            <span ref={numberRef}>0</span>%
-          </div>
-          <p className="text-xl md:text-2xl font-medium mt-4 text-brand-dark tracking-wide drop-shadow-sm">Customer Satisfaction</p>
-        </div>
-      </section>
-
-      {/* Testimonial */}
-      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-white/40 backdrop-blur-3xl text-center flex items-center justify-center relative z-10 border-y border-white/50">
-        <div className="max-w-4xl mx-auto px-4 lg:px-0">
-          <p className="text-2xl md:text-3xl lg:text-4xl font-light text-brand-primary leading-snug mb-8 fade-up font-heading tracking-tight mx-auto drop-shadow-sm">
-            "We truly appreciate your commitment on this project. I wanted to acknowledge the satisfaction on our remodel. I must give a 100% satisfied mark as you not only finished the job early and under budget, but with great sub-contractors and excellent workmanship. The job was done very efficiently and timely."
-          </p>
-          <div className="fade-up">
-            <p className="font-medium text-lg lg:text-xl text-gray-900 tracking-wide drop-shadow-sm">Raja Bilal</p>
-            <p className="text-brand-primary text-sm lg:text-base font-semibold tracking-wider font-heading mt-1 drop-shadow-sm">CEO Focus with Raja</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Team - Horizontal Scroll */}
-      <section ref={teamWrapperRef} className="bg-transparent pt-24 pb-24 lg:pt-32 lg:pb-32 overflow-hidden w-full relative z-10">
-        <div className="w-full">
-          <div className="px-5 sm:px-6 mb-8 lg:mb-10 fade-up max-w-7xl mx-auto w-full">
-            <h3 className="text-brand-primary text-[10px] font-bold tracking-widest uppercase mb-2">LEADERSHIP</h3>
-            <h2 className="text-3xl lg:text-4xl font-light leading-tight text-brand-dark">Meet the <Highlight>Executives</Highlight></h2>
-          </div>
-          <div ref={teamContainerRef} className="mobile-stack flex gap-4 lg:gap-5 px-5 sm:px-6 lg:px-0 max-w-7xl mx-auto w-full md:w-max lg:w-full">
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4 fade-up">
             {[
-              { name: "Remy Okunbena", role: "Managing Director", img: "remy.webp" },
-              { name: "Mathew Kalesanwo", role: "VP, Revenue Growth & Business Development", img: "matthew.webp" },
-              { name: "Olufolake Olumogba", role: "Director of Project Development & Infrastructure", img: "olufolake.webp" },
-              { name: "Arc. Sandra Airunugba", role: "Senior Architect and Supervisory Project Manager", img: "sandra.webp" }
-            ].map((exec, i) => (
-              <div key={i} className="w-full sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] relative group shrink-0 rounded-xl overflow-hidden shadow-lg border border-brand-primary/10">
+              { icon: Landmark, title: 'U.S. Headquarters', body: '444 W Lake Street, Suite 1700, Chicago, Illinois 60606.' },
+              { icon: MapPin, title: 'Operating Presence', body: 'Chicago, Houston, and Lagos touchpoints for real estate activity and partnerships.' },
+              { icon: Globe2, title: 'Cross-Border Support', body: 'Development planning, procurement, finishing support, and strategic advisory across markets.' }
+            ].map((item) => (
+              <div key={item.title} className="bg-white/80 border border-white/60 rounded-2xl p-6 shadow-sm">
+                <item.icon className="w-7 h-7 text-brand-primary mb-5" />
+                <h3 className="text-xl font-heading mb-3">{item.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-white/30 backdrop-blur-xl relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mb-12 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CHOOSE YOUR PATH</p>
+            <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
+              Clear entry points for homeowners, developers, investors, and partners.
+            </h2>
+            <p className="text-gray-700 text-lg leading-relaxed">Every visitor should know where they fit. The site now routes people by intent instead of asking everyone to decode the company from a generic services list.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
+            {servicePaths.map((path) => (
+              <div key={path.title} className="bg-white/80 border border-white/60 rounded-2xl p-6 shadow-sm flex flex-col min-h-[310px]">
+                <h3 className="text-2xl font-heading mb-4">{path.title}</h3>
+                <p className="text-gray-600 leading-relaxed mb-6 flex-1">{path.text}</p>
+                <button onClick={() => handleNavigate(path.path)} className="text-brand-primary font-bold flex items-center gap-2 hover:text-brand-dark transition-colors text-left">
+                  {path.action} <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-brand-dark text-white relative z-10 overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-4 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">FGIP GLOBAL CORPORATE STRUCTURE</p>
+            <h2 className="text-4xl md:text-5xl font-light leading-tight font-heading tracking-tight mb-6">
+              A cross-border real estate development platform.
+            </h2>
+            <p className="text-white/70 leading-relaxed mb-8">
+              First Generation Homes LLC strengthens the FGIP story by adding U.S. operating credibility, construction knowledge, supplier relationships, and development support to the Nigerian estate platform.
+            </p>
+            <Button onClick={() => handleNavigate('/invest')} className="border-white/60 text-white hover:bg-white hover:text-brand-dark">Investor Overview</Button>
+          </div>
+          <div className="lg:col-span-8 space-y-5 fade-up">
+            {structureNodes.map((node, index) => (
+              <div key={node.title} className="relative bg-white/8 border border-white/15 rounded-2xl p-6 md:p-7">
+                <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+                  <div className="w-12 h-12 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold shrink-0">0{index + 1}</div>
+                  <div>
+                    <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-2">{node.eyebrow}</p>
+                    <h3 className="text-2xl md:text-3xl font-heading mb-3">{node.title}</h3>
+                    <p className="text-white/70 leading-relaxed">{node.body}</p>
+                  </div>
+                </div>
+                {index < structureNodes.length - 1 && <div className="hidden md:block absolute left-12 -bottom-5 w-px h-5 bg-white/25" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-white/40 backdrop-blur-3xl border-y border-white/40 relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">FLAGSHIP DEVELOPMENT</p>
+            <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
+              FGIP Legacy Luxury Estate is the proof of scale.
+            </h2>
+            <p className="text-gray-700 text-lg leading-relaxed mb-8">
+              A 1,500-unit, infrastructure-led residential development in Ogun State within the Lagos growth corridor, planned as a self-sustaining estate ecosystem with housing, power, water, roads, drainage, and security.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              {estateMetrics.map((item) => (
+                <div key={item} className="flex gap-3 text-sm text-gray-700 bg-white/70 border border-white/60 rounded-xl p-4">
+                  <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button onClick={() => handleNavigate('/invest')} className="bg-brand-primary text-white border-brand-primary hover:bg-brand-dark">Explore the Investment</Button>
+              <Button onClick={() => handleNavigate('/portfolio')} className="bg-white/80 border-white text-brand-dark hover:bg-white">View Portfolio</Button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 fade-up">
+            <div className="grid grid-cols-2 gap-3">
+              {projectCards.map((project, index) => (
+                <div key={project.title} className={`${index === 0 ? 'col-span-2' : ''} bg-white rounded-2xl overflow-hidden shadow-md border border-white/60`}>
+                  <div className="aspect-[16/9] overflow-hidden bg-gray-100">
+                    <img src={project.imgs[0]} alt={project.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy" />
+                  </div>
+                  <div className="p-4">
+                    <p className="text-brand-primary text-[10px] font-bold tracking-widest uppercase mb-2">{project.tag}</p>
+                    <h3 className="font-heading text-xl mb-1">{project.title}</h3>
+                    <p className="text-sm text-gray-600">{project.loc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-white/30 backdrop-blur-md relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 order-2 lg:order-1 fade-up">
+            <div className="relative aspect-[4/3] w-full shadow-lg overflow-hidden rounded-sm bg-black">
+              <img
+                src="/images/mission/our-mission1.webp"
+                alt="First Generation Homes project team"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <video
+                ref={aboutVideoRef}
+                src={shouldLoadAboutVideo ? '/videos/about-video-optimized.mp4' : undefined}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="none"
+                poster="/images/mission/our-mission1.webp"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${shouldLoadAboutVideo ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-7 order-1 lg:order-2 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">STRATEGIC IMPORTANCE</p>
+            <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
+              The U.S. company gives the FGIP platform institutional credibility.
+            </h2>
+            <p className="text-gray-700 text-lg leading-relaxed mb-8">
+              For investors and lenders, First Generation Homes LLC demonstrates that the sponsor is connected to established real estate markets, practical construction knowledge, supplier networks, and cross-border development experience.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {['Construction expertise', 'Supplier networks', 'Development knowledge transfer', 'Residential delivery capability'].map((item) => (
+                <div key={item} className="flex items-center gap-3 bg-white/70 border border-white/60 rounded-xl p-4 text-gray-700 font-medium">
+                  <Building2 className="w-5 h-5 text-brand-primary shrink-0" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-white/40 backdrop-blur-3xl text-center flex items-center justify-center relative z-10 border-y border-white/50">
+        <div className="max-w-4xl mx-auto px-4 lg:px-0 fade-up">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-light text-brand-primary leading-snug mb-8 font-heading tracking-tight mx-auto drop-shadow-sm">
+            "We truly appreciate your commitment on this project. I wanted to acknowledge the satisfaction on our remodel. I must give a 100% satisfied mark as you not only finished the job early and under budget, but with great sub-contractors and excellent workmanship."
+          </p>
+          <p className="font-medium text-lg lg:text-xl text-gray-900 tracking-wide drop-shadow-sm">Raja Bilal</p>
+          <p className="text-brand-primary text-sm lg:text-base font-semibold tracking-wider font-heading mt-1 drop-shadow-sm">CEO Focus with Raja</p>
+        </div>
+      </section>
+
+      <section className="bg-transparent pt-20 pb-24 lg:pt-28 lg:pb-32 overflow-hidden w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
+          <div className="mb-10 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-3">LEADERSHIP</p>
+            <h2 className="text-4xl md:text-5xl font-light leading-tight text-brand-dark font-heading">Leadership behind the <Highlight>platform</Highlight></h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 fade-up">
+            {leadership.map((exec) => (
+              <div key={exec.name} className="aspect-[4/5] relative group rounded-xl overflow-hidden shadow-lg border border-brand-primary/10 bg-gray-100">
                 <img
                   src={`/images/team-images/${exec.img}`}
+                  alt={exec.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0"
                   loading="lazy"
                   width="300"
@@ -658,10 +473,9 @@ export default function Home() {
                 </div>
               </div>
             ))}
-            {/* View All Button Card */}
-            <div className="w-full sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] flex items-center justify-center shrink-0 bg-brand-gray rounded-xl p-6 shadow-md">
+            <div className="aspect-[4/5] flex items-center justify-center bg-brand-gray rounded-xl p-6 shadow-md">
               <div className="text-center">
-                <h3 className="text-lg font-heading mb-4 text-brand-dark">The Minds Behind the Vision</h3>
+                <h3 className="text-lg font-heading mb-4 text-brand-dark">The team behind delivery, development, and partnerships.</h3>
                 <Button onClick={() => handleNavigate('/team')}>View Full Team</Button>
               </div>
             </div>
