@@ -220,7 +220,7 @@ export default function Home() {
 
   return (
     <main className="w-full max-w-full overflow-x-clip">
-      <section className="relative min-h-[100svh] md:min-h-[760px] flex flex-col justify-center px-5 sm:px-6 pt-28 pb-24 overflow-hidden">
+      <section className="relative min-h-[100svh] md:min-h-[760px] flex flex-col justify-center px-5 sm:px-6 pt-28 pb-56 md:pb-48 lg:pb-52 overflow-hidden">
         <img
           src="/images/services/header.webp"
           alt=""
@@ -244,14 +244,14 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent z-0" />
 
         <div className="relative z-10 fade-up max-w-7xl mx-auto w-full text-white">
-          <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Chicago-headquartered real estate development and construction</p>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium leading-[0.98] mb-7 font-heading tracking-tight max-w-5xl drop-shadow-md">
-            A U.S. platform for residential construction and cross-border development.
+          <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Client focused. Community first.</p>
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium leading-[0.95] mb-7 font-heading tracking-tight max-w-4xl drop-shadow-md">
+            We build around you.
           </h1>
-          <p className="text-lg md:text-2xl text-white/90 mb-10 max-w-3xl leading-relaxed drop-shadow-md">
-            First Generation Homes LLC connects custom home delivery, renovation, procurement, and development advisory with the FGIP ecosystem supporting large-scale projects across the United States and Nigeria.
+          <p className="text-lg md:text-2xl text-white/90 mb-8 max-w-2xl leading-relaxed drop-shadow-md">
+            From custom homes and renovations to estate-scale development, First Generation Homes helps turn vision into lasting value.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto max-w-3xl">
             <button onClick={() => handleNavigate('/contact')} className="bg-white text-brand-dark rounded-full px-6 sm:px-8 py-4 font-bold tracking-wide flex items-center justify-center gap-3 hover:bg-white/90 transition-colors cursor-pointer shadow-xl">
               Book a Project Consultation <ArrowRight className="w-5 h-5 text-brand-primary" />
             </button>
