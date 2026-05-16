@@ -42,8 +42,8 @@ const teamMembers = [
     img: "/images/team-images/sandra.webp",
     bio: [
       "Sandra Airunugba is a distinguished Nigerian Architect and Interior Designer with over a decade of experience in shaping functional and aesthetic environments. As the CEO and Chief Architect of Flaux Architectures, she leverages her dual expertise to lead high-end real estate developments and innovative design projects across the country.",
-      "Sandra holds a Master's degree in Architecture from Caleb University and a Master's in Interior Design from the University of Ibadan, a combination that allows her to seamlessly bridge the gap between structural integrity and internal spatial harmony. Her professional standing is backed by her membership in the Nigerian Institute of Architects (NIA).",
-      "Currently serving as a Senior Architect and Project Manager for FGIP, Sandra's career is marked by a proven track record in large-scale project execution. Prior to her entrepreneurial success with Flaux Architectures, she honed her technical leadership as a Project Architect for MRS Oil and Gas, where she managed complex infrastructure requirements. Her approach combines technical precision with a visionary eye for detail, making her a formidable force in Nigeria's built environment."
+      "Sandra holds a Master's degree in Architecture from Caleb University and a Master's in Interior Design from Obafemi Awolowo University, a combination that allows her to seamlessly bridge the gap between structural integrity and internal spatial harmony. Her professional standing is backed by her membership in the Nigerian Institute of Architects (NIA).",
+      "Currently serving as a Senior Architect and Project Manager for FGIP, Sandra's career is marked by a proven track record in large-scale project execution. Prior to her entrepreneurial success with Flaux Architectures, she honed her technical leadership as a Project Architect for Bestaf Projects, where she managed complex infrastructure requirements. Her approach combines technical precision with a visionary eye for detail, making her a formidable force in Nigeria's built environment."
     ]
   },
   {
