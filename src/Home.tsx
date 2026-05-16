@@ -89,6 +89,16 @@ const projectCards = [
     ]
   },
   {
+    title: 'Four Bedroom Duplex',
+    loc: 'FGIP Legacy Estate - Ogun State',
+    tag: 'Flagship Residential',
+    imgs: [
+      '/images/fgip%20legacy/4%20bedroom/4-bed1.webp',
+      '/images/fgip%20legacy/4%20bedroom/4-bed2.webp',
+      '/images/fgip%20legacy/4%20bedroom/4-bed3.webp'
+    ]
+  },
+  {
     title: 'Three Bedroom Bungalow',
     loc: 'FGIP Legacy Estate - Ogun State',
     tag: 'Residential Cluster',
