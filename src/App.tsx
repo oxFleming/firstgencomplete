@@ -10,6 +10,8 @@ const Team = lazy(() => import('./Team'));
 const FAQ = lazy(() => import('./FAQ'));
 const Invest = lazy(() => import('./Invest'));
 const Contact = lazy(() => import('./Contact'));
+const FgipLegacyEstate = lazy(() => import('./FgipLegacyEstate'));
+const Insights = lazy(() => import('./Insights'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-white/30 backdrop-blur-3xl">
@@ -18,12 +20,18 @@ const PageLoader = () => (
 );
 
 const navLinks = [
-  { label: 'Home', path: '/' },
+  { label: 'About', path: '/' },
   { label: 'Services', path: '/services' },
-  { label: 'Portfolio', path: '/portfolio' },
-  { label: 'Team', path: '/team' },
-  { label: 'Invest', path: '/invest' },
+  { label: 'Projects', path: '/portfolio' },
+  { label: 'FGIP', path: '/fgip-legacy-estate' },
+  { label: 'Leadership', path: '/team' },
   { label: 'Contact', path: '/contact' }
+];
+
+const secondaryLinks = [
+  { label: 'Investment Opportunities', path: '/invest' },
+  { label: 'Insights', path: '/insights' },
+  { label: 'FAQ', path: '/faq' }
 ];
 
 function App() {
@@ -186,7 +194,7 @@ function App() {
               <span className={`text-[0.5rem] md:text-[0.55rem] font-medium tracking-[0.5em] uppercase mt-1 transition-colors duration-300 ${headerSolid ? 'text-gray-500' : 'text-white/80'}`}>Homes</span>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-10 xl:gap-12 text-sm font-medium tracking-widest uppercase">
+            <div className="hidden lg:flex items-center gap-8 xl:gap-10 text-sm font-medium tracking-widest uppercase">
               {navLinks.map((link) => (
                 <Link key={link.path} to={link.path} onClick={() => handleNavClick(link.path)} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>{link.label}</Link>
               ))}
@@ -203,8 +211,13 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/projects" element={<Portfolio />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/leadership" element={<Team />} />
+            <Route path="/fgip-legacy-estate" element={<FgipLegacyEstate />} />
+            <Route path="/fgip" element={<FgipLegacyEstate />} />
             <Route path="/invest" element={<Invest />} />
+            <Route path="/insights" element={<Insights />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<Home />} />
@@ -235,7 +248,9 @@ function App() {
                   {navLinks.map((link) => (
                     <Link key={link.path} to={link.path} onClick={() => handleNavClick(link.path)} className="hover:text-brand-primary transition-colors">{link.label}</Link>
                   ))}
-                  <Link to="/faq" onClick={() => handleNavClick('/faq')} className="hover:text-brand-primary transition-colors">FAQ</Link>
+                  {secondaryLinks.map((link) => (
+                    <Link key={link.path} to={link.path} onClick={() => handleNavClick(link.path)} className="hover:text-brand-primary transition-colors">{link.label}</Link>
+                  ))}
                 </div>
 
                 <div className="flex flex-col gap-2 text-sm text-gray-600">
@@ -289,7 +304,7 @@ function App() {
               </button>
             </div>
             <div className="flex-1 flex flex-col justify-center items-center gap-7 text-3xl font-heading font-light text-center px-6">
-              {[...navLinks, { label: 'FAQ', path: '/faq' }].map((link) => (
+              {[...navLinks, ...secondaryLinks].map((link) => (
                 <Link key={link.path} to={link.path} onClick={() => handleNavClick(link.path)} className="hover:text-brand-primary transition-colors max-w-full leading-tight">{link.label}</Link>
               ))}
             </div>
