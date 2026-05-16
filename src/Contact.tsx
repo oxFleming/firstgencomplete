@@ -10,6 +10,19 @@ const projectTypes = [
   'Planning and consultation'
 ];
 
+const consultationTopics = [
+  'Custom homes',
+  'Luxury renovations',
+  'Development projects',
+  'Investment discussions'
+];
+
+const nextSteps = [
+  'We review your project type, location, timing, and goals.',
+  'We follow up with the most useful next step for your situation.',
+  'If there is a fit, we move toward scope, budget, planning, or proposal work.'
+];
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -77,9 +90,9 @@ export default function Contact() {
         const result = await response.json();
 
         if (response.ok) {
-          setFormStatus('Request received. Our team will follow up shortly.');
+          setFormStatus('Request received. We will review the details and follow up with a practical next step.');
           setFormData({ name: '', email: '', phone: '', projectType: projectTypes[0], message: '' });
-          setTimeout(() => setFormStatus(''), 5000);
+          setTimeout(() => setFormStatus(''), 6000);
         } else {
           setFormStatus(result.error || 'Failed to send message.');
         }
@@ -97,21 +110,28 @@ export default function Contact() {
           <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">REQUEST A CONSULTATION</h3>
           <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight leading-tight">Let's define the right next step.</h1>
           <p className="text-lg text-gray-700 leading-relaxed mb-8 max-w-lg">
-            Whether you are planning a custom home, renovation, development project, or investment conversation, share the basics and we will help you move from idea to a clear plan.
+            Whether you are planning a custom home, renovation, development project, or investment conversation, share the basics and we will help you move from idea to a clearer plan.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-            {[
-              'Custom homes',
-              'Luxury renovations',
-              'Development projects',
-              'Investment discussions'
-            ].map((item) => (
+            {consultationTopics.map((item) => (
               <div key={item} className="flex items-start gap-3 text-sm text-gray-700 bg-white/50 border border-white/50 rounded-xl p-4">
                 <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
                 <span className="font-medium">{item}</span>
               </div>
             ))}
+          </div>
+
+          <div className="bg-white/60 border border-white/50 rounded-2xl p-5 mb-10">
+            <h2 className="font-heading text-2xl mb-4">What happens after you submit?</h2>
+            <div className="space-y-3">
+              {nextSteps.map((step, index) => (
+                <div key={step} className="flex gap-3 text-sm text-gray-700 leading-relaxed">
+                  <span className="text-brand-primary font-bold shrink-0">0{index + 1}</span>
+                  <span>{step}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="space-y-7">
@@ -242,8 +262,12 @@ export default function Contact() {
               type="submit"
               className="w-full bg-brand-primary text-white py-4 rounded-xl font-bold hover:bg-brand-dark transition-all shadow-lg flex items-center justify-center gap-3 group"
             >
-              Request Consultation <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Book My Consultation <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
+
+            <p className="text-xs text-gray-500 text-center leading-relaxed">
+              Prefer a direct conversation? Email, call, or message us on WhatsApp using the contact options on this page.
+            </p>
 
             {formStatus && (
               <p className={`text-center font-medium mt-4 ${formStatus.includes('received') ? 'text-green-600' : 'text-brand-primary'}`}>
