@@ -38,7 +38,7 @@ const servicePaths = [
     title: 'Invest or Partner',
     text: 'Cross-border development knowledge, U.S. operating credibility, and FGIP ecosystem support for investors, lenders, landowners, and strategic partners.',
     action: 'Explore Legacy Estate',
-    path: '/invest'
+    path: '/fgip-legacy-estate'
   }
 ];
 
@@ -314,9 +314,9 @@ export default function Home() {
           <div className="max-w-3xl mb-12 fade-up">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CHOOSE YOUR PATH</p>
             <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
-              Clear entry points for homeowners, developers, investors, and partners.
+              Find the right path for your project.
             </h2>
-            <p className="text-gray-700 text-lg leading-relaxed">Every visitor should know where they fit. The site now routes people by intent instead of asking everyone to decode the company from a generic services list.</p>
+            <p className="text-gray-700 text-lg leading-relaxed">Whether you want to build a custom home, modernize a property, develop land, or explore FGIP Legacy Estate opportunities, start with the route that matches your goal.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
