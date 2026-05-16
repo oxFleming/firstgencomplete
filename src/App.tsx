@@ -179,14 +179,14 @@ function App() {
 
       <div className={`transition-all duration-700 ease-out flex flex-col min-h-screen w-full max-w-full overflow-x-clip ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-white/70 backdrop-blur-2xl shadow-sm border-b border-white/50' : 'bg-transparent'}`}>
-          <div className="max-w-7xl mx-auto flex justify-between items-center px-5 sm:px-6 py-4 lg:py-5 lg:px-12">
+          <div className="w-full max-w-[92rem] mx-auto flex justify-between items-center px-5 sm:px-8 lg:px-12 py-4 lg:py-5">
             <Link to="/" onClick={() => handleNavClick('/')} className={`flex flex-col items-start leading-none font-heading select-none cursor-pointer transition-colors duration-300 ${headerSolid ? 'text-brand-dark' : 'text-white'}`}>
               <span className="text-base md:text-lg font-light tracking-[0.15em] uppercase">First</span>
               <span className={`text-lg md:text-xl font-bold tracking-tight uppercase transition-colors duration-300 ${headerSolid ? 'text-brand-primary' : 'text-white'}`}>Generation</span>
               <span className={`text-[0.5rem] md:text-[0.55rem] font-medium tracking-[0.5em] uppercase mt-1 transition-colors duration-300 ${headerSolid ? 'text-gray-500' : 'text-white/80'}`}>Homes</span>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-12 text-sm font-medium tracking-widest uppercase">
+            <div className="hidden lg:flex items-center gap-10 xl:gap-12 text-sm font-medium tracking-widest uppercase">
               {navLinks.map((link) => (
                 <Link key={link.path} to={link.path} onClick={() => handleNavClick(link.path)} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>{link.label}</Link>
               ))}
