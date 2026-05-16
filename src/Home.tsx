@@ -220,7 +220,7 @@ export default function Home() {
 
   return (
     <main className="w-full max-w-full overflow-x-clip">
-      <section className="relative min-h-[100svh] md:min-h-[760px] flex flex-col justify-center px-5 sm:px-6 pt-28 pb-56 md:pb-48 lg:pb-52 overflow-hidden">
+      <section className="relative min-h-[100svh] flex flex-col justify-between px-5 sm:px-8 lg:px-12 pt-28 md:pt-32 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
         <img
           src="/images/services/header.webp"
           alt=""
@@ -241,9 +241,9 @@ export default function Home() {
           className={`absolute inset-0 w-full h-full object-cover object-center z-0 transition-opacity duration-700 ${shouldLoadHeroVideo ? 'opacity-100' : 'opacity-0'}`}
         />
         <div className="absolute inset-0 bg-black/55 z-0" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent z-0" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent z-0" />
 
-        <div className="relative z-10 fade-up max-w-7xl mx-auto w-full text-white">
+        <div className="relative z-10 fade-up w-full max-w-[92rem] mx-auto text-white mt-auto pb-8 md:pb-10 lg:pb-12">
           <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Client focused. Community first.</p>
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium leading-[0.95] mb-7 font-heading tracking-tight max-w-4xl drop-shadow-md">
             We build around you.
@@ -261,9 +261,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-6 sm:bottom-8 lg:bottom-10 left-5 right-5 lg:left-12 lg:right-12 grid grid-cols-2 md:grid-cols-4 gap-3 text-white z-10">
+        <div className="relative z-10 w-full max-w-[92rem] mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-white shrink-0">
           {authorityMetrics.map((metric) => (
-            <div key={metric.value} className="bg-white/12 border border-white/20 backdrop-blur-md px-4 py-3 rounded-xl">
+            <div key={metric.value} className="bg-white/12 border border-white/20 backdrop-blur-md px-4 py-3 rounded-xl min-h-[72px]">
               <p className="text-2xl md:text-3xl font-heading font-medium leading-none">{metric.value}</p>
               <p className="text-[10px] md:text-xs text-white/80 leading-snug mt-2">{metric.label}</p>
             </div>
