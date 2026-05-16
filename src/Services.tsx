@@ -74,25 +74,6 @@ const proofPoints = [
   'Consultation-first process before scope or budget decisions'
 ];
 
-const processSteps = [
-  {
-    title: 'Project fit call',
-    detail: 'We clarify what you want to build, renovate, develop, or invest in.'
-  },
-  {
-    title: 'Scope and constraints',
-    detail: 'We discuss location, timeline, budget range, decision makers, and current blockers.'
-  },
-  {
-    title: 'Recommended path',
-    detail: 'You leave with the right service route and the information needed for next steps.'
-  },
-  {
-    title: 'Plan and delivery',
-    detail: 'When there is a fit, we move into design, procurement, construction, or development planning.'
-  }
-];
-
 export default function Services() {
   const navigate = useNavigate();
 
@@ -177,25 +158,6 @@ export default function Services() {
             />
           </div>
         ))}
-      </section>
-
-      <section className="services-fade-up mt-24 bg-white/50 backdrop-blur-xl border border-white/50 rounded-2xl p-6 md:p-10 shadow-sm">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-5">
-            <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">WHAT HAPPENS NEXT</h3>
-            <h2 className="text-3xl md:text-4xl font-light font-heading tracking-tight mb-5">A clearer path from interest to action.</h2>
-            <p className="text-gray-700 leading-relaxed">Visitors convert when the next step feels low-risk and useful. Our consultation is designed to help you understand fit, scope, priorities, and what information is needed before work begins.</p>
-          </div>
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {processSteps.map((step, index) => (
-              <div key={step.title} className="bg-white rounded-xl p-5 border border-gray-100">
-                <span className="text-brand-primary text-xs font-bold tracking-widest">0{index + 1}</span>
-                <p className="mt-3 text-gray-900 font-medium">{step.title}</p>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">{step.detail}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       <section className="pt-24 pb-12 text-center services-fade-up">
