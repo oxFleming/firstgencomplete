@@ -211,13 +211,11 @@ const projects: Project[] = [
 function ProjectCollage({ images, title }: { images: string[], title: string }) {
   if (!images || images.length <= 1) {
     return (
-      <LazyLoadImage 
+      <img 
         src={images?.[0]} 
         alt={title} 
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-        wrapperClassName="w-full h-full"
-        threshold={1200}
-        effect="opacity"
+        loading="lazy"
       />
     );
   }
@@ -225,9 +223,9 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
   // Define different grid layouts based on image count
   if (images.length === 2) {
     return (
-      <div className="grid grid-cols-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
+      <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
         {images.map((img, i) => (
-          <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+          <img key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" loading="lazy" />
         ))}
       </div>
     );
@@ -235,10 +233,10 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
 
   if (images.length === 3) {
     return (
-      <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
-        <LazyLoadImage src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover row-span-2" wrapperClassName="w-full h-full row-span-2" threshold={1200} effect="opacity" />
-        <LazyLoadImage src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
-        <LazyLoadImage src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
+        <img src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover md:row-span-2" loading="lazy" />
+        <img src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" loading="lazy" />
+        <img src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" loading="lazy" />
       </div>
     );
   }
@@ -246,9 +244,9 @@ function ProjectCollage({ images, title }: { images: string[], title: string }) 
   // 4 or more
   const displayImages = images.slice(0, 4);
   return (
-    <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
+    <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
       {displayImages.map((img, i) => (
-        <LazyLoadImage key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+        <img key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" loading="lazy" />
       ))}
     </div>
   );
@@ -317,9 +315,9 @@ export default function Portfolio() {
           From modern coastal retreats to sprawling mountain estates, our portfolio offers a swift yet in-depth look at our team's expertise, the enduring quality of our work, and our commitment to details that reflect the <span className="bg-brand-primary text-white px-1">vision of our clients.</span> Explore our custom home portfolio below.
         </p>
 
-        <div className="mb-8">
+        <div className="mb-8 w-full">
           <h4 className="text-gray-500 mb-4">Filters</h4>
-          <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide">
+          <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide -mx-2 px-2">
             {categories.map(category => (
               <button
                 key={category}
@@ -343,14 +341,18 @@ export default function Portfolio() {
             className="group cursor-pointer block relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
             onClick={() => openProject(featuredProject)}
           >
-            <div className="overflow-hidden relative rounded-2xl mb-4 bg-gray-100 flex aspect-[16/9] md:aspect-auto md:h-[500px]">
+            <div className="overflow-hidden relative rounded-2xl mb-4 bg-gray-100 flex aspect-[3/4] md:aspect-auto md:h-[500px]">
               <ProjectCollage
                 images={featuredProject.images && featuredProject.category === "International & Investment Projects" ? featuredProject.images : [featuredProject.image]} 
                 title={featuredProject.title} 
               />
               {featuredProject.comingSoon && (
-                <div className="absolute top-6 right-6 bg-brand-dark/90 text-white px-4 py-2 font-bold tracking-widest text-sm uppercase rounded-lg z-10 pointer-events-none">
-                  Coming soon in 2026
+                <div className="absolute top-6 right-6 bg-brand-dark/90 text-white px-4 py-2 font-bold tracking-widest text-sm uppercase rounded-lg z-10 pointer-events-none flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  Ongoing Project
                 </div>
               )}
             </div>
@@ -381,7 +383,7 @@ export default function Portfolio() {
             className="portfolio-fade-up group cursor-pointer transition-all duration-500 hover:-translate-y-1"
             onClick={() => openProject(project)}
           >
-            <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[4/3]">
+            <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[3/4] md:aspect-video">
               <ProjectCollage
                 images={project.images && project.category === "International & Investment Projects" ? project.images : [project.image]} 
                 title={project.title} 
@@ -390,8 +392,12 @@ export default function Portfolio() {
                 <ArrowRight className="w-6 h-6" />
               </div>
               {project.comingSoon && (
-                <div className="absolute top-4 right-4 bg-brand-dark/90 text-white px-3 py-1 font-bold tracking-widest text-[10px] uppercase rounded-lg z-20 pointer-events-none">
-                  Coming soon in 2026
+                <div className="absolute top-4 right-4 bg-brand-dark/90 text-white px-3 py-1 font-bold tracking-widest text-[10px] uppercase rounded-lg z-20 pointer-events-none flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  Ongoing Project
                 </div>
               )}
             </div>
@@ -441,19 +447,20 @@ export default function Portfolio() {
                   
                 return (
                   <>
-                  <LazyLoadImage 
+                  <img 
                       src={gallery[currentModalImageIdx]} 
                       alt={`${selectedProject.title} view ${currentModalImageIdx + 1}`} 
                       className="w-full h-full absolute inset-0 object-cover animate-in fade-in duration-500" 
-                      wrapperClassName="w-full h-full absolute inset-0"
                       key={currentModalImageIdx}
-                      threshold={1200}
-                      effect="opacity"
                     />
                     
                     {selectedProject.comingSoon && (
-                      <div className="absolute top-6 left-6 bg-brand-dark/90 backdrop-blur-sm text-white px-4 py-2 font-bold tracking-widest text-xs md:text-sm uppercase shadow-xl rounded-sm z-30 pointer-events-none">
-                        Coming soon in 2026
+                      <div className="absolute top-6 left-6 bg-brand-dark/90 backdrop-blur-sm text-white px-4 py-2 font-bold tracking-widest text-xs md:text-sm uppercase shadow-xl rounded-sm z-30 pointer-events-none flex items-center gap-2">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Ongoing Project
                       </div>
                     )}
                     
@@ -516,8 +523,14 @@ export default function Portfolio() {
               <div className="mt-auto pt-6 flex gap-4 text-sm font-medium border-t border-gray-100 shrink-0">
                 <div className="flex flex-col">
                   <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Status</span>
-                  <span className="text-brand-dark">
-                    {selectedProject.comingSoon ? "Expected 2026" : "Completed"}
+                  <span className="text-brand-dark flex items-center gap-2">
+                    {selectedProject.comingSoon && (
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                      </span>
+                    )}
+                    {selectedProject.comingSoon ? "Ongoing Project" : "Completed"}
                   </span>
                 </div>
               </div>

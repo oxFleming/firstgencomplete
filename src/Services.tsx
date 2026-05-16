@@ -17,16 +17,14 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   }, [images]);
 
   return (
-    <div className="relative w-full aspect-[4/3] lg:aspect-[16/9] rounded-sm sticky top-32 overflow-hidden bg-gray-100 shadow-md">
+    <div className="relative w-full aspect-[3/4] md:aspect-video lg:aspect-[16/9] rounded-sm sticky top-32 overflow-hidden bg-gray-100 shadow-md">
       {images.map((src, i) => (
-        <LazyLoadImage 
+        <img 
           key={i}
           src={src} 
           alt={`Slide ${i + 1}`}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === currentIndex ? 'opacity-100' : 'opacity-0'}`}
-          wrapperClassName="w-full h-full absolute inset-0"
-          threshold={1200}
-          effect="opacity"
+          loading="lazy"
         />
       ))}
     </div>
@@ -82,7 +80,7 @@ export default function Services() {
       {Array.isArray(img) ? (
         <ImageCarousel images={img} />
       ) : (
-        <LazyLoadImage src={img} alt={title} className="w-full aspect-[4/3] lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" wrapperClassName="w-full" threshold={1200} effect="opacity" />
+        <img src={img} alt={title} className="w-full aspect-[3/4] md:aspect-video lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" loading="lazy" />
       )}
     </div>
   );
@@ -106,7 +104,7 @@ export default function Services() {
         <p>We solve problems others can't or won't with creativity. We build <Highlight>lasting relationships</Highlight> with candor. And we specialize in details that reflect the modern lifestyle and market demands, both in the US and internationally.</p>
       </div>
 
-      <LazyLoadImage src="/images/services/header.jpg" alt="Ribbon cutting" className="w-full aspect-[21/9] object-cover rounded-sm mb-12 services-fade-up" wrapperClassName="w-full" />
+      <img src="/images/services/header.jpg" alt="Ribbon cutting" className="w-full aspect-[4/3] md:aspect-[21/9] object-cover rounded-sm mb-12 services-fade-up" loading="lazy" />
 
       <ServiceSection 
         id="custom-homes"
@@ -186,9 +184,9 @@ export default function Services() {
         <h3 className="text-3xl md:text-5xl font-light leading-tight mb-16 font-heading">
           We join the customer's journey, take on their goals, guide them through the design phase and deliver a building that will best <Highlight>accomplish those goals.</Highlight>
         </h3>
-        <div className="relative h-[600px] mt-12 bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 shadow-xl">
-          <LazyLoadImage src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-2/3 h-[450px] object-cover rounded-xl absolute right-8 top-8" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
-          <LazyLoadImage src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-2/3 h-[300px] object-cover rounded-xl absolute left-8 bottom-8 border-8 border-white/40 shadow-2xl backdrop-blur-sm" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+        <div className="relative h-[400px] md:h-[600px] mt-12 bg-white/30 backdrop-blur-md p-4 md:p-8 rounded-3xl border border-white/50 shadow-xl overflow-hidden md:overflow-visible">
+          <img src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-[85%] md:w-2/3 h-[250px] md:h-[450px] object-cover rounded-xl absolute right-4 md:right-8 top-4 md:top-8" loading="lazy" />
+          <img src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-[85%] md:w-2/3 h-[180px] md:h-[300px] object-cover rounded-xl absolute left-4 md:left-8 bottom-4 md:bottom-8 border-4 md:border-8 border-white/40 shadow-2xl backdrop-blur-sm" loading="lazy" />
         </div>
       </div>
 

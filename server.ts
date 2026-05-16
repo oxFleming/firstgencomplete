@@ -66,8 +66,15 @@ async function startServer() {
     // The bundled server.cjs is located inside the dist folder
     const distPath = __dirname;
     
-    // Serve static files from the dist directory
-    app.use(express.static(distPath));
+    // Serve static files from the dist directory with aggressive caching for assets
+    app.use(express.static(distPath, {
+      maxAge: '1y',
+      setHeaders: (res, filePath) => {
+        if (filePath.match(/\.(jpg|jpeg|png|gif|svg|webp|mp4|webm|woff2|woff)$/)) {
+          res.setHeader('Cache-Control', 'public, maxAge=31536000, immutable');
+        }
+      }
+    }));
 
     // Serve index.html for all unknown paths (SPA)
     app.get("*", (req, res) => {

@@ -180,8 +180,22 @@ export default function Home() {
       <section className="px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           <div className="order-2 lg:order-1 relative h-[500px] lg:h-[600px] fade-up">
-            <LazyLoadImage src="/images/mission/our-mission1.jpg" alt="Team members" className="w-[80%] lg:w-3/4 h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg" wrapperClassName="w-full h-full" />
-            <LazyLoadImage src="/images/mission/our-mission2.jpg" alt="Team with truck" className="w-[70%] lg:w-2/3 h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10" wrapperClassName="w-full h-full" />
+            <img 
+              src="/images/mission/our-mission1.jpg" 
+              alt="Team members" 
+              className="w-[80%] lg:w-3/4 h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg" 
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+            <img 
+              src="/images/mission/our-mission2.jpg" 
+              alt="Team with truck" 
+              className="w-[70%] lg:w-2/3 h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10" 
+              loading="lazy"
+              width="500"
+              height="300"
+            />
           </div>
           <div className="order-1 lg:order-2">
             <SectionHeader 
@@ -363,7 +377,16 @@ export default function Home() {
                 <h3 className="text-3xl lg:text-4xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
                 <p className="text-gray-800 mb-4 text-base lg:text-lg font-medium drop-shadow-sm">{proj.loc}</p>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-                  <span className="inline-block border border-white/60 bg-white/40 backdrop-blur-md text-gray-800 font-medium text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">{proj.tag}</span>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="inline-block border border-white/60 bg-white/40 backdrop-blur-md text-gray-800 font-medium text-sm px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">{proj.tag}</span>
+                    <span className="inline-flex items-center gap-2 border border-green-200 bg-green-50/80 backdrop-blur-md text-green-700 font-bold text-[10px] px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                      </span>
+                      Ongoing Project
+                    </span>
+                  </div>
                   <div 
                     onClick={() => handleNavigate('/portfolio')}
                     className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm cursor-pointer"
@@ -372,26 +395,49 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="w-full aspect-[16/9] lg:aspect-auto lg:h-[70vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
+              <div className="w-full aspect-[3/4] md:aspect-video lg:aspect-auto lg:h-[70vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
                 <div className="project-image absolute top-[-25%] left-0 w-full h-[150%]">
                   {proj.imgs.length === 1 ? (
-                    <LazyLoadImage src={proj.imgs[0]} alt={proj.title} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+                    <img 
+                      src={proj.imgs[0]} 
+                      alt={proj.title} 
+                      className="w-full h-full object-cover" 
+                      loading="lazy"
+                    />
                   ) : proj.imgs.length === 2 ? (
-                    <div className="grid grid-cols-2 h-full w-full gap-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.map((img, idx) => (
-                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+                        <img 
+                          key={idx} 
+                          src={img} 
+                          alt={`${proj.title} ${idx+1}`} 
+                          className="w-full h-full object-cover" 
+                          loading="lazy"
+                        />
                       ))}
                     </div>
                   ) : proj.imgs.length === 3 ? (
-                    <div className="grid grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      <LazyLoadImage src={proj.imgs[0]} alt={`${proj.title} 1`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" threshold={1200} effect="opacity" />
-                      <LazyLoadImage src={proj.imgs[1]} alt={`${proj.title} 2`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" threshold={1200} effect="opacity" />
-                      <LazyLoadImage src={proj.imgs[2]} alt={`${proj.title} 3`} className="w-full h-full object-cover lg:col-span-1" wrapperClassName="w-full h-full lg:col-span-1" threshold={1200} effect="opacity" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
+                      {proj.imgs.map((img, idx) => (
+                        <img 
+                          key={idx} 
+                          src={img} 
+                          alt={`${proj.title} ${idx+1}`} 
+                          className={`w-full h-full object-cover ${idx === 0 ? 'lg:col-span-1' : 'lg:col-span-1'}`} 
+                          loading="lazy"
+                        />
+                      ))}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-2 h-full w-full gap-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-1">
                       {proj.imgs.slice(0, 4).map((img, idx) => (
-                        <LazyLoadImage key={idx} src={img} alt={`${proj.title} ${idx+1}`} className="w-full h-full object-cover" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+                        <img 
+                          key={idx} 
+                          src={img} 
+                          alt={`${proj.title} ${idx+1}`} 
+                          className="w-full h-full object-cover" 
+                          loading="lazy"
+                        />
                       ))}
                     </div>
                   )}
@@ -431,7 +477,7 @@ export default function Home() {
 
       {/* Large Image */}
       <section className="w-full h-[60vh] relative z-10 drop-shadow-xl overflow-hidden">
-        <LazyLoadImage src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+        <img src="https://picsum.photos/seed/home-crane/2400/1200" alt="Construction site" className="w-full h-full object-cover mix-blend-multiply opacity-80 backdrop-blur-sm absolute inset-0" loading="lazy" />
       </section>
 
       {/* Building for the best */}
@@ -446,7 +492,7 @@ export default function Home() {
 
       {/* Stats */}
       <section ref={statsRef} className="relative h-[60vh] flex items-center justify-center overflow-hidden z-10">
-        <LazyLoadImage src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" wrapperClassName="w-full h-full absolute inset-0" threshold={1200} effect="opacity" />
+        <img src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" loading="lazy" />
         <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-0"></div>
         <div className="relative z-10 text-center px-16 py-12">
           <div className="text-8xl md:text-[12rem] font-light text-brand-primary tracking-tighter leading-none font-heading drop-shadow-md">
@@ -484,7 +530,13 @@ export default function Home() {
               { name: "Arc. Sandra Airunugba", role: "Senior Architect and Supervisory Project Manager", img: "sandra.jpeg" }
             ].map((exec, i) => (
               <div key={i} className="w-[80vw] sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] relative group shrink-0 rounded-xl overflow-hidden shadow-lg border border-brand-primary/10">
-                <LazyLoadImage src={`/images/team-images/${exec.img}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" wrapperClassName="w-full h-full" threshold={1200} effect="opacity" />
+                <img 
+                  src={`/images/team-images/${exec.img}`} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" 
+                  loading="lazy"
+                  width="300"
+                  height="375"
+                />
                 <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white">
                   <h3 className="text-lg font-heading mb-1">{exec.name}</h3>
                   <p className="text-brand-primary tracking-widest uppercase text-[9px] font-bold leading-tight line-clamp-2">{exec.role}</p>
