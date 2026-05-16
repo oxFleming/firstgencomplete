@@ -10,6 +10,13 @@ const projectTypes = [
   'Planning and consultation'
 ];
 
+const consultationBenefits = [
+  'Clarify the right service path',
+  'Discuss scope, timeline, and budget range',
+  'Identify the information needed before a proposal',
+  'Leave with a practical next step'
+];
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
@@ -87,9 +94,9 @@ export default function ContactSection() {
         const result = await response.json();
 
         if (response.ok) {
-          setFormStatus('Request received. Our team will follow up shortly.');
+          setFormStatus('Request received. We will review the details and follow up with a practical next step.');
           setFormData({ name: '', email: '', phone: '', projectType: projectTypes[0], message: '' });
-          setTimeout(() => setFormStatus(''), 5000);
+          setTimeout(() => setFormStatus(''), 6000);
         } else {
           setFormStatus(result.error || 'Failed to send message.');
         }
@@ -107,24 +114,26 @@ export default function ContactSection() {
           <div className="contact-section-fade-up">
             <span className="text-brand-primary text-xs font-bold tracking-[0.2em] uppercase mb-5 inline-block">FREE PROJECT CONSULTATION</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.08] mb-6 text-gray-900 tracking-tight font-heading">
-              Tell us what you want to build, renovate, or develop.
+              Tell us what you want to build, renovate, develop, or invest in.
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-8 max-w-xl">
-              Share a few details about your project and our team will help you clarify the next step, budget considerations, and the best path from idea to execution.
+              Share the basics and we will help you understand the right next step. The goal of the first conversation is clarity, not pressure.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-              {[
-                'Chicago, Houston, and Lagos reach',
-                'Design-build and renovation expertise',
-                'Development and investment guidance',
-                'Clear next steps after the first call'
-              ].map((item) => (
+              {consultationBenefits.map((item) => (
                 <div key={item} className="flex items-start gap-3 text-sm text-gray-700">
                   <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </div>
               ))}
+            </div>
+
+            <div className="rounded-2xl border border-gray-100 bg-[#F9FAFB] p-5 mb-8">
+              <h3 className="font-heading text-xl mb-3 text-gray-900">What to include</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Location, project type, stage of planning, budget range if known, desired timeline, and the best way to reach you.
+              </p>
             </div>
 
             <div className="space-y-5">
@@ -151,6 +160,11 @@ export default function ContactSection() {
 
           <div className="contact-section-fade-up">
             <form onSubmit={handleFormSubmit} className="space-y-5 bg-[#F9FAFB] border border-gray-100 rounded-2xl p-5 md:p-6">
+              <div>
+                <h3 className="font-heading text-2xl text-gray-900 mb-2">Request a consultation</h3>
+                <p className="text-sm text-gray-600">A short, useful brief helps us prepare a better first response.</p>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <input
                   type="text"
@@ -206,8 +220,12 @@ export default function ContactSection() {
                 type="submit"
                 className="w-full bg-brand-primary text-white py-4 rounded-xl font-bold hover:bg-brand-dark transition-all shadow-lg flex items-center justify-center gap-3 group text-base"
               >
-                Request Consultation <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Book My Consultation <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
+
+              <p className="text-xs text-gray-500 text-center leading-relaxed">
+                Prefer to talk now? Use the phone, email, or WhatsApp options beside this form.
+              </p>
 
               {formStatus && (
                 <p className={`text-center font-medium mt-4 text-sm ${formStatus.includes('received') ? 'text-green-600' : 'text-brand-primary'}`}>
