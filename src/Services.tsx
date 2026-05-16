@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Highlight, Button } from './components/ui';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ContactSection from './components/ContactSection';
 
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -17,11 +16,11 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   }, [images]);
 
   return (
-    <div className="relative w-full aspect-[3/4] md:aspect-video lg:aspect-[16/9] rounded-sm sticky top-32 overflow-hidden bg-gray-100 shadow-md">
+    <div className="relative w-full aspect-[3/4] md:aspect-video lg:aspect-[16/9] rounded-sm lg:sticky top-32 overflow-hidden bg-gray-100 shadow-md">
       {images.map((src, i) => (
-        <img 
+        <img
           key={i}
-          src={src} 
+          src={src}
           alt={`Slide ${i + 1}`}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === currentIndex ? 'opacity-100' : 'opacity-0'}`}
           loading="lazy"
@@ -37,7 +36,7 @@ export default function Services() {
     const ctx = gsap.context(() => {
       const fadeElements = document.querySelectorAll('.services-fade-up');
       fadeElements.forEach((el) => {
-        gsap.fromTo(el, 
+        gsap.fromTo(el,
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } }
         );
@@ -60,7 +59,7 @@ export default function Services() {
         <h2 className="text-4xl font-light mb-6 font-heading">{title}</h2>
         {quote && <p className="text-xl text-gray-600 mb-6 font-light">"{quote}"</p>}
         <p className="text-lg text-gray-700 leading-relaxed mb-8">
-          {text.split(highlight).map((part: string, i: number, arr: any[]) => 
+          {text.split(highlight).map((part: string, i: number, arr: any[]) =>
             i === arr.length - 1 ? part : <React.Fragment key={i}>{part}<Highlight>{highlight}</Highlight></React.Fragment>
           )}
         </p>
@@ -80,19 +79,19 @@ export default function Services() {
       {Array.isArray(img) ? (
         <ImageCarousel images={img} />
       ) : (
-        <img src={img} alt={title} className="w-full aspect-[3/4] md:aspect-video lg:aspect-[16/9] object-cover rounded-sm sticky top-32 shadow-md" loading="lazy" />
+        <img src={img} alt={title} className="w-full aspect-[3/4] md:aspect-video lg:aspect-[16/9] object-cover rounded-sm lg:sticky top-32 shadow-md" loading="lazy" />
       )}
     </div>
   );
 
   return (
-    <div className="pt-32 pb-24 max-w-7xl mx-auto px-6">
+    <main className="pt-32 pb-24 max-w-7xl mx-auto px-5 sm:px-6 w-full max-w-full overflow-x-clip">
       <div className="max-w-4xl">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-6 services-fade-up">SERVICES</h3>
         <h1 className="text-5xl md:text-7xl font-light leading-tight mb-12 font-heading tracking-tight services-fade-up">From blueprint to<br/>ribbon-cutting</h1>
       </div>
-      
-      <div className="sticky top-[73px] bg-white/40 backdrop-blur-2xl z-40 py-4 border-b border-white/30 flex gap-6 overflow-x-auto whitespace-nowrap text-sm font-medium mb-12 services-fade-up px-4 rounded-xl shadow-sm">
+
+      <div className="sticky top-[73px] bg-white/40 backdrop-blur-2xl z-40 py-4 border-b border-white/30 flex gap-6 overflow-x-auto whitespace-nowrap text-sm font-medium mb-12 services-fade-up px-4 rounded-xl shadow-sm max-w-full scrollbar-hide">
         <a href="#custom-homes" className="hover:text-brand-primary transition-colors">Custom Homes</a>
         <a href="#renovation" className="hover:text-brand-primary transition-colors">Renovation</a>
         <a href="#development" className="hover:text-brand-primary transition-colors">Development</a>
@@ -104,9 +103,9 @@ export default function Services() {
         <p>We solve problems others can't or won't with creativity. We build <Highlight>lasting relationships</Highlight> with candor. And we specialize in details that reflect the modern lifestyle and market demands, both in the US and internationally.</p>
       </div>
 
-      <img src="/images/services/header.jpg" alt="Ribbon cutting" className="w-full aspect-[4/3] md:aspect-[21/9] object-cover rounded-sm mb-12 services-fade-up" loading="lazy" />
+      <img src="/images/services/header.webp" alt="Ribbon cutting" className="w-full aspect-[4/3] md:aspect-[21/9] object-cover rounded-sm mb-12 services-fade-up" loading="lazy" />
 
-      <ServiceSection 
+      <ServiceSection
         id="custom-homes"
         title="Custom Residential Construction"
         quote="Delivering high-quality residential spaces designed around both functionality and aesthetic appeal."
@@ -119,10 +118,10 @@ export default function Services() {
           "Interior finishing",
           "Landscaping integration"
         ]}
-        img="/images/project-images/custom-home/custom2.jpg"
+        img="/images/project-images/custom-home/custom2.webp"
       />
 
-      <ServiceSection 
+      <ServiceSection
         id="renovation"
         title="Home Renovation & Property Modernization"
         text="First Generation Homes LLC undertakes full-scale residential renovation projects aimed at upgrading existing homes and increasing property value. These projects improve property performance and increase long-term asset value."
@@ -135,12 +134,12 @@ export default function Services() {
           "Interior redesign and exterior modernization"
         ]}
         img={[
-          "/images/project-images/bathrooms/bathroom3.jpg",
-          "/images/project-images/interior/interior2.jpg"
+          "/images/project-images/bathrooms/bathroom3.webp",
+          "/images/project-images/interior/interior2.webp"
         ]}
       />
 
-      <ServiceSection 
+      <ServiceSection
         id="development"
         title="Building Development & Real Estate Projects"
         text="The company also engages in property development projects that involve transforming land into residential or mixed-use developments. This capability aligns directly with the development strategy used in the FGIP Legacy Estate master plan."
@@ -153,13 +152,13 @@ export default function Services() {
           "Development consulting and procurement"
         ]}
         img={[
-          "/images/services/building1.jpg",
-          "/images/services/building2.jpg",
-          "/images/services/building3.jpg"
+          "/images/services/building1.webp",
+          "/images/services/building2.webp",
+          "/images/services/building3.webp"
         ]}
       />
 
-      <ServiceSection 
+      <ServiceSection
         id="materials"
         title="Construction Materials & Finishing Products"
         text="First Generation Homes LLC also supports construction projects through sourcing and installation of building finishing materials. These supply capabilities can help reduce procurement costs and improve quality control during estate construction."
@@ -171,13 +170,13 @@ export default function Services() {
           "Kitchen fixtures",
           "Bathroom installations and interior finishing materials"
         ]}
-        img="/images/services/materials.jpg"
+        img="/images/services/materials.webp"
       />
 
       {/* Value Engineering */}
       <div className="pt-24 border-t border-gray-200 mt-12 services-fade-up">
         <h4 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-6">VALUE ENGINEERING PHILOSOPHY</h4>
-        <h2 className="text-4xl font-light mb-8 font-heading">Value Engineering ≠ Scope Cutting</h2>
+        <h2 className="text-4xl font-light mb-8 font-heading">Value Engineering != Scope Cutting</h2>
         <p className="text-lg text-gray-700 leading-relaxed mb-12">
           At First Generation Homes, we put the VALUE back in Value Engineering! VE, a buzzword in our industry, is too often used by contractors to justify cutting scope or including inferior products to achieve budget. Our preconstruction process, artfully hones in on the overall worth of each part, piece, and design decision made. We are on a constant mission to make sure that every dollar spent in your construction project has the maximum value squeezed out of it. Our track record of delivering project goals within budget speaks for itself, just ask our clients.
         </p>
@@ -185,8 +184,8 @@ export default function Services() {
           We join the customer's journey, take on their goals, guide them through the design phase and deliver a building that will best <Highlight>accomplish those goals.</Highlight>
         </h3>
         <div className="relative h-[400px] md:h-[600px] mt-12 bg-white/30 backdrop-blur-md p-4 md:p-8 rounded-3xl border border-white/50 shadow-xl overflow-hidden md:overflow-visible">
-          <img src="/images/mission/our-mission1.jpg" alt="Workers with crane" className="w-[85%] md:w-2/3 h-[250px] md:h-[450px] object-cover rounded-xl absolute right-4 md:right-8 top-4 md:top-8" loading="lazy" />
-          <img src="/images/mission/our-mission2.jpg" alt="Team photo" className="w-[85%] md:w-2/3 h-[180px] md:h-[300px] object-cover rounded-xl absolute left-4 md:left-8 bottom-4 md:bottom-8 border-4 md:border-8 border-white/40 shadow-2xl backdrop-blur-sm" loading="lazy" />
+          <img src="/images/mission/our-mission1.webp" alt="Workers with crane" className="w-[85%] md:w-2/3 h-[250px] md:h-[450px] object-cover rounded-xl absolute right-4 md:right-8 top-4 md:top-8" loading="lazy" />
+          <img src="/images/mission/our-mission2.webp" alt="Team photo" className="w-[85%] md:w-2/3 h-[180px] md:h-[300px] object-cover rounded-xl absolute left-4 md:left-8 bottom-4 md:bottom-8 border-4 md:border-8 border-white/40 shadow-2xl backdrop-blur-sm" loading="lazy" />
         </div>
       </div>
 
@@ -200,6 +199,6 @@ export default function Services() {
       </div>
 
       <ContactSection />
-    </div>
+    </main>
   );
 }

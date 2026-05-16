@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Highlight, Button, SectionHeader, AccordionItem } from './components/ui';
 import { useNavigate } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ContactSection from './components/ContactSection';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,10 +15,17 @@ export default function Home() {
   const numberRef = useRef<HTMLSpanElement>(null);
   const teamWrapperRef = useRef<HTMLDivElement>(null);
   const teamContainerRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const aboutVideoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
+  const [shouldLoadAboutVideo, setShouldLoadAboutVideo] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
       // Stats Counter Animation
       if (statsRef.current && numberRef.current) {
         gsap.to(numberRef.current, {
@@ -40,7 +46,7 @@ export default function Home() {
       }
 
       // Horizontal Scroll Team
-      if (teamWrapperRef.current && teamContainerRef.current) {
+      if (isDesktop && teamWrapperRef.current && teamContainerRef.current) {
         gsap.to(teamContainerRef.current, {
           x: () => -(teamContainerRef.current!.scrollWidth - window.innerWidth),
           ease: "none",
@@ -58,7 +64,7 @@ export default function Home() {
       const projectCards = document.querySelectorAll('.project-card');
       projectCards.forEach((card) => {
         const img = card.querySelector('.project-image');
-        if (img) {
+        if (isDesktop && img) {
           gsap.to(img, {
             yPercent: 20,
             ease: "none",
@@ -81,12 +87,14 @@ export default function Home() {
 
       // Fade up elements
       const fadeElements = document.querySelectorAll('.fade-up');
-      fadeElements.forEach((el) => {
-        gsap.fromTo(el, 
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } }
-        );
-      });
+      if (isDesktop) {
+        fadeElements.forEach((el) => {
+          gsap.fromTo(el,
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } }
+          );
+        });
+      }
     });
 
       // Refresh ScrollTrigger after a short delay and after images load
@@ -101,48 +109,141 @@ export default function Home() {
       };
   }, []);
 
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsMobileViewport(query.matches);
+
+    updateViewport();
+    query.addEventListener("change", updateViewport);
+    return () => query.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    const allowVideo = () => {
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+      return (
+        window.matchMedia("(min-width: 768px)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+        !connection?.saveData
+      );
+    };
+
+    if (!allowVideo()) return;
+
+    const loadHeroVideo = () => setShouldLoadHeroVideo(true);
+    let timeoutId: number | undefined;
+    let idleId: number | undefined;
+
+    const idleWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+
+    if (idleWindow.requestIdleCallback) {
+      idleId = idleWindow.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(loadHeroVideo, 1400);
+    }
+
+    return () => {
+      if (idleId !== undefined && idleWindow.cancelIdleCallback) {
+        idleWindow.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoadHeroVideo || !heroVideoRef.current) return;
+    heroVideoRef.current.load();
+  }, [shouldLoadHeroVideo]);
+
+  useEffect(() => {
+    const video = aboutVideoRef.current;
+    if (!video) return;
+
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    const canUseVideo =
+      window.matchMedia("(min-width: 768px)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      !connection?.saveData;
+
+    if (!canUseVideo) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadAboutVideo(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadAboutVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   const handleNavigate = (path: string) => {
     navigate(path);
   };
 
   return (
-    <main>
+    <main className="w-full max-w-full overflow-x-clip">
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex flex-col justify-center px-6 overflow-hidden">
-        <video 
-          src="/videos/hero.mp4" 
-          autoPlay 
-          muted 
-          loop 
+      <section className="relative min-h-[100svh] md:min-h-[720px] flex flex-col justify-center px-5 sm:px-6 pt-24 pb-20 overflow-hidden">
+        <img
+          src="/images/services/header.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          loading="eager"
+          decoding="async"
+        />
+        <video
+          ref={heroVideoRef}
+          src={shouldLoadHeroVideo ? "/videos/hero-optimized.mp4" : undefined}
+          autoPlay
+          muted
+          loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          preload="none"
+          poster="/images/services/header.webp"
+          className={`absolute inset-0 w-full h-full object-cover object-center z-0 transition-opacity duration-700 ${shouldLoadHeroVideo ? 'opacity-100' : 'opacity-0'}`}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[#9D84B7] via-[#ff9a9e] to-[#fecfef] opacity-20 mix-blend-multiply z-0"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 z-0"></div>
-        
+
         <div className="relative z-10 fade-up max-w-7xl mx-auto w-full drop-shadow-lg">
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-medium text-white leading-[1] mb-6 font-heading tracking-tight drop-shadow-md">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium text-white leading-[1] mb-6 font-heading tracking-tight drop-shadow-md">
             We build<br />around <span className="italic font-light">you</span>
           </h1>
           <p className="text-xl md:text-2xl text-white mb-10 font-light font-medium drop-shadow-md">Client Focused. Community First.</p>
-          <button onClick={() => handleNavigate('/invest')} className="bg-white/95 backdrop-blur-md text-brand-dark rounded-full px-8 py-4 font-bold tracking-wide flex items-center gap-3 hover:bg-white transition-colors cursor-pointer w-max shadow-xl">
+          <button onClick={() => handleNavigate('/invest')} className="bg-white/95 backdrop-blur-md text-brand-dark rounded-full px-6 sm:px-8 py-4 font-bold tracking-wide flex items-center gap-3 hover:bg-white transition-colors cursor-pointer w-fit max-w-full text-left shadow-xl">
             Invest in Legacy Estate <ArrowRight className="w-5 h-5 text-brand-primary" />
           </button>
         </div>
 
-        <div className="absolute bottom-8 lg:bottom-12 left-6 right-6 lg:left-12 lg:right-12 flex justify-between text-white/90 text-xs tracking-[0.2em] uppercase font-bold fade-up z-10 drop-shadow-md">
+        <div className="absolute bottom-6 sm:bottom-8 lg:bottom-12 left-5 right-5 lg:left-12 lg:right-12 flex items-center justify-between gap-2 text-white/90 text-[10px] sm:text-xs tracking-[0.16em] sm:tracking-[0.2em] uppercase font-bold fade-up z-10 drop-shadow-md">
           <span>People</span>
-          <span className="w-4 h-[1px] bg-white/70 my-auto shadow-sm"></span>
+          <span className="w-4 h-[1px] bg-white/70 my-auto shadow-sm flex-1 max-w-8"></span>
           <span>Principles</span>
-          <span className="w-4 h-[1px] bg-white/70 my-auto shadow-sm"></span>
+          <span className="w-4 h-[1px] bg-white/70 my-auto shadow-sm flex-1 max-w-8"></span>
           <span>Progress</span>
         </div>
       </section>
 
       {/* Merged Redesign */}
-      <section className="px-6 py-16 lg:py-20 flex items-center bg-white/40 backdrop-blur-3xl relative overflow-hidden border-b border-white/20">
+      <section className="px-5 sm:px-6 py-14 lg:py-20 flex items-center bg-white/40 backdrop-blur-3xl relative overflow-hidden border-b border-white/20">
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-          
+
           {/* Text Side (Left) */}
           <div className="order-2 lg:order-1 fade-up pr-0 lg:pr-8">
             <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-medium leading-[1.1] mb-5 text-gray-800 tracking-tight font-heading">
@@ -160,47 +261,58 @@ export default function Home() {
           <div className="order-1 lg:order-2 relative fade-up mt-6 lg:mt-0">
              {/* Floating Line attached to Image */}
              <div className="absolute top-8 lg:top-16 -left-6 lg:-left-12 w-16 lg:w-24 h-[2px] bg-brand-primary z-10 hidden md:block"></div>
-             
-             <div className="relative aspect-[4/3] lg:aspect-video w-full shadow-lg group select-none overflow-hidden rounded-sm bg-black">
-                <video 
-                  src="/videos/about-video.mp4" 
-                  autoPlay 
-                  loop 
-                  muted 
+
+             <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-video w-full shadow-lg group select-none overflow-hidden rounded-sm bg-black">
+                <img
+                  src="/images/mission/our-mission1.webp"
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <video
+                  ref={aboutVideoRef}
+                  src={shouldLoadAboutVideo ? "/videos/about-video-optimized.mp4" : undefined}
+                  autoPlay
+                  loop
+                  muted
                   playsInline
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                  preload="none"
+                  poster="/images/mission/our-mission1.webp"
+                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${shouldLoadAboutVideo ? 'opacity-100' : 'opacity-0'}`}
                 />
              </div>
           </div>
-          
+
         </div>
       </section>
 
       {/* Our Mission */}
-      <section className="px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
+      <section className="px-5 sm:px-6 py-20 relative overflow-hidden backdrop-blur-xl bg-white/20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-          <div className="order-2 lg:order-1 relative h-[500px] lg:h-[600px] fade-up">
-            <img 
-              src="/images/mission/our-mission1.jpg" 
-              alt="Team members" 
-              className="w-[80%] lg:w-3/4 h-[400px] lg:h-[500px] object-cover absolute left-0 top-0 shadow-lg" 
+          <div className="order-2 lg:order-1 relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] max-h-[600px] fade-up">
+            <img
+              src="/images/mission/our-mission1.webp"
+              alt="Team members"
+              className="w-[80%] lg:w-3/4 h-[72%] lg:h-[82%] object-cover absolute left-0 top-0 shadow-lg"
               loading="lazy"
               width="600"
               height="400"
             />
-            <img 
-              src="/images/mission/our-mission2.jpg" 
-              alt="Team with truck" 
-              className="w-[70%] lg:w-2/3 h-[250px] lg:h-[300px] object-cover absolute right-0 bottom-0 shadow-2xl z-10" 
+            <img
+              src="/images/mission/our-mission2.webp"
+              alt="Team with truck"
+              className="w-[70%] lg:w-2/3 h-[42%] lg:h-[50%] object-cover absolute right-0 bottom-0 shadow-2xl z-10"
               loading="lazy"
               width="500"
               height="300"
             />
           </div>
           <div className="order-1 lg:order-2">
-            <SectionHeader 
-              subtitle="OUR MISSION" 
-              title={<>We are dedicated to providing exceptional service defined by excellence, integrity, and genuine care, ensuring every interaction leaves a <Highlight>lasting positive impression</Highlight>.</>} 
+            <SectionHeader
+              subtitle="OUR MISSION"
+              title={<>We are dedicated to providing exceptional service defined by excellence, integrity, and genuine care, ensuring every interaction leaves a <Highlight>lasting positive impression</Highlight>.</>}
             />
             {/* Custom Purple Arrow */}
             <div className="mt-12 flex justify-center lg:justify-start fade-up">
@@ -213,13 +325,13 @@ export default function Home() {
       </section>
 
       {/* Services (Moved Up) */}
-      <section className="px-6 py-24 bg-white/40 backdrop-blur-3xl border-y border-white/30 shadow-[0_0_40px_rgba(0,0,0,0.02)] relative z-10">
+      <section className="px-5 sm:px-6 py-24 bg-white/40 backdrop-blur-3xl border-y border-white/30 shadow-[0_0_40px_rgba(0,0,0,0.02)] relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <div className="sticky top-32">
-              <SectionHeader 
-                subtitle="SERVICES" 
-                title={<>Full-circle, <Highlight>proven</Highlight> building services at an unmatched <Highlight>value</Highlight>.</>} 
+              <SectionHeader
+                subtitle="SERVICES"
+                title={<>Full-circle, <Highlight>proven</Highlight> building services at an unmatched <Highlight>value</Highlight>.</>}
               />
               <div className="mb-16 fade-up">
                 <Button onClick={() => handleNavigate('/services')}>View Services</Button>
@@ -228,26 +340,26 @@ export default function Home() {
           </div>
 
           <div className="lg:col-span-7 border-t border-gray-300 fade-up">
-          <AccordionItem 
-            title="Custom Residential Construction" 
+          <AccordionItem
+            title="Custom Residential Construction"
             content="We design and construct custom homes tailored to client specifications. Projects typically involve architectural design collaboration, structural construction, interior finishing, and landscaping integration."
             isOpen={activeAccordion === 0}
             onClick={() => setActiveAccordion(activeAccordion === 0 ? null : 0)}
           />
-          <AccordionItem 
-            title="Home Renovation & Modernization" 
+          <AccordionItem
+            title="Home Renovation & Modernization"
             content="We undertake full-scale residential renovation projects aimed at upgrading existing homes and increasing property value, including kitchen remodels, bathroom renovations, and structural upgrades."
             isOpen={activeAccordion === 1}
             onClick={() => setActiveAccordion(activeAccordion === 1 ? null : 1)}
           />
-          <AccordionItem 
-            title="Building Development" 
+          <AccordionItem
+            title="Building Development"
             content="Transforming land into residential or mixed-use developments. Activities include development planning, building construction, project management, and development consulting."
             isOpen={activeAccordion === 2}
             onClick={() => setActiveAccordion(activeAccordion === 2 ? null : 2)}
           />
-          <AccordionItem 
-            title="Materials & Finishing" 
+          <AccordionItem
+            title="Materials & Finishing"
             content="We support construction projects through sourcing and installation of building finishing materials, including tile products, wood flooring, kitchen fixtures, and interior finishing materials."
             isOpen={activeAccordion === 3}
             onClick={() => setActiveAccordion(activeAccordion === 3 ? null : 3)}
@@ -259,7 +371,7 @@ export default function Home() {
       {/* Trusted By - Infinite Marquee */}
       <section className="py-16 bg-white/40 backdrop-blur-xl overflow-hidden border-y border-white/40 shadow-sm relative z-10">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-10 text-center">TRUSTED BY</h3>
-        <div className="flex w-max animate-marquee opacity-60 hover:opacity-100 transition-opacity duration-500">
+        <div className="flex w-max max-w-none animate-marquee opacity-60 hover:opacity-100 transition-opacity duration-500">
           {[1, 2].map((set) => (
             <div key={set} className="flex justify-around items-center gap-12 sm:gap-16 lg:gap-24 px-6 md:px-12 shrink-0">
               <div className="font-bold text-2xl md:text-3xl font-heading tracking-tighter shrink-0">LUMINA</div>
@@ -274,16 +386,16 @@ export default function Home() {
       </section>
 
       {/* Featured Projects */}
-      <section className="pt-24 bg-white/30 backdrop-blur-2xl relative z-10 w-full">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="pt-20 lg:pt-24 bg-white/30 backdrop-blur-2xl relative z-10 w-full overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 fade-up">
-            <div className="max-w-2xl px-4 lg:px-0">
+            <div className="max-w-2xl px-0 lg:px-0">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-brand-primary mb-6 font-heading tracking-tight drop-shadow-sm">Flagship Project</h2>
               <p className="text-lg text-gray-800 font-medium leading-relaxed drop-shadow-sm">
                 The FGIP Legacy Estate represents our absolute commitment to world-class infrastructure and community building. This master-planned development in Lagos, Nigeria, features diverse residential and commercial components designed for a modern, holistic lifestyle.
               </p>
             </div>
-            <div className="shrink-0 px-4 lg:px-0 flex flex-col sm:flex-row gap-4">
+            <div className="shrink-0 px-0 lg:px-0 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
               <Button onClick={() => handleNavigate('/invest')} className="backdrop-blur-md bg-brand-primary hover:bg-brand-dark text-white transition-all shadow-lg border border-brand-primary font-medium tracking-tight">Invest in FGIP Legacy Estate</Button>
               <Button onClick={() => handleNavigate('/portfolio')} className="backdrop-blur-md bg-white/80 hover:bg-white text-brand-dark transition-all shadow-lg border border-white font-medium tracking-tight">View Portfolio</Button>
             </div>
@@ -292,88 +404,91 @@ export default function Home() {
 
         <div className="relative">
           {[
-            { 
-              title: 'Six Bedroom Duplex', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Flagship Residential', 
+            {
+              title: 'Six Bedroom Duplex',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Flagship Residential',
               imgs: [
-                '/images/fgip%20legacy/6%20bedroom/6-bed1.png',
-                '/images/fgip%20legacy/6%20bedroom/6-bed2.png',
-                '/images/fgip%20legacy/6%20bedroom/6-bed3.png',
-                '/images/fgip%20legacy/6%20bedroom/6-bed4.png'
-              ] 
+                '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
+                '/images/fgip%20legacy/6%20bedroom/6-bed2.webp',
+                '/images/fgip%20legacy/6%20bedroom/6-bed3.webp',
+                '/images/fgip%20legacy/6%20bedroom/6-bed4.webp'
+              ]
             },
-            { 
-              title: 'Five Bedroom Duplex', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Flagship Residential', 
+            {
+              title: 'Five Bedroom Duplex',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Flagship Residential',
               imgs: [
-                '/images/fgip%20legacy/5%20Bedroom/5-bed1.png',
-                '/images/fgip%20legacy/5%20Bedroom/5-bed2.png'
-              ] 
+                '/images/fgip%20legacy/5%20Bedroom/5-bed1.webp',
+                '/images/fgip%20legacy/5%20Bedroom/5-bed2.webp'
+              ]
             },
-            { 
-              title: 'Three Bedroom Bungalow', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Flagship Residential', 
+            {
+              title: 'Three Bedroom Bungalow',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Flagship Residential',
               imgs: [
-                '/images/fgip%20legacy/3%20bedroom/3-bed1.png',
-                '/images/fgip%20legacy/3%20bedroom/3-bed2.png'
-              ] 
+                '/images/fgip%20legacy/3%20bedroom/3-bed1.webp',
+                '/images/fgip%20legacy/3%20bedroom/3-bed2.webp'
+              ]
             },
-            { 
-              title: 'Primary School', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Community Infrastructure', 
+            {
+              title: 'Primary School',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Community Infrastructure',
               imgs: [
-                '/images/fgip%20legacy/primary%20school/school1.png',
-                '/images/fgip%20legacy/primary%20school/school2.png',
-                '/images/fgip%20legacy/primary%20school/school3.png',
-                '/images/fgip%20legacy/primary%20school/school4.png'
-              ] 
+                '/images/fgip%20legacy/primary%20school/school1.webp',
+                '/images/fgip%20legacy/primary%20school/school2.webp',
+                '/images/fgip%20legacy/primary%20school/school3.webp',
+                '/images/fgip%20legacy/primary%20school/school4.webp'
+              ]
             },
-            { 
-              title: 'Daycare Centre', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Community Infrastructure', 
+            {
+              title: 'Daycare Centre',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Community Infrastructure',
               imgs: [
-                '/images/fgip%20legacy/daycare/daycare1.png',
-                '/images/fgip%20legacy/daycare/daycare2.png'
-              ] 
+                '/images/fgip%20legacy/daycare/daycare1.webp',
+                '/images/fgip%20legacy/daycare/daycare2.webp'
+              ]
             },
-            { 
-              title: 'Business Centre', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Commercial Development', 
+            {
+              title: 'Business Centre',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Commercial Development',
               imgs: [
-                '/images/fgip%20legacy/Business%20Center/business1.png',
-                '/images/fgip%20legacy/Business%20Center/business2.png',
-                '/images/fgip%20legacy/Business%20Center/business3.png'
-              ] 
+                '/images/fgip%20legacy/Business%20Center/business1.webp',
+                '/images/fgip%20legacy/Business%20Center/business2.webp',
+                '/images/fgip%20legacy/Business%20Center/business3.webp'
+              ]
             },
-            { 
-              title: 'Luxury Hotel', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Hospitality', 
+            {
+              title: 'Luxury Hotel',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Hospitality',
               imgs: [
-                '/images/fgip%20legacy/hotel/hotel1.png',
-                '/images/fgip%20legacy/hotel/hotel2.png',
-                '/images/fgip%20legacy/hotel/hotel3.png'
-              ] 
+                '/images/fgip%20legacy/hotel/hotel1.webp',
+                '/images/fgip%20legacy/hotel/hotel2.webp',
+                '/images/fgip%20legacy/hotel/hotel3.webp'
+              ]
             },
-            { 
-              title: 'Social Hall', 
-              loc: 'FGIP Legacy Estate • Lagos', 
-              tag: 'Civic Spaces', 
-              imgs: ['/images/services/materials.jpg'] 
+            {
+              title: 'Social Hall',
+              loc: 'FGIP Legacy Estate - Lagos',
+              tag: 'Civic Spaces',
+              imgs: ['/images/services/materials.webp']
             }
-          ].map((proj, i) => (
-            <div 
-              key={i} 
-              className="project-card sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-6 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
+          ].map((proj, i) => {
+            const projectImages = isMobileViewport ? proj.imgs.slice(0, 1) : proj.imgs;
+
+            return (
+            <div
+              key={i}
+              className="project-card md:sticky w-full bg-white/95 backdrop-blur-3xl group pt-12 lg:pt-6 shadow-[0_-15px_30px_rgba(0,0,0,0.08)] border-t border-white/50"
               style={{ top: '80px', zIndex: i + 1 }}
             >
-              <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-4 lg:pb-2">
+              <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pb-4 lg:pb-2">
                 <h3 className="text-3xl lg:text-4xl font-medium mb-1 transition-colors duration-300 font-heading group-[.is-active]:text-[#D32F2F] drop-shadow-sm">{proj.title}</h3>
                 <p className="text-gray-800 mb-4 text-base lg:text-lg font-medium drop-shadow-sm">{proj.loc}</p>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
@@ -387,7 +502,7 @@ export default function Home() {
                       Ongoing Project
                     </span>
                   </div>
-                  <div 
+                  <div
                     onClick={() => handleNavigate('/portfolio')}
                     className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-[.is-active]:border-[#D32F2F] group-[.is-active]:text-[#D32F2F] group-[.is-active]:bg-white group-hover:border-[#D32F2F] group-hover:text-[#D32F2F] group-hover:bg-white shrink-0 shadow-sm cursor-pointer"
                   >
@@ -395,47 +510,47 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="w-full aspect-[3/4] md:aspect-video lg:aspect-auto lg:h-[70vh] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
-                <div className="project-image absolute top-[-25%] left-0 w-full h-[150%]">
-                  {proj.imgs.length === 1 ? (
-                    <img 
-                      src={proj.imgs[0]} 
-                      alt={proj.title} 
-                      className="w-full h-full object-cover" 
+              <div className="w-full aspect-[4/5] sm:aspect-[16/11] lg:aspect-[16/9] lg:max-h-[680px] overflow-hidden relative border-t border-gray-100 bg-gray-50 flex">
+                <div className="project-image mobile-no-parallax absolute top-[-12%] left-0 w-full h-[124%]">
+                  {projectImages.length === 1 ? (
+                    <img
+                      src={projectImages[0]}
+                      alt={proj.title}
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                  ) : proj.imgs.length === 2 ? (
+                  ) : projectImages.length === 2 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-1">
-                      {proj.imgs.map((img, idx) => (
-                        <img 
-                          key={idx} 
-                          src={img} 
-                          alt={`${proj.title} ${idx+1}`} 
-                          className="w-full h-full object-cover" 
+                      {projectImages.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`${proj.title} ${idx+1}`}
+                          className="w-full h-full object-cover"
                           loading="lazy"
                         />
                       ))}
                     </div>
-                  ) : proj.imgs.length === 3 ? (
+                  ) : projectImages.length === 3 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full w-full gap-1">
-                      {proj.imgs.map((img, idx) => (
-                        <img 
-                          key={idx} 
-                          src={img} 
-                          alt={`${proj.title} ${idx+1}`} 
-                          className={`w-full h-full object-cover ${idx === 0 ? 'lg:col-span-1' : 'lg:col-span-1'}`} 
+                      {projectImages.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`${proj.title} ${idx+1}`}
+                          className={`w-full h-full object-cover ${idx === 0 ? 'lg:col-span-1' : 'lg:col-span-1'}`}
                           loading="lazy"
                         />
                       ))}
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-1">
-                      {proj.imgs.slice(0, 4).map((img, idx) => (
-                        <img 
-                          key={idx} 
-                          src={img} 
-                          alt={`${proj.title} ${idx+1}`} 
-                          className="w-full h-full object-cover" 
+                      {projectImages.slice(0, 4).map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`${proj.title} ${idx+1}`}
+                          className="w-full h-full object-cover"
                           loading="lazy"
                         />
                       ))}
@@ -444,29 +559,29 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </section>
 
       {/* Our Reach (Moved Down) */}
-      <section className="px-6 py-24 bg-white/40 backdrop-blur-md border-t border-white/40 mt-12 relative z-10 w-full drop-shadow-sm">
+      <section className="px-5 sm:px-6 py-24 bg-white/40 backdrop-blur-md border-t border-white/40 mt-12 relative z-10 w-full drop-shadow-sm">
         <div className="max-w-7xl mx-auto">
           <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-10">OUR REACH</h3>
           <div className="border-t border-gray-300 fade-up">
-            <AccordionItem 
-              title="USA" 
+            <AccordionItem
+              title="USA"
               content="Headquartered in Chicago, Illinois, we deliver premium residential construction, renovation, and development projects across the United States, adhering to the highest standards of quality and modern lifestyle demands."
               isOpen={activeReachAccordion === 0}
               onClick={() => setActiveReachAccordion(activeReachAccordion === 0 ? null : 0)}
             />
-            <AccordionItem 
-              title="Europe" 
+            <AccordionItem
+              title="Europe"
               content="Our European operations focus on strategic real estate initiatives, bringing our expertise in design, construction management, and premium finishing products to select international markets."
               isOpen={activeReachAccordion === 1}
               onClick={() => setActiveReachAccordion(activeReachAccordion === 1 ? null : 1)}
             />
-            <AccordionItem 
-              title="Africa" 
+            <AccordionItem
+              title="Africa"
               content="We support international real estate development across Africa, leveraging the broader FGIP ecosystem to provide strategic expertise in residential development planning and infrastructure."
               isOpen={activeReachAccordion === 2}
               onClick={() => setActiveReachAccordion(activeReachAccordion === 2 ? null : 2)}
@@ -481,7 +596,7 @@ export default function Home() {
       </section>
 
       {/* Building for the best */}
-      <section className="px-6 py-24 lg:py-32 text-center max-w-7xl mx-auto relative z-10">
+      <section className="px-5 sm:px-6 py-24 lg:py-32 text-center max-w-7xl mx-auto relative z-10">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 fade-up font-heading tracking-tight drop-shadow-md">
           Building for the <Highlight>best</Highlight>
         </h2>
@@ -494,8 +609,8 @@ export default function Home() {
       <section ref={statsRef} className="relative h-[60vh] flex items-center justify-center overflow-hidden z-10">
         <img src="https://picsum.photos/seed/home-workers/1200/800" alt="Workers" className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 mix-blend-overlay" loading="lazy" />
         <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-0"></div>
-        <div className="relative z-10 text-center px-16 py-12">
-          <div className="text-8xl md:text-[12rem] font-light text-brand-primary tracking-tighter leading-none font-heading drop-shadow-md">
+        <div className="relative z-10 text-center px-5 sm:px-8 md:px-16 py-12 w-full">
+          <div className="text-7xl sm:text-8xl md:text-[12rem] font-light text-brand-primary tracking-tighter leading-none font-heading drop-shadow-md">
             <span ref={numberRef}>0</span>%
           </div>
           <p className="text-xl md:text-2xl font-medium mt-4 text-brand-dark tracking-wide drop-shadow-sm">Customer Satisfaction</p>
@@ -503,7 +618,7 @@ export default function Home() {
       </section>
 
       {/* Testimonial */}
-      <section className="px-6 py-16 lg:py-24 bg-white/40 backdrop-blur-3xl text-center flex items-center justify-center relative z-10 border-y border-white/50">
+      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-white/40 backdrop-blur-3xl text-center flex items-center justify-center relative z-10 border-y border-white/50">
         <div className="max-w-4xl mx-auto px-4 lg:px-0">
           <p className="text-2xl md:text-3xl lg:text-4xl font-light text-brand-primary leading-snug mb-8 fade-up font-heading tracking-tight mx-auto drop-shadow-sm">
             "We truly appreciate your commitment on this project. I wanted to acknowledge the satisfaction on our remodel. I must give a 100% satisfied mark as you not only finished the job early and under budget, but with great sub-contractors and excellent workmanship. The job was done very efficiently and timely."
@@ -518,21 +633,21 @@ export default function Home() {
       {/* Our Team - Horizontal Scroll */}
       <section ref={teamWrapperRef} className="bg-transparent pt-24 pb-24 lg:pt-32 lg:pb-32 overflow-hidden w-full relative z-10">
         <div className="w-full">
-          <div className="px-6 mb-8 lg:mb-10 fade-up max-w-7xl mx-auto w-full">
+          <div className="px-5 sm:px-6 mb-8 lg:mb-10 fade-up max-w-7xl mx-auto w-full">
             <h3 className="text-brand-primary text-[10px] font-bold tracking-widest uppercase mb-2">LEADERSHIP</h3>
             <h2 className="text-3xl lg:text-4xl font-light leading-tight text-brand-dark">Meet the <Highlight>Executives</Highlight></h2>
           </div>
-          <div ref={teamContainerRef} className="flex gap-4 lg:gap-5 px-6 lg:px-auto max-w-7xl mx-auto w-max lg:w-full">
+          <div ref={teamContainerRef} className="mobile-stack flex gap-4 lg:gap-5 px-5 sm:px-6 lg:px-0 max-w-7xl mx-auto w-full md:w-max lg:w-full">
             {[
-              { name: "Remy Okunbena", role: "Managing Director", img: "remy.png" },
-              { name: "Mathew Kalesanwo", role: "VP, Revenue Growth & Business Development", img: "matthew.png" },
-              { name: "Olufolake Olumogba", role: "Director of Project Development & Infrastructure", img: "olufolake.png" },
-              { name: "Arc. Sandra Airunugba", role: "Senior Architect and Supervisory Project Manager", img: "sandra.jpeg" }
+              { name: "Remy Okunbena", role: "Managing Director", img: "remy.webp" },
+              { name: "Mathew Kalesanwo", role: "VP, Revenue Growth & Business Development", img: "matthew.webp" },
+              { name: "Olufolake Olumogba", role: "Director of Project Development & Infrastructure", img: "olufolake.webp" },
+              { name: "Arc. Sandra Airunugba", role: "Senior Architect and Supervisory Project Manager", img: "sandra.webp" }
             ].map((exec, i) => (
-              <div key={i} className="w-[80vw] sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] relative group shrink-0 rounded-xl overflow-hidden shadow-lg border border-brand-primary/10">
-                <img 
-                  src={`/images/team-images/${exec.img}`} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0" 
+              <div key={i} className="w-full sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] relative group shrink-0 rounded-xl overflow-hidden shadow-lg border border-brand-primary/10">
+                <img
+                  src={`/images/team-images/${exec.img}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 absolute inset-0"
                   loading="lazy"
                   width="300"
                   height="375"
@@ -544,7 +659,7 @@ export default function Home() {
               </div>
             ))}
             {/* View All Button Card */}
-            <div className="w-[80vw] sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] flex items-center justify-center shrink-0 bg-brand-gray rounded-xl p-6 shadow-md">
+            <div className="w-full sm:w-[240px] lg:w-[230px] xl:w-[250px] aspect-[4/5] flex items-center justify-center shrink-0 bg-brand-gray rounded-xl p-6 shadow-md">
               <div className="text-center">
                 <h3 className="text-lg font-heading mb-4 text-brand-dark">The Minds Behind the Vision</h3>
                 <Button onClick={() => handleNavigate('/team')}>View Full Team</Button>
