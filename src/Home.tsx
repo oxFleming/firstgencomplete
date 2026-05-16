@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Building2, CheckCircle2, Globe2, Landmark, MapPin } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Globe2, Landmark, MapPin } from 'lucide-react';
 import { Highlight, Button } from './components/ui';
 import { useNavigate } from 'react-router-dom';
 import ContactSection from './components/ContactSection';
@@ -276,10 +276,10 @@ export default function Home() {
           <div className="lg:col-span-5 fade-up">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CORPORATE POSITIONING</p>
             <h2 className="text-4xl md:text-5xl font-light leading-tight font-heading tracking-tight mb-6">
-              More than a builder. A <Highlight>development platform</Highlight> with U.S. credibility and international reach.
+              More than a builder. A <Highlight>development partner</Highlight> with U.S. credibility.
             </h2>
             <p className="text-gray-700 leading-relaxed mb-8">
-              The strongest idea behind First Generation Homes is not just construction. It is the ability to connect U.S. residential delivery standards, supplier networks, and development knowledge with cross-border real estate opportunities.
+              First Generation Homes combines residential delivery, renovation experience, procurement support, and development advisory under one operating platform.
             </p>
             <Button onClick={() => handleNavigate('/team')}>Meet the Leadership</Button>
           </div>
@@ -389,50 +389,6 @@ export default function Home() {
                     <h3 className="font-heading text-xl mb-1">{project.title}</h3>
                     <p className="text-sm text-gray-600">{project.loc}</p>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-white/30 backdrop-blur-md relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5 order-2 lg:order-1 fade-up">
-            <div className="relative aspect-[4/3] w-full shadow-lg overflow-hidden rounded-sm bg-black">
-              <img
-                src="/images/mission/our-mission1.webp"
-                alt="First Generation Homes project team"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <video
-                ref={aboutVideoRef}
-                src={shouldLoadAboutVideo ? '/videos/about-video-optimized.mp4' : undefined}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="none"
-                poster="/images/mission/our-mission1.webp"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${shouldLoadAboutVideo ? 'opacity-100' : 'opacity-0'}`}
-              />
-            </div>
-          </div>
-          <div className="lg:col-span-7 order-1 lg:order-2 fade-up">
-            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">STRATEGIC IMPORTANCE</p>
-            <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
-              The U.S. company gives the FGIP platform institutional credibility.
-            </h2>
-            <p className="text-gray-700 text-lg leading-relaxed mb-8">
-              For investors and lenders, First Generation Homes LLC demonstrates that the sponsor is connected to established real estate markets, practical construction knowledge, supplier networks, and cross-border development experience.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {['Construction expertise', 'Supplier networks', 'Development knowledge transfer', 'Residential delivery capability'].map((item) => (
-                <div key={item} className="flex items-center gap-3 bg-white/70 border border-white/60 rounded-xl p-4 text-gray-700 font-medium">
-                  <Building2 className="w-5 h-5 text-brand-primary shrink-0" />
-                  {item}
                 </div>
               ))}
             </div>
