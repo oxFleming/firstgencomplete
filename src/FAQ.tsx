@@ -16,11 +16,11 @@ export default function FAQ() {
     },
     {
       question: "Where does First Generation Homes operate?",
-      answer: "We are headquartered in Chicago, Illinois but maintain a strong international reach. We service the United States, Europe, and Africa, running major international investment projects such as the FGIP Legacy Estate in Lagos, Nigeria."
+      answer: "We are headquartered in Chicago, Illinois, with project and partnership conversations connected to Chicago, Houston, Lagos, and the FGIP Legacy Estate in Ogun State. The right first step is to share your project location so we can confirm fit and next steps."
     },
     {
       question: "What is your approach to 'Value Engineering'?",
-      answer: "To us, Value Engineering does NOT mean cutting scope or utilizing inferior products perfectly to meet a budget. Instead, our preconstruction process meticulously evaluates the worth of every design decision and piece of material. Our mission is to squeeze the maximum value out of every dollar spent on your project while retaining top-tier quality and aesthetics."
+      answer: "Value engineering means making smarter decisions before money is spent. We review scope, materials, availability, installation realities, and budget priorities so the project can protect quality without wasting money on choices that do not improve the result."
     },
     {
       question: "Do you handle international real estate and investment environments?",
@@ -28,7 +28,7 @@ export default function FAQ() {
     },
     {
       question: "How do I start a custom residential or remodeling project?",
-      answer: "You can start by reaching out via our Contact form on the homepage, or by messaging us directly on WhatsApp at +234 703 741 2354. Our team will join you on your journey, review your goals, guide you through the initial design phase, and provide a competitive blueprint to accomplish your vision."
+      answer: "Start with the consultation form or WhatsApp. Include the property location, project type, timing, budget range if known, and what decision you need help making first. We will respond with the most practical next step."
     }
   ];
 
