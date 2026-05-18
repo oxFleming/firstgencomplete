@@ -1,570 +1,234 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, ArrowLeft, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, X } from 'lucide-react';
 import ContactSection from './components/ContactSection';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const categories = ["All", "Custom Homes", "Luxury Estates", "Renovations & Custom Interiors", "International & Investment Projects"];
+const filters = ['All', 'Completed Work', 'Renovations & Interiors', 'Custom Homes', 'FGIP Estate Concepts'];
 
 type Project = {
-  id: string;
   title: string;
   location: string;
   category: string;
+  status: string;
   image: string;
   images?: string[];
   description: string;
-  comingSoon?: boolean;
 };
 
 const projects: Project[] = [
   {
-    id: "6",
-    title: "FGIP Legacy Estate: 6-Bedroom Duplex",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/6%20bedroom/6-bed1.webp",
-    images: [
-      "/images/fgip%20legacy/6%20bedroom/6-bed1.webp",
-      "/images/fgip%20legacy/6%20bedroom/6-bed2.webp",
-      "/images/fgip%20legacy/6%20bedroom/6-bed3.webp",
-      "/images/fgip%20legacy/6%20bedroom/6-bed4.webp"
-    ],
-    comingSoon: true,
-    description: "Premium large-scale residential unit within the FGIP masterplan, featuring smart home integration and sustainable design."
+    title: 'Modern Custom Home Construction',
+    location: 'Chicago, IL',
+    category: 'Custom Homes',
+    status: 'Completed / portfolio sample',
+    image: '/images/project-images/custom-home/custom1.webp',
+    images: ['/images/project-images/custom-home/custom1.webp', '/images/project-images/custom-home/custom2.webp', '/images/project-images/custom-home/custom3.webp'],
+    description: 'A custom home build showing modern architectural direction, open living space, exterior finish work, and coordinated residential delivery.'
   },
   {
-    id: "9",
-    title: "FGIP Legacy Estate: 5-Bedroom Duplex",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/5%20Bedroom/5-bed1.webp",
-    images: [
-      "/images/fgip%20legacy/5%20Bedroom/5-bed1.webp",
-      "/images/fgip%20legacy/5%20Bedroom/5-bed2.webp"
-    ],
-    comingSoon: true,
-    description: "Luxury family housing with modern architectural finishes and optimized spatial flow."
+    title: 'Modern 3-bedroom Estate',
+    location: 'Chicago, IL',
+    category: 'Completed Work',
+    status: 'Completed / portfolio sample',
+    image: '/images/project-images/3-bedroom/3-bedroom2.webp',
+    images: ['/images/project-images/3-bedroom/3-bedroom2.webp', '/images/project-images/3-bedroom/3-bedroom1.webp'],
+    description: 'Interior build-out for a spacious residential property with fireplace, kitchen, suite planning, and durable finish execution.'
   },
   {
-    id: "16",
-    title: "FGIP Legacy Estate: 4-Bedroom Duplex",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/4%20bedroom/4-bed1.webp",
-    images: [
-      "/images/fgip%20legacy/4%20bedroom/4-bed1.webp",
-      "/images/fgip%20legacy/4%20bedroom/4-bed2.webp",
-      "/images/fgip%20legacy/4%20bedroom/4-bed3.webp"
-    ],
-    comingSoon: true,
-    description: "Modern family duplex within the FGIP Legacy Estate masterplan, designed for spacious everyday living, premium finishes, and long-term residential value."
+    title: 'Bathroom Remodels & Designs',
+    location: 'Selected remodel portfolio',
+    category: 'Renovations & Interiors',
+    status: 'Completed / portfolio sample',
+    image: '/images/project-images/bathrooms/bathroom1.webp',
+    images: ['/images/project-images/bathrooms/bathroom1.webp', '/images/project-images/bathrooms/bathroom2.webp', '/images/project-images/bathrooms/bathroom3.webp', '/images/project-images/bathrooms/bathroom4.webp'],
+    description: 'Bathroom modernization work focused on layout improvement, spa-like finishes, lighting, surfaces, and everyday usability.'
   },
   {
-    id: "10",
-    title: "FGIP Legacy Estate: 3-Bedroom Bungalow",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/3%20bedroom/3-bed1.webp",
-    images: [
-      "/images/fgip%20legacy/3%20bedroom/3-bed1.webp",
-      "/images/fgip%20legacy/3%20bedroom/3-bed2.webp"
-    ],
-    comingSoon: true,
-    description: "Efficient and elegant executive living spaces designed for modern convenience and comfort."
+    title: 'Modern Kitchen Remodels',
+    location: 'Selected remodel portfolio',
+    category: 'Renovations & Interiors',
+    status: 'Completed / portfolio sample',
+    image: '/images/project-images/kitchen/kitchen1.webp',
+    images: ['/images/project-images/kitchen/kitchen1.webp', '/images/project-images/kitchen/kitchen2.webp'],
+    description: 'Kitchen modernization examples showing open layouts, island planning, cabinetry, stone surfaces, lighting, and entertaining-focused flow.'
   },
   {
-    id: "11",
-    title: "FGIP Legacy Estate: Primary School",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/primary%20school/school1.webp",
-    images: [
-      "/images/fgip%20legacy/primary%20school/school1.webp",
-      "/images/fgip%20legacy/primary%20school/school2.webp",
-      "/images/fgip%20legacy/primary%20school/school3.webp",
-      "/images/fgip%20legacy/primary%20school/school4.webp"
-    ],
-    comingSoon: true,
-    description: "State-of-the-art educational facility integrated into the community to support local growth and learning."
+    title: 'Greenfield Estate Development',
+    location: 'Texas, USA',
+    category: 'Completed Work',
+    status: 'Completed / portfolio sample',
+    image: '/images/project-images/greenfield/greenfield1.webp',
+    images: ['/images/project-images/greenfield/greenfield1.webp'],
+    description: 'Site development and residential estate construction sample showing land preparation, structural work, material coordination, and delivery management.'
   },
   {
-    id: "12",
-    title: "FGIP Legacy Estate: Daycare Centre",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/daycare/daycare1.webp",
-    images: [
-      "/images/fgip%20legacy/daycare/daycare1.webp",
-      "/images/fgip%20legacy/daycare/daycare2.webp"
-    ],
-    comingSoon: true,
-    description: "A secure and nurturing environment for the estate's youngest residents, built with high safety standards."
+    title: 'Modern Interior',
+    location: 'Selected interior portfolio',
+    category: 'Renovations & Interiors',
+    status: 'Completed / portfolio sample',
+    image: '/images/project-images/interior/interior1.webp',
+    images: ['/images/project-images/interior/interior1.webp', '/images/project-images/interior/interior2.webp', '/images/project-images/interior/interior3.webp', '/images/project-images/interior/interior4.webp'],
+    description: 'Interior planning and decor examples focused on clean lines, material contrast, natural light, and livable modern spaces.'
   },
   {
-    id: "13",
-    title: "FGIP Legacy Estate: Business Centre",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/Business%20Center/business1.webp",
-    images: [
-      "/images/fgip%20legacy/Business%20Center/business1.webp",
-      "/images/fgip%20legacy/Business%20Center/business2.webp",
-      "/images/fgip%20legacy/Business%20Center/business3.webp"
-    ],
-    comingSoon: true,
-    description: "A centralized hub for professional services and corporate initiatives within the estate."
+    title: 'FGIP Legacy Estate: 6-Bedroom Duplex',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned concept / rendering',
+    image: '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
+    images: ['/images/fgip%20legacy/6%20bedroom/6-bed1.webp', '/images/fgip%20legacy/6%20bedroom/6-bed2.webp', '/images/fgip%20legacy/6%20bedroom/6-bed3.webp', '/images/fgip%20legacy/6%20bedroom/6-bed4.webp'],
+    description: 'Planned large-format residential product within the FGIP Legacy Estate masterplan. Shown as an estate concept, not as completed portfolio work.'
   },
   {
-    id: "14",
-    title: "FGIP Legacy Estate: Luxury Hotel",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/fgip%20legacy/hotel/hotel1.webp",
-    images: [
-      "/images/fgip%20legacy/hotel/hotel1.webp",
-      "/images/fgip%20legacy/hotel/hotel2.webp",
-      "/images/fgip%20legacy/hotel/hotel3.webp"
-    ],
-    comingSoon: true,
-    description: "Premier hospitality destination providing world-class services to visitors and residents alike."
+    title: 'FGIP Legacy Estate: 5-Bedroom Duplex',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned concept / rendering',
+    image: '/images/fgip%20legacy/5%20Bedroom/5-bed1.webp',
+    images: ['/images/fgip%20legacy/5%20Bedroom/5-bed1.webp', '/images/fgip%20legacy/5%20Bedroom/5-bed2.webp'],
+    description: 'Planned family housing product for the FGIP Legacy Estate concept package, included to show residential mix and architectural direction.'
   },
   {
-    id: "15",
-    title: "FGIP Legacy Estate: Social Hall",
-    location: "Lagos, Nigeria",
-    category: "International & Investment Projects",
-    image: "/images/services/materials.webp",
-    images: ["/images/services/materials.webp"],
-    comingSoon: true,
-    description: "A versatile community space for events, gatherings, and social interaction."
+    title: 'FGIP Legacy Estate: 4-Bedroom Duplex',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned concept / rendering',
+    image: '/images/fgip%20legacy/4%20bedroom/4-bed1.webp',
+    images: ['/images/fgip%20legacy/4%20bedroom/4-bed1.webp', '/images/fgip%20legacy/4%20bedroom/4-bed2.webp', '/images/fgip%20legacy/4%20bedroom/4-bed3.webp'],
+    description: 'Planned duplex concept within the FGIP Legacy Estate masterplan, showing product range, living scale, and long-term residential positioning.'
   },
   {
-    id: "1",
-    title: "Modern 3-bedroom Estate",
-    location: "Chicago, IL",
-    category: "Luxury Estates",
-    image: "/images/project-images/3-bedroom/3-bedroom2.webp",
-    images: [
-      "/images/project-images/3-bedroom/3-bedroom2.webp",
-      "/images/project-images/3-bedroom/3-bedroom1.webp"
-    ],
-    description: "A comprehensive interior build-out for a spacious 3-bedroom lakefront home designed for family living and frequent gatherings.\n\nThe project included detailed interior finishing, featuring a prominent large stone fireplace in the central living area, an expansive kitchen optimized for heavy daily use, and a custom-designed master suite overlooking the water.\n\nThe execution focused on high-quality construction, the use of durable, premium materials, and delivering a clean, straightforward, and timeless architectural aesthetic."
+    title: 'FGIP Legacy Estate: 3-Bedroom Bungalow',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned concept / rendering',
+    image: '/images/fgip%20legacy/3%20bedroom/3-bed1.webp',
+    images: ['/images/fgip%20legacy/3%20bedroom/3-bed1.webp', '/images/fgip%20legacy/3%20bedroom/3-bed2.webp'],
+    description: 'Planned bungalow concept for the estate residential mix, included as a development vision asset rather than a completed build.'
   },
   {
-    id: "7",
-    title: "Modern Custom Home Construction",
-    location: "Chicago, IL",
-    category: "Custom Homes",
-    image: "/images/project-images/custom-home/custom1.webp",
-    images: [
-      "/images/project-images/custom-home/custom1.webp",
-      "/images/project-images/custom-home/custom2.webp",
-      "/images/project-images/custom-home/custom3.webp"
-    ],
-    description: "A complete custom home build integrating modern architectural design with highly functional, open-concept everyday living spaces.\n\nThe scope involved full-phase construction from site foundation to structural framing and high-end exterior finishing. Large-scale windows were strategically placed to maximize natural light throughout the residence.\n\nThe interior features premium hardwood flooring, custom-built cabinetry, and smart home infrastructure, delivering a cohesive, energy-efficient, and sophisticated living environment."
+    title: 'FGIP Legacy Estate: Primary School',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned amenity concept / rendering',
+    image: '/images/fgip%20legacy/primary%20school/school1.webp',
+    images: ['/images/fgip%20legacy/primary%20school/school1.webp', '/images/fgip%20legacy/primary%20school/school2.webp', '/images/fgip%20legacy/primary%20school/school3.webp'],
+    description: 'Planned education amenity for the FGIP Legacy Estate community vision, showing how residential development connects to daily life and services.'
   },
   {
-    id: "2",
-    title: "Bathroom Remodels & Designs",
-    location: "USA, Europe, Africa",
-    category: "Renovations & Custom Interiors",
-    image: "/images/project-images/bathrooms/bathroom1.webp",
-    images: [
-      "/images/project-images/bathrooms/bathroom1.webp",
-      "/images/project-images/bathrooms/bathroom2.webp",
-      "/images/project-images/bathrooms/bathroom3.webp",
-      "/images/project-images/bathrooms/bathroom4.webp"
-    ],
-    description: "A portfolio of complete teardowns and renovations of outdated master and guest bathrooms, transforming them into optimized, modern spa-like spaces tailored to specific client needs.\n\nThese projects typically require reconfiguring original layouts to maximize airiness and flow. Common signature installations include large freestanding soaking tubs positioned centrally, custom dual-sink vanities integrated with vertically tiled accent walls, and seamless glass walk-in showers.\n\nEach remodel is completed with the installation of warm, modern lighting fixtures and high-end plumbing hardware, ensuring a fully functional and deeply relaxing environment."
+    title: 'FGIP Legacy Estate: Daycare Centre',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned amenity concept / rendering',
+    image: '/images/fgip%20legacy/daycare/daycare1.webp',
+    images: ['/images/fgip%20legacy/daycare/daycare1.webp', '/images/fgip%20legacy/daycare/daycare2.webp'],
+    description: 'Planned daycare amenity concept for the estate, included to clarify the community infrastructure vision.'
   },
   {
-    id: "3",
-    title: "Greenfield Estate Development",
-    location: "Texas, USA",
-    category: "Luxury Estates",
-    image: "/images/project-images/greenfield/greenfield1.webp",
-    images: [
-      "/images/project-images/greenfield/greenfield1.webp"
-    ],
-    description: "Full-scale construction and site development of a new expansive residential estate property on a raw plot of land.\n\nThe scope of work encompassed comprehensive site management, including initial land clearing, earthworks, heavy-duty foundation pouring, and the structural framing of the main residential buildings.\n\nExecution involved the precise coordination of heavy equipment operations, procurement of premium-grade building materials, and rigorous timeline management to ensure solid workmanship and structural integrity across the entire build."
+    title: 'FGIP Legacy Estate: Business Centre',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned amenity concept / rendering',
+    image: '/images/fgip%20legacy/Business%20Center/business1.webp',
+    images: ['/images/fgip%20legacy/Business%20Center/business1.webp', '/images/fgip%20legacy/Business%20Center/business2.webp', '/images/fgip%20legacy/Business%20Center/business3.webp'],
+    description: 'Planned business center concept for the estate, showing the intended mix of residential, commercial, and support uses.'
   },
   {
-    id: "4",
-    title: "Modern Kitchen Remodels",
-    location: "USA, Europe, Africa",
-    category: "Renovations & Custom Interiors",
-    image: "/images/project-images/kitchen/kitchen1.webp",
-    images: [
-      "/images/project-images/kitchen/kitchen1.webp",
-      "/images/project-images/kitchen/kitchen2.webp"
-    ],
-    description: "A comprehensive collection of structural kitchen modernizations and redesigns that redefine the heart of the home to match the absolute taste and lifestyle demands of our clients.\n\nOur approach frequently involves tearing down enclosing walls to open up floor plans, allowing for the installation of massive focal-point islands, luxury stone countertops, and high-end integrated appliances. Whether the aesthetic goal is a sleek contemporary finish with dark grey accents or a rustic modern charm featuring exposed ceiling beams and wood-paneled fixtures, the core focus remains aligned.\n\nBy seamlessly pairing custom cabinetry with strategic layered lighting, these overhauls bridge tactile textures with modern convenience to deliver spaces built inherently for entertaining and everyday living."
-  },
-  {
-    id: "8",
-    title: "Modern Interior",
-    location: "Various Locations",
-    category: "Renovations & Custom Interiors",
-    image: "/images/project-images/interior/interior1.webp",
-    images: [
-      "/images/project-images/interior/interior1.webp",
-      "/images/project-images/interior/interior2.webp",
-      "/images/project-images/interior/interior3.webp",
-      "/images/project-images/interior/interior4.webp",
-      "/images/project-images/interior/interior5.webp"
-    ],
-    description: "Curated interior decorating services focusing on clean lines, minimalist layouts, and sophisticated monochromatic or highly contrasted color palettes.\n\nOur modern decor projects emphasize utilizing negative space, bringing in natural light, and selecting low-profile, high-impact furniture pieces that serve both function and form. We integrate cutting-edge materials like polished concrete, glass, and brushed steel alongside plush, comfortable textiles to ensure the space never feels clinical.\n\nThe result is a highly tailored, uncluttered living environment that looks visually striking while remaining exceptionally livable for the modern homeowner."
+    title: 'FGIP Legacy Estate: Luxury Hotel',
+    location: 'Ogun State, Nigeria',
+    category: 'FGIP Estate Concepts',
+    status: 'Planned amenity concept / rendering',
+    image: '/images/fgip%20legacy/hotel/hotel1.webp',
+    images: ['/images/fgip%20legacy/hotel/hotel1.webp', '/images/fgip%20legacy/hotel/hotel2.webp', '/images/fgip%20legacy/hotel/hotel3.webp'],
+    description: 'Planned hospitality concept for the estate, included as part of the broader development vision and partnership story.'
   }
 ];
 
-function ProjectCollage({ images, title }: { images: string[], title: string }) {
-  if (!images || images.length <= 1) {
-    return (
-      <img
-        src={images?.[0]}
-        alt={title}
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        loading="lazy"
-      />
-    );
-  }
-
-  // Define different grid layouts based on image count
-  if (images.length === 2) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
-        {images.map((img, i) => (
-          <img key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" loading="lazy" />
-        ))}
-      </div>
-    );
-  }
-
-  if (images.length === 3) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
-        <img src={images[0]} alt={`${title} 1`} className="w-full h-full object-cover md:row-span-2" loading="lazy" />
-        <img src={images[1]} alt={`${title} 2`} className="w-full h-full object-cover" loading="lazy" />
-        <img src={images[2]} alt={`${title} 3`} className="w-full h-full object-cover" loading="lazy" />
-      </div>
-    );
-  }
-
-  // 4 or more
-  const displayImages = images.slice(0, 4);
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 h-full w-full gap-0.5 transition-transform duration-700 group-hover:scale-105">
-      {displayImages.map((img, i) => (
-        <img key={i} src={img} alt={`${title} ${i+1}`} className="w-full h-full object-cover" loading="lazy" />
-      ))}
-    </div>
-  );
-}
-
 export default function Portfolio() {
-  const location = useLocation();
-  const initialState = location.state as { category?: string } | null;
-  const [activeFilter, setActiveFilter] = useState(initialState?.category || "All");
+  const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [currentModalImageIdx, setCurrentModalImageIdx] = useState(0);
 
-  useEffect(() => {
-    if (location.state && (location.state as any).category) {
-      setActiveFilter((location.state as any).category);
-    } else if (location.pathname === '/portfolio' && !location.state) {
-      // Optional: reset if explicitly navigated without state
-      // setActiveFilter("All");
-    }
-  }, [location]);
-
-  const filteredProjects = projects.filter(p => activeFilter === "All" || p.category === activeFilter);
-  const featuredProject = filteredProjects[0];
-  const remainingProjects = filteredProjects.slice(1);
-
-  const openProject = (project: Project) => {
-    setSelectedProject(project);
-    setCurrentModalImageIdx(0);
-  };
-
-  useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [selectedProject]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.portfolio-fade-up',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
-      );
-    });
-
-    const timeoutId = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 500);
-
-    return () => {
-      clearTimeout(timeoutId);
-      ctx.revert();
-    };
-  }, [activeFilter]);
+  const filteredProjects = activeFilter === 'All'
+    ? projects
+    : projects.filter((project) => project.category === activeFilter);
 
   return (
     <main className="pt-32 pb-24 max-w-7xl mx-auto px-5 sm:px-6 w-full max-w-full overflow-x-clip">
-      <div className="mb-12 lg:mb-20 portfolio-fade-up max-w-4xl">
-        <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR WORK</h3>
-        <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Built work, estate vision, and finish intelligence.</h1>
+      <section className="mb-12 lg:mb-16 max-w-4xl">
+        <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">Our Work</h3>
+        <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Completed work and planned estate concepts, clearly separated.</h1>
         <p className="text-lg text-gray-700 leading-relaxed mb-10">
-          A tighter look at the work First Generation Homes is positioned to deliver: custom residences, high-value renovations, premium interiors, and the FGIP Legacy Estate masterplan. The emphasis is simple: spaces that justify the investment.
+          Use the filters to distinguish completed portfolio samples from FGIP Legacy Estate renderings and planned amenities. That clarity matters: homeowners should see proof of execution, while investors and partners can review the estate vision without confusing it for finished work.
         </p>
-
-        <div className="mb-8 w-full">
-          <h4 className="text-gray-500 mb-4">Filters</h4>
-          <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide max-w-full">
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setActiveFilter(category)}
-                className={`rounded-full px-5 py-2 text-sm whitespace-nowrap border transition-colors ${
-                  activeFilter === category
-                    ? 'bg-brand-primary text-white border-brand-primary'
-                    : 'bg-transparent text-gray-600 border-gray-300 hover:border-brand-primary'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+        <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide max-w-full">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`rounded-full px-5 py-2 text-sm whitespace-nowrap border transition-colors ${
+                activeFilter === filter
+                  ? 'bg-brand-primary text-white border-brand-primary'
+                  : 'bg-transparent text-gray-600 border-gray-300 hover:border-brand-primary'
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
         </div>
-      </div>
+      </section>
 
-      <section className="portfolio-fade-up mb-16 grid grid-cols-1 lg:grid-cols-12 gap-4 bg-brand-dark text-white overflow-hidden">
-        <div className="lg:col-span-4 p-8 lg:p-10 flex flex-col justify-between min-h-[360px]">
+      <section className="mb-16 grid grid-cols-1 lg:grid-cols-12 gap-4 bg-brand-dark text-white overflow-hidden">
+        <div className="lg:col-span-4 p-8 lg:p-10 flex flex-col justify-between min-h-[340px]">
           <div>
-            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Selection Standard</p>
-            <h2 className="text-4xl font-heading font-light leading-tight mb-5">Every image should prove scale, taste, or execution.</h2>
-            <p className="text-white/70 leading-relaxed">Portfolio pages should not feel like a dump of projects. They should help a qualified client see the level of decision-making they are buying.</p>
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">How To Read This Page</p>
+            <h2 className="text-4xl font-heading font-light leading-tight mb-5">Completed work builds trust. Planned concepts show direction.</h2>
+            <p className="text-white/70 leading-relaxed">Each project carries a status so the page feels honest, useful, and easier to scan from a sales perspective.</p>
           </div>
           <p className="text-white/45 text-xs uppercase tracking-[0.22em] mt-8">Residences / Interiors / Estate Development</p>
         </div>
-        <div className="lg:col-span-8 grid grid-cols-3 min-h-[360px]">
+        <div className="lg:col-span-8 grid grid-cols-3 min-h-[340px]">
           <img src="/images/luxury-stock/signature-lounge.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
           <img src="/images/luxury-stock/materials-gallery.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
           <img src="/images/luxury-stock/marble-bath.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
         </div>
       </section>
 
-      {featuredProject && (
-        <div className="mb-16 portfolio-fade-up relative z-10">
-          <div
-            className="group cursor-pointer block relative overflow-hidden transition-all duration-500 hover:-translate-y-1"
-            onClick={() => openProject(featuredProject)}
-          >
-            <div className="overflow-hidden relative rounded-2xl mb-4 bg-gray-100 flex aspect-[3/4] md:aspect-auto md:h-[500px]">
-              <ProjectCollage
-                images={featuredProject.images && featuredProject.category === "International & Investment Projects" ? featuredProject.images : [featuredProject.image]}
-                title={featuredProject.title}
-              />
-              {featuredProject.comingSoon && (
-                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-brand-dark/90 text-white px-3 sm:px-4 py-2 font-bold tracking-widest text-[10px] sm:text-sm uppercase rounded-lg z-10 pointer-events-none flex items-center gap-2 max-w-[calc(100%-2rem)]">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                  </span>
-                  Ongoing Project
-                </div>
-              )}
-            </div>
-            <div className="bg-transparent flex justify-between items-start transition-colors px-2 gap-4 min-w-0">
-              <div className="flex-1 pr-0 sm:pr-6 min-w-0">
-                <h2 className="text-3xl font-medium mb-2 text-brand-dark group-hover:text-brand-primary transition-colors font-heading">{featuredProject.title}</h2>
-                <div className="flex flex-wrap items-center gap-2 mb-3 text-gray-600 text-sm font-medium">
-                  <span className="text-brand-primary">{featuredProject.category}</span>
-                  <span>-</span>
-                  <span>{featuredProject.location}</span>
-                </div>
-                <p className="text-gray-700 text-base line-clamp-2 max-w-3xl leading-relaxed">
-                  {featuredProject.description}
-                </p>
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mb-24">
+        {filteredProjects.map((project) => (
+          <article key={project.title} className="group cursor-pointer transition-all duration-500 hover:-translate-y-1" onClick={() => setSelectedProject(project)}>
+            <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[4/3]">
+              <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+              <div className="absolute top-4 left-4 bg-brand-dark/90 text-white px-3 py-1 font-bold tracking-widest text-[10px] uppercase rounded-lg">
+                {project.status}
               </div>
-              <div className="hidden sm:block text-brand-primary bg-brand-primary/10 rounded-full p-4 group-hover:bg-brand-primary group-hover:text-white transition-all shrink-0">
+              <div className="absolute bottom-0 right-0 bg-brand-primary p-4 text-white group-hover:bg-brand-dark transition-colors rounded-tl-2xl">
                 <ArrowRight className="w-6 h-6" />
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-24 relative z-10">
-        {remainingProjects.map(project => (
-          <div
-            key={project.id}
-            className="portfolio-fade-up group cursor-pointer transition-all duration-500 hover:-translate-y-1"
-            onClick={() => openProject(project)}
-          >
-            <div className="relative overflow-hidden rounded-2xl mb-4 bg-gray-100 aspect-[3/4] md:aspect-video">
-              <ProjectCollage
-                images={project.images && project.category === "International & Investment Projects" ? project.images : [project.image]}
-                title={project.title}
-              />
-              <div className="absolute bottom-0 right-0 bg-brand-primary p-4 text-white group-hover:bg-brand-dark transition-colors z-20 rounded-tl-2xl">
-                <ArrowRight className="w-6 h-6" />
-              </div>
-              {project.comingSoon && (
-                <div className="absolute top-4 right-4 bg-brand-dark/90 text-white px-3 py-1 font-bold tracking-widest text-[10px] uppercase rounded-lg z-20 pointer-events-none flex items-center gap-2 max-w-[calc(100%-2rem)]">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                  </span>
-                  Ongoing Project
-                </div>
-              )}
-            </div>
-            <div className="py-2 px-1">
-              <h3 className="text-2xl font-medium text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">{project.title}</h3>
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="text-xs text-brand-primary font-bold uppercase tracking-wider">
-                  {project.category}
-                </span>
-                <span className="text-gray-400 text-xs">-</span>
-                <p className="text-gray-600 font-medium text-sm">{project.location}</p>
-              </div>
-              <p className="text-gray-700 text-base mb-4 line-clamp-3 leading-relaxed pr-2">
-                {project.description}
-              </p>
-            </div>
-          </div>
+            <h2 className="text-2xl font-heading mb-2 group-hover:text-brand-primary transition-colors">{project.title}</h2>
+            <p className="text-xs text-brand-primary font-bold uppercase tracking-wider mb-2">{project.category}</p>
+            <p className="text-sm text-gray-600 font-medium mb-3">{project.location}</p>
+            <p className="text-gray-700 leading-relaxed line-clamp-3">{project.description}</p>
+          </article>
         ))}
-      </div>
+      </section>
 
-      {/* Project Details Modal - Small Window Split Design */}
       {selectedProject && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 lg:p-12">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md transition-opacity"
-            onClick={() => setSelectedProject(null)}
-          />
-
-          {/* Modal Content */}
-          <div className="bg-white w-full max-w-4xl lg:max-w-6xl h-[90vh] md:h-[80vh] max-h-[800px] relative z-10 shadow-2xl overflow-hidden rounded-xl flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-300">
-
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 bg-white/80 hover:bg-white popup-close-btn p-2 rounded-full text-brand-dark transition-colors z-[110] shadow-md border border-gray-100"
-              aria-label="Close modal"
-            >
-              <X className="w-5 h-5 cursor-pointer" />
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-md" onClick={() => setSelectedProject(null)} />
+          <div className="bg-white w-full max-w-5xl max-h-[86vh] relative z-10 shadow-2xl overflow-hidden rounded-xl grid grid-cols-1 md:grid-cols-2">
+            <button onClick={() => setSelectedProject(null)} className="absolute top-4 right-4 bg-white/90 hover:bg-white p-2 rounded-full text-brand-dark transition-colors z-[110] shadow-md border border-gray-100" aria-label="Close modal">
+              <X className="w-5 h-5" />
             </button>
-
-            {/* Left Side: Images */}
-            <div className="w-full md:w-1/2 h-64 sm:h-80 md:h-full relative bg-gray-100 flex items-center flex-shrink-0 group/slider overflow-hidden">
-              {(() => {
-                const gallery = selectedProject.images && selectedProject.images.length > 0
-                  ? selectedProject.images
-                  : [selectedProject.image];
-
-                return (
-                  <>
-                  <img
-                      src={gallery[currentModalImageIdx]}
-                      alt={`${selectedProject.title} view ${currentModalImageIdx + 1}`}
-                      className="w-full h-full absolute inset-0 object-cover animate-in fade-in duration-500"
-                      key={currentModalImageIdx}
-                    />
-
-                    {selectedProject.comingSoon && (
-                      <div className="absolute top-6 left-6 bg-brand-dark/90 backdrop-blur-sm text-white px-4 py-2 font-bold tracking-widest text-xs md:text-sm uppercase shadow-xl rounded-sm z-30 pointer-events-none flex items-center gap-2">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        Ongoing Project
-                      </div>
-                    )}
-
-                    {gallery.length > 1 && (
-                      <div className="absolute inset-0 flex items-center justify-between p-4 opacity-100 md:opacity-0 md:group-hover/slider:opacity-100 transition-opacity z-20 pointer-events-none">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentModalImageIdx((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
-                          }}
-                          className="bg-white/90 hover:bg-white hover:scale-105 transition-all p-2 rounded-full text-brand-dark shadow-lg pointer-events-auto cursor-pointer"
-                        >
-                          <ArrowLeft className="w-5 h-5" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentModalImageIdx((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
-                          }}
-                          className="bg-white/90 hover:bg-white hover:scale-105 transition-all p-2 rounded-full text-brand-dark shadow-lg pointer-events-auto cursor-pointer"
-                        >
-                          <ArrowRight className="w-5 h-5" />
-                        </button>
-                      </div>
-                    )}
-
-                    {gallery.length > 1 && (
-                      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20 w-full pointer-events-none">
-                        {gallery.map((_, idx) => (
-                          <div
-                            key={idx}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentModalImageIdx ? 'bg-brand-primary w-6' : 'bg-white/70'}`}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </>
-                );
-              })()}
+            <div className="bg-gray-100 min-h-[320px] md:min-h-[620px]">
+              <img src={selectedProject.images?.[0] || selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
             </div>
-
-            {/* Right Side: Details */}
-            <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto min-h-0 bg-white">
-              <div className="flex flex-wrap items-center gap-3 mb-4 text-xs font-bold tracking-widest text-gray-400 uppercase shrink-0">
-                <span className="text-brand-primary">{selectedProject.category}</span>
-                <span>-</span>
-                <span>{selectedProject.location}</span>
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-heading mb-6 text-brand-dark leading-tight shrink-0">
-                {selectedProject.title}
-              </h2>
-
-              <div className="w-12 h-1 bg-brand-primary mb-6 flex-shrink-0"></div>
-
-              <div className="text-base text-gray-600 leading-relaxed whitespace-pre-wrap mb-8 flex-shrink-0">
-                {selectedProject.description}
-              </div>
-
-              <div className="mt-auto pt-6 flex gap-4 text-sm font-medium border-t border-gray-100 shrink-0">
-                <div className="flex flex-col">
-                  <span className="text-gray-400 text-xs uppercase tracking-wider mb-1">Status</span>
-                  <span className="text-brand-dark flex items-center gap-2">
-                    {selectedProject.comingSoon && (
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                      </span>
-                    )}
-                    {selectedProject.comingSoon ? "Ongoing Project" : "Completed"}
-                  </span>
-                </div>
-              </div>
+            <div className="p-6 md:p-10 overflow-y-auto">
+              <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-3">{selectedProject.category}</p>
+              <h2 className="text-3xl md:text-5xl font-heading mb-4">{selectedProject.title}</h2>
+              <p className="text-gray-500 font-medium mb-6">{selectedProject.location}</p>
+              <div className="inline-flex bg-brand-primary/10 text-brand-primary px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6">{selectedProject.status}</div>
+              <p className="text-gray-700 leading-relaxed">{selectedProject.description}</p>
             </div>
-
           </div>
         </div>
       )}
