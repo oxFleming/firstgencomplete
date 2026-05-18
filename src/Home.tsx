@@ -1,60 +1,60 @@
-import React from react;
-import { ArrowRight, CheckCircle2, Hammer, Handshake, Home as HomeIcon, Landmark } from lucide-react;
-import { Highlight, Button } from ./components/ui;
-import { useNavigate } from react-router-dom;
-import ContactSection from ./components/ContactSection;
+import React from 'react';
+import { ArrowRight, CheckCircle2, Hammer, Handshake, Home as HomeIcon, Landmark } from 'lucide-react';
+import { Highlight, Button } from './components/ui';
+import { useNavigate } from 'react-router-dom';
+import ContactSection from './components/ContactSection';
 
 const routes = [
   {
     icon: HomeIcon,
-    eyebrow: Homeowners,
-    title: Build a Custom Home,
-    text: Ground-up residential construction with architectural coordination, finish planning, site discipline, and one accountable delivery conversation.,
-    action: Start a Home Consultation,
-    path: /contact,
-    image: /images/luxury-stock/airy-custom-home.webp
+    eyebrow: 'Homeowners',
+    title: 'Build a Custom Home',
+    text: 'Ground-up residential construction with architectural coordination, finish planning, site discipline, and one accountable delivery conversation.',
+    action: 'Start a Home Consultation',
+    path: '/contact',
+    image: '/images/luxury-stock/airy-custom-home.webp'
   },
   {
     icon: Hammer,
-    eyebrow: Property Owners,
-    title: Renovate or Modernize,
-    text: Kitchen, bath, structural, and whole-property modernization for owners who want comfort, resale strength, and a sharper daily experience.,
-    action: Discuss a Renovation,
-    path: /contact,
-    image: /images/luxury-stock/spa-bath-suite.webp
+    eyebrow: 'Property Owners',
+    title: 'Renovate or Modernize',
+    text: 'Kitchen, bath, structural, and whole-property modernization for owners who want comfort, resale strength, and a sharper daily experience.',
+    action: 'Discuss a Renovation',
+    path: '/contact',
+    image: '/images/luxury-stock/spa-bath-suite.webp'
   },
   {
     icon: Landmark,
-    eyebrow: Developers & Partners,
-    title: Develop Real Estate,
-    text: Planning, project controls, construction coordination, and procurement support for residential and mixed-use work that needs commercial discipline.,
-    action: Review Services,
-    path: /services,
-    image: /images/luxury-stock/materials-gallery.webp
+    eyebrow: 'Developers & Partners',
+    title: 'Develop Real Estate',
+    text: 'Planning, project controls, construction coordination, and procurement support for residential and mixed-use work that needs commercial discipline.',
+    action: 'Review Services',
+    path: '/services',
+    image: '/images/luxury-stock/materials-gallery.webp'
   },
   {
     icon: Handshake,
-    eyebrow: Investors,
-    title: Explore FGIP Legacy Estate,
-    text: A dedicated route for investors, lenders, landowners, and partners evaluating FGIP Legacy Estate or other development opportunities.,
-    action: View FGIP Overview,
-    path: /fgip-legacy-estate,
-    image: /images/fgip%20legacy/6%20bedroom/6-bed1.webp
+    eyebrow: 'Investors',
+    title: 'Explore FGIP Legacy Estate',
+    text: 'A dedicated route for investors, lenders, landowners, and partners evaluating FGIP Legacy Estate or other development opportunities.',
+    action: 'View FGIP Overview',
+    path: '/fgip-legacy-estate',
+    image: '/images/fgip%20legacy/6%20bedroom/6-bed1.webp'
   }
 ];
 
 const estatePoints = [
-  1,500 planned residential units,
-  $549M total development value,
-  Infrastructure-led estate planning,
-  Dedicated overview for investors and partners
+  '1,500 planned residential units',
+  '$549M total development value',
+  'Infrastructure-led estate planning',
+  'Dedicated overview for investors and partners'
 ];
 
 const leadership = [
-  { name: Remy Okunbena, role: Managing Director, img: remy.webp },
-  { name: Mathew Kalesanwo, role: VP, Revenue Growth & Business Development, img: matthew.webp },
-  { name: Olufolake Olumogba, role: Director of Project Development & Infrastructure, img: olufolake.webp },
-  { name: Arc. Sandra Airunugba, role: Senior Architect and Supervisory Project Manager, img: sandra.webp }
+  { name: 'Remy Okunbena', role: 'Managing Director', img: 'remy.webp' },
+  { name: 'Mathew Kalesanwo', role: 'VP, Revenue Growth & Business Development', img: 'matthew.webp' },
+  { name: 'Olufolake Olumogba', role: 'Director of Project Development & Infrastructure', img: 'olufolake.webp' },
+  { name: 'Arc. Sandra Airunugba', role: 'Senior Architect and Supervisory Project Manager', img: 'sandra.webp' }
 ];
 
 export default function Home() {
@@ -63,13 +63,7 @@ export default function Home() {
   return (
     <main className="w-full max-w-full overflow-x-clip">
       <section className="relative min-h-[94svh] flex items-end px-5 sm:px-8 lg:px-12 pt-32 pb-10 overflow-hidden bg-brand-dark text-white">
-        <img
-          src="/images/luxury-stock/airy-custom-home.webp"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          loading="eager"
-        />
+        <img src="/images/luxury-stock/airy-custom-home.webp" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover z-0" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/82 via-black/58 to-black/24" />
         <div className="relative z-10 w-full max-w-[92rem] mx-auto">
           <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Custom homes. Renovations. Development support.</p>
@@ -105,11 +99,7 @@ export default function Home() {
             <Button onClick={() => navigate('/services')} className="border-white/60 text-white hover:bg-white hover:text-brand-dark">Review Services</Button>
           </div>
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              'Custom homes and major renovations',
-              'Development planning and project support',
-              'FGIP investor and partner inquiries'
-            ].map((item) => (
+            {['Custom homes and major renovations', 'Development planning and project support', 'FGIP investor and partner inquiries'].map((item) => (
               <div key={item} className="bg-white/9 border border-white/15 rounded-2xl p-6 shadow-sm backdrop-blur-md flex gap-3">
                 <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
                 <p className="text-white/72 leading-relaxed">{item}</p>
@@ -177,12 +167,7 @@ export default function Home() {
             </div>
           </div>
           <div className="lg:col-span-7 relative z-10 grid grid-cols-2 gap-3">
-            {[
-              '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
-              '/images/fgip%20legacy/5%20Bedroom/5-bed1.webp',
-              '/images/fgip%20legacy/4%20bedroom/4-bed1.webp',
-              '/images/fgip%20legacy/primary%20school/school1.webp'
-            ].map((image, index) => (
+            {['/images/fgip%20legacy/6%20bedroom/6-bed1.webp', '/images/fgip%20legacy/5%20Bedroom/5-bed1.webp', '/images/fgip%20legacy/4%20bedroom/4-bed1.webp', '/images/fgip%20legacy/primary%20school/school1.webp'].map((image, index) => (
               <img key={image} src={image} alt="" className={`w-full object-cover bg-gray-100 ${index === 0 ? 'col-span-2 aspect-[16/8]' : 'aspect-[4/3]'}`} loading="lazy" />
             ))}
           </div>
