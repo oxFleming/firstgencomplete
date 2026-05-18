@@ -119,6 +119,26 @@ export default function FgipLegacyEstate() {
         </div>
       </section>
 
+      <section className="px-5 sm:px-8 lg:px-12 py-16 lg:py-24 bg-[#111111] text-white overflow-hidden">
+        <div className="max-w-[92rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-4 fgip-fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Luxury Proof Points</p>
+            <h2 className="text-4xl md:text-5xl font-heading font-light leading-tight mb-6">The estate story must feel premium before a buyer reads the brochure.</h2>
+            <p className="text-white/70 leading-relaxed">FGIP Legacy Estate needs to show architecture, infrastructure, interiors, and material confidence together. That is how the project moves from housing inventory to luxury destination.</p>
+          </div>
+          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-3 fgip-fade-up">
+            {[
+              '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
+              '/images/luxury-stock/grand-foyer.webp',
+              '/images/luxury-stock/materials-gallery.webp',
+              '/images/luxury-stock/spa-bath-suite.webp'
+            ].map((image, index) => (
+              <img key={image} src={image} alt="" className={`w-full object-cover ${index % 2 === 1 ? 'aspect-[3/4] md:mt-10' : 'aspect-[3/4]'}`} loading="lazy" />
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-brand-dark text-white">
         <div className="max-w-[92rem] mx-auto">
           <div className="max-w-3xl mb-12 fgip-fade-up">

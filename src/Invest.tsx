@@ -40,7 +40,7 @@ export default function Invest() {
             Invest in <span className="italic font-light">FGIP Legacy Estate</span>
           </h1>
           <p className="text-lg md:text-xl text-white/90 font-light max-w-2xl mx-auto drop-shadow-md">
-            Be part of a large-scale, infrastructure-led residential development in one of Nigeria's fastest-growing corridors.
+            A $549M, 1,500-unit residential platform planned around infrastructure, premium housing, and long-term corridor demand.
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function Invest() {
               title={<>Strategic Sponsorship & <Highlight>Development Partnership</Highlight></>}
             />
             <p className="text-gray-800 text-lg leading-relaxed mb-6 font-medium">
-              First Generation Homes LLC is proud to serve as a strategic sponsor and development partner of FGIP Legacy Luxury Estate - a large-scale, infrastructure-led residential development located within the Lagos-Ogun growth corridor in Ogun State, Nigeria.
+              First Generation Homes LLC supports FGIP Legacy Luxury Estate as a strategic sponsor and development partner, adding U.S. operating credibility, procurement judgment, and construction perspective to a large-scale estate platform.
             </p>
             <p className="text-gray-600 leading-relaxed mb-8">
               Designed as a fully integrated residential community, the project spans approximately 160 acres and is planned to deliver 1,500 residential units through a structured, phased development model.
@@ -123,6 +123,24 @@ export default function Invest() {
                 As a strategic sponsor, we prioritize structured execution and sustainable growth, fostering investor confidence and long-term community impact.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-24 bg-[#111111] text-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-5 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Capital Story</p>
+            <h2 className="text-4xl lg:text-6xl font-heading font-light leading-tight mb-6">Investors should see product quality and operating discipline.</h2>
+            <p className="text-white/72 text-lg leading-relaxed">
+              The opportunity is not only land. It is a phased residential ecosystem with infrastructure, housing mix, community uses, and cross-border development support.
+            </p>
+          </div>
+          <div className="lg:col-span-7 grid grid-cols-2 gap-3 fade-up">
+            <img src="/images/fgip%20legacy/5%20Bedroom/5-bed1.webp" alt="" className="aspect-square object-cover" loading="lazy" />
+            <img src="/images/luxury-stock/grand-foyer.webp" alt="" className="aspect-square object-cover mt-10" loading="lazy" />
+            <img src="/images/luxury-stock/materials-wall.webp" alt="" className="aspect-square object-cover -mt-10" loading="lazy" />
+            <img src="/images/luxury-stock/spa-bath-suite.webp" alt="" className="aspect-square object-cover" loading="lazy" />
           </div>
         </div>
       </section>

@@ -18,27 +18,35 @@ const authorityMetrics = [
 const servicePaths = [
   {
     title: 'Build a Custom Home',
-    text: 'Residential construction, architectural coordination, structural delivery, interiors, and landscaping integration for clients who want a home built around real life.',
+    text: 'Ground-up residential construction with architectural coordination, finish planning, site discipline, and one accountable delivery conversation.',
     action: 'Start a Home Consultation',
-    path: '/contact'
+    path: '/contact',
+    image: '/images/luxury-stock/airy-custom-home.webp',
+    stat: 'Custom estates'
   },
   {
     title: 'Modernize a Property',
-    text: 'Kitchen remodels, bathroom renovations, structural upgrades, interior redesign, and exterior modernization to improve comfort and long-term asset value.',
+    text: 'Kitchen, bath, structural, and whole-property modernization for owners who want comfort, resale strength, and a sharper daily experience.',
     action: 'Discuss a Renovation',
-    path: '/contact'
+    path: '/contact',
+    image: '/images/luxury-stock/spa-bath-suite.webp',
+    stat: 'Premium remodels'
   },
   {
     title: 'Develop Real Estate',
-    text: 'Development planning, construction coordination, project management, procurement, and consulting for residential or mixed-use opportunities.',
+    text: 'Planning, project controls, construction coordination, and procurement support for residential and mixed-use work that needs commercial discipline.',
     action: 'Explore Services',
-    path: '/services'
+    path: '/services',
+    image: '/images/luxury-stock/materials-gallery.webp',
+    stat: 'Delivery systems'
   },
   {
     title: 'Invest or Partner',
-    text: 'Cross-border development knowledge, U.S. operating credibility, and FGIP ecosystem support for investors, lenders, landowners, and strategic partners.',
+    text: 'A cross-border platform with U.S. credibility and FGIP estate-scale proof for investors, lenders, landowners, and strategic partners.',
     action: 'Explore Legacy Estate',
-    path: '/fgip-legacy-estate'
+    path: '/fgip-legacy-estate',
+    image: '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
+    stat: '$549M masterplan'
   }
 ];
 
@@ -130,8 +138,14 @@ const leadership = [
 export default function Home() {
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const aboutVideoRef = useRef<HTMLVideoElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
   const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
   const [shouldLoadAboutVideo, setShouldLoadAboutVideo] = useState(false);
+  const [heroRevealStyle, setHeroRevealStyle] = useState<React.CSSProperties>({
+    '--reveal-x': '72%',
+    '--reveal-y': '38%',
+    '--reveal-opacity': '0.72'
+  } as React.CSSProperties);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -228,9 +242,27 @@ export default function Home() {
     navigate(path);
   };
 
+  const handleHeroPointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    if (!heroSectionRef.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const rect = heroSectionRef.current.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    setHeroRevealStyle({
+      '--reveal-x': `${x}%`,
+      '--reveal-y': `${y}%`,
+      '--reveal-opacity': '0.92'
+    } as React.CSSProperties);
+  };
+
   return (
     <main className="w-full max-w-full overflow-x-clip">
-      <section className="relative min-h-[100svh] flex flex-col justify-between px-5 sm:px-8 lg:px-12 pt-28 md:pt-32 pb-6 sm:pb-8 lg:pb-10 overflow-hidden">
+      <section
+        ref={heroSectionRef}
+        onPointerMove={handleHeroPointerMove}
+        onPointerLeave={() => setHeroRevealStyle((style) => ({ ...style, '--reveal-opacity': '0.62' } as React.CSSProperties))}
+        className="relative min-h-[100svh] flex flex-col justify-between px-5 sm:px-8 lg:px-12 pt-28 md:pt-32 pb-6 sm:pb-8 lg:pb-10 overflow-hidden"
+        style={heroRevealStyle}
+      >
         <img
           src="/images/services/header.webp"
           alt=""
@@ -252,14 +284,16 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-black/55 z-0" />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent z-0" />
+        <div className="hero-liquid-reveal absolute inset-0 z-[1] pointer-events-none" aria-hidden="true" />
+        <div className="hero-glitter-field absolute inset-0 z-[2] pointer-events-none" aria-hidden="true" />
 
         <div className="relative z-10 fade-up w-full max-w-[92rem] mx-auto text-white mt-auto pb-8 md:pb-10 lg:pb-12">
-          <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Client focused. Community first.</p>
+          <p className="text-xs sm:text-sm font-bold tracking-[0.24em] uppercase mb-5 text-white/80">Luxury homes. Estate-scale development.</p>
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-medium leading-[0.95] mb-7 font-heading tracking-tight max-w-4xl drop-shadow-md">
-            We build around you.
+            We build for people who expect more.
           </h1>
           <p className="text-lg md:text-2xl text-white/90 mb-8 max-w-2xl leading-relaxed drop-shadow-md">
-            From custom homes and renovations to estate-scale development, First Generation Homes helps turn vision into lasting value.
+            Custom residences, high-value renovations, and a $549M estate platform delivered with design discipline, procurement control, and development strength.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto max-w-3xl">
             <button onClick={() => handleNavigate('/contact')} className="bg-white text-brand-dark rounded-full px-6 sm:px-8 py-4 font-bold tracking-wide flex items-center justify-center gap-3 hover:bg-white/90 transition-colors cursor-pointer shadow-xl">
@@ -286,10 +320,10 @@ export default function Home() {
           <div className="lg:col-span-5 fade-up">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CORPORATE POSITIONING</p>
             <h2 className="text-4xl md:text-5xl font-light leading-tight font-heading tracking-tight mb-6">
-              More than a builder. A <Highlight>development partner</Highlight> with U.S. credibility.
+              More than a contractor. A <Highlight>luxury development partner</Highlight> with U.S. credibility.
             </h2>
             <p className="text-gray-700 leading-relaxed mb-8">
-              First Generation Homes combines residential delivery, renovation experience, procurement support, and development advisory under one operating platform.
+              First Generation Homes combines construction delivery, high-end renovation experience, finish procurement, and development advisory under one operating platform.
             </p>
             <Button onClick={() => handleNavigate('/team')}>Meet the Leadership</Button>
           </div>
@@ -309,24 +343,32 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-white/30 backdrop-blur-xl relative z-10">
-        <div className="max-w-7xl mx-auto">
+      <section className="px-5 sm:px-6 py-20 lg:py-32 bg-[#111111] text-white relative z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(157,132,183,0.18),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.06),transparent_36%)]" aria-hidden="true" />
+        <div className="max-w-[92rem] mx-auto relative">
           <div className="max-w-3xl mb-12 fade-up">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CHOOSE YOUR PATH</p>
-            <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
-              Find the right path for your project.
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-light leading-tight font-heading tracking-tight mb-6">
+              Find your path into a higher-value property.
             </h2>
-            <p className="text-gray-700 text-lg leading-relaxed">Whether you want to build a custom home, modernize a property, develop land, or explore FGIP Legacy Estate opportunities, start with the route that matches your goal.</p>
+            <p className="text-white/70 text-lg leading-relaxed">Four entry points, one standard: premium decisions, stronger execution, and assets designed to hold attention.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
-            {servicePaths.map((path) => (
-              <div key={path.title} className="bg-white/80 border border-white/60 rounded-2xl p-6 shadow-sm flex flex-col min-h-[310px]">
-                <h3 className="text-2xl font-heading mb-4">{path.title}</h3>
-                <p className="text-gray-600 leading-relaxed mb-6 flex-1">{path.text}</p>
-                <button onClick={() => handleNavigate(path.path)} className="text-brand-primary font-bold flex items-center gap-2 hover:text-brand-dark transition-colors text-left">
-                  {path.action} <ArrowRight className="w-4 h-4" />
-                </button>
+          <div className="luxury-path-grid fade-up">
+            {servicePaths.map((path, index) => (
+              <div key={path.title} className={`luxury-path-card luxury-path-card-${index + 1}`}>
+                <img src={path.image} alt="" className="luxury-path-image" loading="lazy" />
+                <div className="luxury-path-overlay" />
+                <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-8">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/70 mb-4">{path.stat}</p>
+                    <h3 className="text-2xl md:text-3xl font-heading mb-4">{path.title}</h3>
+                    <p className="text-white/76 leading-relaxed max-w-sm">{path.text}</p>
+                  </div>
+                  <button onClick={() => handleNavigate(path.path)} className="mt-8 text-white font-bold flex items-center gap-2 hover:text-brand-primary transition-colors text-left">
+                    {path.action} <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

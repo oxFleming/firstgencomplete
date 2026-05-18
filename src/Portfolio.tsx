@@ -323,9 +323,9 @@ export default function Portfolio() {
     <main className="pt-32 pb-24 max-w-7xl mx-auto px-5 sm:px-6 w-full max-w-full overflow-x-clip">
       <div className="mb-12 lg:mb-20 portfolio-fade-up max-w-4xl">
         <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">OUR WORK</h3>
-        <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Portfolio</h1>
+        <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight">Built work, estate vision, and finish intelligence.</h1>
         <p className="text-lg text-gray-700 leading-relaxed mb-10">
-          From modern coastal retreats to sprawling mountain estates, our portfolio offers a swift yet in-depth look at our team's expertise, the enduring quality of our work, and our commitment to details that reflect the <span className="bg-brand-primary text-white px-1">vision of our clients.</span> Explore our custom home portfolio below.
+          A tighter look at the work First Generation Homes is positioned to deliver: custom residences, high-value renovations, premium interiors, and the FGIP Legacy Estate masterplan. The emphasis is simple: spaces that justify the investment.
         </p>
 
         <div className="mb-8 w-full">
@@ -347,6 +347,22 @@ export default function Portfolio() {
           </div>
         </div>
       </div>
+
+      <section className="portfolio-fade-up mb-16 grid grid-cols-1 lg:grid-cols-12 gap-4 bg-brand-dark text-white overflow-hidden">
+        <div className="lg:col-span-4 p-8 lg:p-10 flex flex-col justify-between min-h-[360px]">
+          <div>
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Selection Standard</p>
+            <h2 className="text-4xl font-heading font-light leading-tight mb-5">Every image should prove scale, taste, or execution.</h2>
+            <p className="text-white/70 leading-relaxed">Portfolio pages should not feel like a dump of projects. They should help a qualified client see the level of decision-making they are buying.</p>
+          </div>
+          <p className="text-white/45 text-xs uppercase tracking-[0.22em] mt-8">Residences / Interiors / Estate Development</p>
+        </div>
+        <div className="lg:col-span-8 grid grid-cols-3 min-h-[360px]">
+          <img src="/images/luxury-stock/signature-lounge.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
+          <img src="/images/luxury-stock/materials-gallery.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
+          <img src="/images/luxury-stock/marble-bath.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </section>
 
       {featuredProject && (
         <div className="mb-16 portfolio-fade-up relative z-10">
