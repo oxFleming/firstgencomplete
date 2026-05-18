@@ -30,7 +30,6 @@ const navLinks = [
 
 const secondaryLinks = [
   { label: 'Investment Opportunities', path: '/invest' },
-  { label: 'Insights', path: '/insights' },
   { label: 'FAQ', path: '/faq' }
 ];
 
