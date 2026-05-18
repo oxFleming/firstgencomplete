@@ -40,21 +40,23 @@ export default function Invest() {
             Invest in <span className="italic font-light">FGIP Legacy Estate</span>
           </h1>
           <p className="text-lg md:text-xl text-white/90 font-light max-w-2xl mx-auto drop-shadow-md">
-            Be part of a large-scale, infrastructure-led residential development in one of Nigeria's fastest-growing corridors.
+            A $549M, 1,500-unit residential platform planned around infrastructure, premium housing, and long-term corridor demand.
           </p>
         </div>
       </section>
 
       {/* Intro Section */}
-      <section className="px-6 py-20 lg:py-32 bg-white/40 backdrop-blur-3xl relative z-10">
+      <section className="px-6 py-20 lg:py-32 bg-[#f4f0e8] relative z-10 overflow-hidden">
+        <img src="/images/luxury-stock/grand-foyer.webp" alt="" className="absolute right-0 top-0 h-full w-full lg:w-1/2 object-cover opacity-24 lg:opacity-100" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f4f0e8] via-[#f4f0e8]/94 to-[#f4f0e8]/72" />
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="fade-up">
+          <div className="fade-up relative z-10">
             <SectionHeader
               subtitle="THE VISION"
               title={<>Strategic Sponsorship & <Highlight>Development Partnership</Highlight></>}
             />
             <p className="text-gray-800 text-lg leading-relaxed mb-6 font-medium">
-              First Generation Homes LLC is proud to serve as a strategic sponsor and development partner of FGIP Legacy Luxury Estate - a large-scale, infrastructure-led residential development located within the Lagos-Ogun growth corridor in Ogun State, Nigeria.
+              First Generation Homes LLC supports FGIP Legacy Luxury Estate as a strategic sponsor and development partner, adding U.S. operating credibility, procurement judgment, and construction perspective to a large-scale estate platform.
             </p>
             <p className="text-gray-600 leading-relaxed mb-8">
               Designed as a fully integrated residential community, the project spans approximately 160 acres and is planned to deliver 1,500 residential units through a structured, phased development model.
@@ -74,7 +76,7 @@ export default function Invest() {
               </div>
             </div>
           </div>
-          <div className="relative fade-up">
+          <div className="relative fade-up z-10">
             <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl skew-x-1 hover:skew-x-0 transition-transform duration-700">
               <LazyLoadImage src="/images/fgip%20legacy/6%20bedroom/6-bed1.webp" alt="Estate Architecture" className="w-full h-full object-cover" wrapperClassName="w-full h-full" />
             </div>
@@ -84,42 +86,44 @@ export default function Invest() {
       </section>
 
       {/* Strategic Value Section */}
-      <section className="px-6 py-24 bg-brand-dark/5 backdrop-blur-xl border-y border-white/40">
-        <div className="max-w-7xl mx-auto">
+      <section className="px-6 py-24 bg-[#111111] text-white border-y border-white/10 relative overflow-hidden">
+        <img src="/images/luxury-stock/materials-gallery.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-16" loading="lazy" />
+        <div className="absolute inset-0 bg-black/72" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 fade-up">
             <h2 className="text-4xl lg:text-5xl font-heading mb-6 tracking-tight">Addressing Modern Demand</h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
+            <p className="text-white/70 text-lg leading-relaxed">
               The project combines modern residential living with engineered infrastructure and long-term value creation.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white/60 p-8 rounded-2xl border border-white/50 shadow-xl hover:-translate-y-2 transition-transform duration-300 group fade-up">
+            <div className="bg-white/10 p-8 rounded-2xl border border-white/15 shadow-xl hover:-translate-y-2 transition-transform duration-300 group fade-up backdrop-blur-md">
               <div className="w-14 h-14 bg-brand-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors">
                 <TrendingUp className="w-7 h-7 text-brand-primary group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-xl font-heading font-medium mb-4">Value Creation</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <h3 className="text-xl font-heading font-medium mb-4 text-white">Value Creation</h3>
+              <p className="text-white/68 text-sm leading-relaxed">
                 FGIP Legacy Luxury Estate is being developed to address the growing demand for secure, well-planned, and lifestyle-driven communities through long-term value creation.
               </p>
             </div>
 
-            <div className="bg-white/60 p-8 rounded-2xl border border-white/50 shadow-xl hover:-translate-y-2 transition-transform duration-300 group fade-up" style={{ transitionDelay: '0.1s' }}>
+            <div className="bg-white/10 p-8 rounded-2xl border border-white/15 shadow-xl hover:-translate-y-2 transition-transform duration-300 group fade-up backdrop-blur-md" style={{ transitionDelay: '0.1s' }}>
               <div className="w-14 h-14 bg-brand-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors">
                 <Landmark className="w-7 h-7 text-brand-primary group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-xl font-heading font-medium mb-4">Institutional Standards</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <h3 className="text-xl font-heading font-medium mb-4 text-white">Institutional Standards</h3>
+              <p className="text-white/68 text-sm leading-relaxed">
                 The project is structured around an infrastructure-first and cluster-based execution strategy to align with institutional development standards.
               </p>
             </div>
 
-            <div className="bg-white/60 p-8 rounded-2xl border border-white/50 shadow-xl hover:-translate-y-2 transition-transform duration-300 group fade-up" style={{ transitionDelay: '0.2s' }}>
+            <div className="bg-white/10 p-8 rounded-2xl border border-white/15 shadow-xl hover:-translate-y-2 transition-transform duration-300 group fade-up backdrop-blur-md" style={{ transitionDelay: '0.2s' }}>
               <div className="w-14 h-14 bg-brand-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-primary transition-colors">
                 <ShieldCheck className="w-7 h-7 text-brand-primary group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-xl font-heading font-medium mb-4">Investor Confidence</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <h3 className="text-xl font-heading font-medium mb-4 text-white">Investor Confidence</h3>
+              <p className="text-white/68 text-sm leading-relaxed">
                 As a strategic sponsor, we prioritize structured execution and sustainable growth, fostering investor confidence and long-term community impact.
               </p>
             </div>
@@ -127,9 +131,29 @@ export default function Invest() {
         </div>
       </section>
 
+      <section className="px-6 py-24 bg-[#111111] text-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-5 fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Capital Story</p>
+            <h2 className="text-4xl lg:text-6xl font-heading font-light leading-tight mb-6">Investors should see product quality and operating discipline.</h2>
+            <p className="text-white/72 text-lg leading-relaxed">
+              The opportunity is not only land. It is a phased residential ecosystem with infrastructure, housing mix, community uses, and cross-border development support.
+            </p>
+          </div>
+          <div className="lg:col-span-7 grid grid-cols-2 gap-3 fade-up">
+            <img src="/images/fgip%20legacy/5%20Bedroom/5-bed1.webp" alt="" className="aspect-square object-cover" loading="lazy" />
+            <img src="/images/luxury-stock/grand-foyer.webp" alt="" className="aspect-square object-cover mt-10" loading="lazy" />
+            <img src="/images/luxury-stock/materials-wall.webp" alt="" className="aspect-square object-cover -mt-10" loading="lazy" />
+            <img src="/images/luxury-stock/spa-bath-suite.webp" alt="" className="aspect-square object-cover" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
       {/* Lifestyle & Amenities */}
-      <section className="px-6 py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+      <section className="px-6 py-24 relative overflow-hidden bg-[#f4f0e8]">
+        <img src="/images/luxury-stock/marble-bath.webp" alt="" className="absolute inset-y-0 left-0 w-full lg:w-1/3 object-cover opacity-16 lg:opacity-85" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f4f0e8]/88 via-[#f4f0e8] to-[#f4f0e8]" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 fade-up">
               <LazyLoadImage src="/images/fgip%20legacy/5%20Bedroom/5-bed1.webp" className="rounded-xl shadow-lg aspect-square object-cover" />

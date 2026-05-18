@@ -105,10 +105,24 @@ export default function Contact() {
 
   return (
     <main className="pt-32 pb-24 max-w-7xl mx-auto px-5 sm:px-6 w-full max-w-full overflow-x-clip">
+      <section className="contact-fade-up mb-16 grid grid-cols-1 lg:grid-cols-12 gap-4 bg-brand-dark text-white overflow-hidden">
+        <div className="lg:col-span-7 min-h-[360px] relative">
+          <img src="/images/luxury-stock/materials-gallery.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-black/70" />
+        </div>
+        <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center">
+          <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Start With Clarity</p>
+          <h1 className="text-4xl md:text-6xl font-light mb-6 font-heading tracking-tight leading-tight">A serious project deserves a specific first conversation.</h1>
+          <p className="text-white/72 leading-relaxed">
+            Share the location, property type, target budget, timing, and the decision you need help making. We will respond with the route that fits.
+          </p>
+        </div>
+      </section>
+
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         <div className="contact-fade-up lg:col-span-5">
           <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">REQUEST A CONSULTATION</h3>
-          <h1 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight leading-tight">Let's define the right next step.</h1>
+          <h2 className="text-5xl md:text-7xl font-light mb-8 font-heading tracking-tight leading-tight">Let's define the right next step.</h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-8 max-w-lg">
             Whether you are planning a custom home, renovation, development project, or investment conversation, share the basics and we will help you move from idea to a clearer plan.
           </p>

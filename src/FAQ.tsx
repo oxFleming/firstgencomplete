@@ -57,12 +57,19 @@ export default function FAQ() {
   };
 
   return (
-    <div className="pt-32 pb-24 max-w-4xl mx-auto px-6 min-h-screen">
+    <div className="pt-32 pb-24 max-w-5xl mx-auto px-6 min-h-screen">
       {/* Search Engine Optimization JSON-LD Injection */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4 text-center faq-item-anim">Knowledge Base</h3>
-      <h1 className="text-4xl md:text-6xl font-light text-center mb-16 font-heading tracking-tight faq-item-anim">Frequently Asked <span className="italic">Questions</span></h1>
+      <section className="faq-item-anim mb-12 bg-brand-dark text-white p-8 lg:p-12 relative overflow-hidden">
+        <img src="/images/luxury-stock/luxury-bath-dark.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-26" loading="lazy" />
+        <div className="absolute inset-0 bg-black/68" />
+        <div className="relative z-10 max-w-3xl">
+          <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">Knowledge Base</h3>
+          <h1 className="text-4xl md:text-6xl font-light mb-6 font-heading tracking-tight">Frequently Asked <span className="italic">Questions</span></h1>
+          <p className="text-white/72 text-lg leading-relaxed">Direct answers for owners, investors, and partners evaluating a luxury construction, renovation, or development conversation.</p>
+        </div>
+      </section>
       
       <div className="space-y-4">
         {faqs.map((faq, index) => (

@@ -39,27 +39,31 @@ export default function Insights() {
 
   return (
     <main className="pt-32 pb-24 max-w-7xl mx-auto px-5 sm:px-6 w-full max-w-full overflow-x-clip">
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16 items-end">
-        <div className="lg:col-span-8 insight-fade-up">
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-16 items-end bg-brand-dark text-white p-6 lg:p-10 relative overflow-hidden">
+        <img src="/images/luxury-stock/materials-wall.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" loading="lazy" />
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="lg:col-span-8 insight-fade-up relative z-10">
           <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Media & Insights</p>
           <h1 className="text-5xl md:text-7xl font-heading font-light leading-tight tracking-tight mb-6">
             Development thinking, company updates, and platform perspective.
           </h1>
-          <p className="text-lg text-gray-700 leading-relaxed max-w-3xl">
+          <p className="text-lg text-white/72 leading-relaxed max-w-3xl">
             A dedicated place for First Generation Homes LLC to publish project updates, investment commentary, development announcements, and thought leadership around luxury residential infrastructure.
           </p>
         </div>
-        <div className="lg:col-span-4 insight-fade-up bg-white/60 border border-white/60 rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-4 insight-fade-up bg-white/10 border border-white/15 rounded-2xl p-6 shadow-sm relative z-10 backdrop-blur-md">
           <h2 className="text-2xl font-heading mb-3">Editorial purpose</h2>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-white/68 leading-relaxed">
             This section gives the brand a professional publishing layer for credibility, SEO, and investor education.
           </p>
         </div>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20 bg-[#f4f0e8] p-5 lg:p-7 relative overflow-hidden">
+        <img src="/images/luxury-stock/grand-foyer.webp" alt="" className="absolute inset-y-0 right-0 w-full lg:w-1/3 object-cover opacity-16 lg:opacity-90" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f4f0e8] via-[#f4f0e8]/96 to-[#f4f0e8]/80" />
         {insights.map((item) => (
-          <article key={item.title} className="insight-fade-up bg-white/70 border border-white/60 rounded-2xl p-7 shadow-sm flex flex-col min-h-[330px]">
+          <article key={item.title} className="insight-fade-up bg-white/78 border border-white/70 rounded-2xl p-7 shadow-sm flex flex-col min-h-[330px] relative z-10 backdrop-blur-sm">
             <item.icon className="w-8 h-8 text-brand-primary mb-6" />
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">{item.category}</p>
             <h2 className="text-2xl font-heading mb-4 leading-tight">{item.title}</h2>

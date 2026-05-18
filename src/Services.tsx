@@ -12,10 +12,10 @@ const servicePillars = [
   {
     id: 'custom-homes',
     title: 'Custom Home Construction',
-    audience: 'For families and property owners ready to build around their lifestyle.',
-    outcome: 'A buildable plan, a coordinated team, and a home delivered with fewer surprises.',
-    description: 'From early planning to final handover, First Generation Homes coordinates design, construction, finishes, and delivery so your home is built with clarity, accountability, and attention to the details that make it yours.',
-    image: '/images/project-images/custom-home/custom2.webp',
+    audience: 'For owners ready to build a signature residence.',
+    outcome: 'One coordinated path from concept, budget, finishes, and construction to handover.',
+    description: 'We coordinate architectural decisions, site execution, interior finish intent, and delivery controls so the residence feels intentional before work begins and refined when the keys are handed over.',
+    image: '/images/luxury-stock/airy-custom-home.webp',
     bullets: [
       'Architectural design coordination',
       'Ground-up residential construction',
@@ -26,10 +26,10 @@ const servicePillars = [
   {
     id: 'renovation',
     title: 'Luxury Renovations & Remodeling',
-    audience: 'For owners who want to modernize, expand, or reposition an existing property.',
-    outcome: 'A better-functioning property that feels current, comfortable, and more valuable.',
-    description: 'We help clients improve how a property looks, functions, and performs, with renovation work that can raise comfort, usability, and long-term value without losing sight of schedule or budget discipline.',
-    image: '/images/project-images/interior/interior2.webp',
+    audience: 'For owners repositioning an existing property for daily use and resale strength.',
+    outcome: 'Modern rooms, stronger utility, and finishes that signal value without shouting.',
+    description: 'We focus renovation scope around the decisions that change how a property lives: kitchens, baths, structural updates, lighting, surfaces, circulation, and exterior presence.',
+    image: '/images/luxury-stock/marble-bath.webp',
     bullets: [
       'Kitchen and bathroom remodeling',
       'Whole-home modernization',
@@ -41,8 +41,8 @@ const servicePillars = [
     id: 'development',
     title: 'Real Estate Development',
     audience: 'For investors, landowners, and partners planning residential or mixed-use projects.',
-    outcome: 'A disciplined path from concept and feasibility to procurement, construction, and delivery.',
-    description: 'Our team supports development planning, procurement, construction coordination, and phased delivery for projects that need commercial discipline, credible partners, and practical execution.',
+    outcome: 'A disciplined path from feasibility to procurement, construction coordination, and phased delivery.',
+    description: 'Our team supports residential and mixed-use projects that need credible planning, visible cost control, supplier coordination, and execution discipline before capital is committed.',
     image: '/images/services/building1.webp',
     bullets: [
       'Development planning and project strategy',
@@ -53,11 +53,11 @@ const servicePillars = [
   },
   {
     id: 'materials',
-    title: 'Finishing Products & Procurement',
+    title: 'Finishes & Procurement',
     audience: 'For clients who want stronger quality control and smarter sourcing decisions.',
     outcome: 'Selections that protect the design intent while keeping cost, quality, and availability visible.',
-    description: 'We support construction and renovation projects through finish selections, material sourcing, and installation coordination that protect both budget and design intent.',
-    image: '/images/services/materials.webp',
+    description: 'We support projects through finish selections, material sourcing, and installation coordination that protect both budget and design intent across tile, stone, flooring, cabinetry, fixtures, and surfaces.',
+    image: '/images/luxury-stock/materials-wall.webp',
     bullets: [
       'Tile, wood, and flooring selections',
       'Kitchen and bathroom fixtures',
@@ -72,6 +72,12 @@ const proofPoints = [
   'Residential construction, renovation, and development support',
   'Design, procurement, and delivery under one conversation',
   'Consultation-first process before scope or budget decisions'
+];
+
+const luxuryStandards = [
+  { value: '01', label: 'Budget clarity before decorative decisions' },
+  { value: '02', label: 'Material selections tied to availability and install reality' },
+  { value: '03', label: 'Project routes for homes, renovations, developments, and partners' }
 ];
 
 export default function Services() {
@@ -104,10 +110,10 @@ export default function Services() {
         <div className="lg:col-span-8 services-fade-up">
           <h3 className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-6">SERVICES</h3>
           <h1 className="text-5xl md:text-7xl font-light leading-tight mb-8 font-heading tracking-tight">
-            Choose the right path for the property you want to <Highlight>build, improve, or develop</Highlight>.
+            Build, improve, or develop with <Highlight>luxury-grade discipline</Highlight>.
           </h1>
           <p className="text-lg text-gray-700 leading-relaxed max-w-3xl">
-            First Generation Homes LLC helps homeowners, investors, and development partners move from interest to a practical next step through construction, renovation, development planning, and finishing support.
+            First Generation Homes LLC helps homeowners, investors, and development partners turn expensive decisions into a controlled plan: scope, materials, schedule, procurement, and delivery.
           </p>
         </div>
         <div className="lg:col-span-4 services-fade-up bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 shadow-sm">
@@ -117,17 +123,38 @@ export default function Services() {
         </div>
       </section>
 
+      <section className="services-fade-up mb-20 grid grid-cols-1 lg:grid-cols-12 gap-4 bg-brand-dark text-white overflow-hidden">
+        <div className="lg:col-span-7 min-h-[420px] relative">
+          <img src="/images/luxury-stock/grand-foyer.webp" alt="Luxury residence interior" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/15 to-black/55" />
+        </div>
+        <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center">
+          <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">How We Position The Work</p>
+          <h2 className="text-4xl md:text-5xl font-heading font-light leading-tight mb-8">Luxury is a controlled process before it is a finish package.</h2>
+          <div className="space-y-5">
+            {luxuryStandards.map((item) => (
+              <div key={item.value} className="flex gap-5 border-t border-white/15 pt-5">
+                <span className="text-brand-primary font-heading text-3xl">{item.value}</span>
+                <p className="text-white/76 leading-relaxed">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <nav className="sticky top-[73px] bg-white/70 backdrop-blur-2xl z-40 py-4 border border-white/40 flex gap-6 overflow-x-auto whitespace-nowrap text-sm font-medium mb-12 services-fade-up px-4 rounded-xl shadow-sm max-w-full scrollbar-hide">
         {servicePillars.map((service) => (
           <a key={service.id} href={`#${service.id}`} className="hover:text-brand-primary transition-colors">{service.title}</a>
         ))}
       </nav>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20 services-fade-up">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20 services-fade-up bg-[#171717] p-5 lg:p-7 text-white relative overflow-hidden">
+        <img src="/images/luxury-stock/materials-gallery.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-18" loading="lazy" />
+        <div className="absolute inset-0 bg-black/55" />
         {proofPoints.map((proof) => (
-          <div key={proof} className="bg-white/60 border border-white/50 rounded-xl p-5 shadow-sm flex items-start gap-3">
+          <div key={proof} className="relative z-10 bg-white/10 border border-white/15 rounded-xl p-5 shadow-sm flex items-start gap-3 backdrop-blur-md">
             <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
-            <span className="text-sm text-gray-700 font-medium">{proof}</span>
+            <span className="text-sm text-white/78 font-medium">{proof}</span>
           </div>
         ))}
       </section>
@@ -153,7 +180,7 @@ export default function Services() {
             <img
               src={service.image}
               alt={service.title}
-              className="w-full aspect-[4/3] lg:aspect-[16/11] object-cover rounded-sm shadow-md"
+              className="w-full aspect-[4/3] lg:aspect-[16/11] object-cover rounded-sm shadow-2xl"
               loading="lazy"
             />
           </div>

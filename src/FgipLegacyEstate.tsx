@@ -100,21 +100,43 @@ export default function FgipLegacyEstate() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-white/50 backdrop-blur-3xl border-b border-white/40">
+      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-[#f4f0e8] border-b border-white/40 relative overflow-hidden">
+        <img src="/images/luxury-stock/airy-custom-home.webp" alt="" className="absolute right-0 top-0 h-full w-full lg:w-1/2 object-cover opacity-28 lg:opacity-100" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f4f0e8] via-[#f4f0e8]/92 to-[#f4f0e8]/72" />
         <div className="max-w-[92rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5 fgip-fade-up">
+          <div className="lg:col-span-5 fgip-fade-up relative z-10">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Project Vision</p>
             <h2 className="text-4xl md:text-6xl font-heading font-light leading-tight tracking-tight mb-6">
               Luxury living anchored by infrastructure and community impact.
             </h2>
           </div>
-          <div className="lg:col-span-7 fgip-fade-up">
+          <div className="lg:col-span-7 fgip-fade-up relative z-10 bg-white/75 border border-white/70 p-6 lg:p-8 backdrop-blur-md">
             <p className="text-xl text-gray-800 leading-relaxed mb-6">
               FGIP Legacy Luxury Estate is designed as a self-sustaining residential ecosystem, not a conventional housing subdivision. Phase 1 establishes the infrastructure backbone and premium residential clusters that support the long-term 1,500-unit masterplan.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
               The development connects modern housing demand with estate-scale planning: power, water, roads, drainage, security, education, commercial support, and residential product diversity. The goal is to create a premium community that can serve homeowners, families, investors, and regional economic growth.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 sm:px-8 lg:px-12 py-16 lg:py-24 bg-[#111111] text-white overflow-hidden">
+        <div className="max-w-[92rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-4 fgip-fade-up">
+            <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Luxury Proof Points</p>
+            <h2 className="text-4xl md:text-5xl font-heading font-light leading-tight mb-6">The estate story must feel premium before a buyer reads the brochure.</h2>
+            <p className="text-white/70 leading-relaxed">FGIP Legacy Estate needs to show architecture, infrastructure, interiors, and material confidence together. That is how the project moves from housing inventory to luxury destination.</p>
+          </div>
+          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-3 fgip-fade-up">
+            {[
+              '/images/fgip%20legacy/6%20bedroom/6-bed1.webp',
+              '/images/luxury-stock/grand-foyer.webp',
+              '/images/luxury-stock/materials-gallery.webp',
+              '/images/luxury-stock/spa-bath-suite.webp'
+            ].map((image, index) => (
+              <img key={image} src={image} alt="" className={`w-full object-cover ${index % 2 === 1 ? 'aspect-[3/4] md:mt-10' : 'aspect-[3/4]'}`} loading="lazy" />
+            ))}
           </div>
         </div>
       </section>
@@ -172,25 +194,27 @@ export default function FgipLegacyEstate() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-white/60 backdrop-blur-3xl border-y border-white/40">
+      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-[#111111] text-white border-y border-white/10 relative overflow-hidden">
+        <img src="/images/luxury-stock/materials-wall.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-18" loading="lazy" />
+        <div className="absolute inset-0 bg-black/72" />
         <div className="max-w-[92rem] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="fgip-fade-up grid grid-cols-2 gap-3">
+          <div className="fgip-fade-up grid grid-cols-2 gap-3 relative z-10">
             <img src="/images/fgip%20legacy/primary%20school/school1.webp" alt="FGIP Legacy Estate school rendering" className="aspect-square object-cover rounded-xl shadow-sm" loading="lazy" />
             <img src="/images/fgip%20legacy/daycare/daycare1.webp" alt="FGIP Legacy Estate daycare rendering" className="aspect-square object-cover rounded-xl shadow-sm mt-10" loading="lazy" />
             <img src="/images/fgip%20legacy/Business%20Center/business1.webp" alt="FGIP Legacy Estate business center rendering" className="aspect-square object-cover rounded-xl shadow-sm -mt-10" loading="lazy" />
             <img src="/images/fgip%20legacy/hotel/hotel2.webp" alt="FGIP Legacy Estate hospitality rendering" className="aspect-square object-cover rounded-xl shadow-sm" loading="lazy" />
           </div>
-          <div className="fgip-fade-up">
+          <div className="fgip-fade-up relative z-10">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Amenities & Community</p>
             <h2 className="text-4xl md:text-6xl font-heading font-light leading-tight tracking-tight mb-6">
               A residential estate planned around everyday life.
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+            <p className="text-lg text-white/72 leading-relaxed mb-8">
               FGIP Legacy Estate is positioned as a complete living environment, with community infrastructure that supports education, work, hospitality, and social connection.
             </p>
             <div className="space-y-4">
               {amenities.map((item) => (
-                <div key={item} className="flex gap-3 text-gray-700 bg-white/70 border border-white/60 rounded-xl p-4">
+                <div key={item} className="flex gap-3 text-white/78 bg-white/10 border border-white/15 rounded-xl p-4 backdrop-blur-md">
                   <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </div>
@@ -200,8 +224,10 @@ export default function FgipLegacyEstate() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-white/30 backdrop-blur-xl">
-        <div className="max-w-[92rem] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-28 bg-[#f4f0e8] relative overflow-hidden">
+        <img src="/images/luxury-stock/grand-foyer.webp" alt="" className="absolute inset-y-0 right-0 w-full lg:w-1/3 object-cover opacity-20 lg:opacity-100" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f4f0e8] via-[#f4f0e8]/95 to-[#f4f0e8]/78" />
+        <div className="max-w-[92rem] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4 relative z-10">
           <div className="fgip-fade-up bg-white/70 border border-white/60 rounded-2xl p-8 lg:p-10">
             <Leaf className="w-8 h-8 text-brand-primary mb-6" />
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-4">Sustainability</p>
@@ -245,13 +271,15 @@ export default function FgipLegacyEstate() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-24 bg-white/50 backdrop-blur-3xl">
-        <div className="max-w-5xl mx-auto text-center fgip-fade-up">
+      <section className="px-5 sm:px-8 lg:px-12 py-20 lg:py-24 bg-[#111111] text-white relative overflow-hidden">
+        <img src="/images/luxury-stock/signature-lounge.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-28" loading="lazy" />
+        <div className="absolute inset-0 bg-black/68" />
+        <div className="max-w-5xl mx-auto text-center fgip-fade-up relative z-10">
           <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">Next Step</p>
           <h2 className="text-4xl md:text-6xl font-heading font-light leading-tight tracking-tight mb-6">
             Explore the estate, the partnership model, or the investment opportunity.
           </h2>
-          <p className="text-lg text-gray-700 leading-relaxed mb-8 max-w-3xl mx-auto">
+          <p className="text-lg text-white/72 leading-relaxed mb-8 max-w-3xl mx-auto">
             Whether you are evaluating the development as an investor, partner, lender, buyer, or strategic collaborator, the right next step is a direct conversation with the team.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
