@@ -315,28 +315,30 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-white/50 backdrop-blur-3xl border-b border-white/30 relative z-10">
+      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-[#151515] text-white border-b border-white/10 relative z-10 overflow-hidden">
+        <img src="/images/luxury-stock/materials-wall.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-18" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#151515] via-[#151515]/92 to-[#151515]/70" />
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5 fade-up">
+          <div className="lg:col-span-5 fade-up relative z-10">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">CORPORATE POSITIONING</p>
             <h2 className="text-4xl md:text-5xl font-light leading-tight font-heading tracking-tight mb-6">
               More than a contractor. A <Highlight>luxury development partner</Highlight> with U.S. credibility.
             </h2>
-            <p className="text-gray-700 leading-relaxed mb-8">
+            <p className="text-white/72 leading-relaxed mb-8">
               First Generation Homes combines construction delivery, high-end renovation experience, finish procurement, and development advisory under one operating platform.
             </p>
-            <Button onClick={() => handleNavigate('/team')}>Meet the Leadership</Button>
+            <Button onClick={() => handleNavigate('/team')} className="border-white/60 text-white hover:bg-white hover:text-brand-dark">Meet the Leadership</Button>
           </div>
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4 fade-up">
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4 fade-up relative z-10">
             {[
               { icon: Landmark, title: 'U.S. Headquarters', body: '444 W Lake Street, Suite 1700, Chicago, Illinois 60606.' },
               { icon: MapPin, title: 'Operating Presence', body: 'Chicago, Houston, and Lagos touchpoints for real estate activity and partnerships.' },
               { icon: Globe2, title: 'Cross-Border Support', body: 'Development planning, procurement, finishing support, and strategic advisory across markets.' }
             ].map((item) => (
-              <div key={item.title} className="bg-white/80 border border-white/60 rounded-2xl p-6 shadow-sm">
+              <div key={item.title} className="bg-white/9 border border-white/15 rounded-2xl p-6 shadow-sm backdrop-blur-md">
                 <item.icon className="w-7 h-7 text-brand-primary mb-5" />
                 <h3 className="text-xl font-heading mb-3">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
+                <p className="text-sm text-white/65 leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
@@ -405,9 +407,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-white/40 backdrop-blur-3xl border-y border-white/40 relative z-10">
+      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-[#f4f0e8] border-y border-white/40 relative z-10 overflow-hidden">
+        <div className="absolute inset-y-0 left-0 w-full lg:w-1/2 opacity-20 lg:opacity-100">
+          <img src="/images/luxury-stock/grand-foyer.webp" alt="" className="w-full h-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-[#f4f0e8]" />
+        </div>
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5 fade-up">
+          <div className="lg:col-span-5 fade-up relative z-10 lg:bg-white/86 lg:backdrop-blur-md lg:p-8 lg:border lg:border-white/70">
             <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-5">FLAGSHIP DEVELOPMENT</p>
             <h2 className="text-4xl md:text-6xl font-light leading-tight font-heading tracking-tight mb-6">
               FGIP Legacy Luxury Estate is the proof of scale.
@@ -429,7 +435,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:col-span-7 fade-up">
+          <div className="lg:col-span-7 fade-up relative z-10">
             <div className="grid grid-cols-2 gap-3">
               {projectCards.map((project, index) => (
                 <div key={project.title} className={`${index === 0 ? 'col-span-2' : ''} bg-white rounded-2xl overflow-hidden shadow-md border border-white/60`}>
@@ -448,12 +454,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 sm:px-6 py-16 lg:py-24 bg-white/40 backdrop-blur-3xl text-center flex items-center justify-center relative z-10 border-y border-white/50">
-        <div className="max-w-4xl mx-auto px-4 lg:px-0 fade-up">
-          <p className="text-2xl md:text-3xl lg:text-4xl font-light text-brand-primary leading-snug mb-8 font-heading tracking-tight mx-auto drop-shadow-sm">
+      <section className="px-5 sm:px-6 py-20 lg:py-28 bg-brand-dark text-center flex items-center justify-center relative z-10 border-y border-white/10 overflow-hidden">
+        <img src="/images/luxury-stock/signature-lounge.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-35" loading="lazy" />
+        <div className="absolute inset-0 bg-black/62" />
+        <div className="max-w-4xl mx-auto px-4 lg:px-0 fade-up relative z-10">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-light text-white leading-snug mb-8 font-heading tracking-tight mx-auto drop-shadow-sm">
             "We truly appreciate your commitment on this project. I wanted to acknowledge the satisfaction on our remodel. I must give a 100% satisfied mark as you not only finished the job early and under budget, but with great sub-contractors and excellent workmanship."
           </p>
-          <p className="font-medium text-lg lg:text-xl text-gray-900 tracking-wide drop-shadow-sm">Raja Bilal</p>
+          <p className="font-medium text-lg lg:text-xl text-white tracking-wide drop-shadow-sm">Raja Bilal</p>
           <p className="text-brand-primary text-sm lg:text-base font-semibold tracking-wider font-heading mt-1 drop-shadow-sm">CEO Focus with Raja</p>
         </div>
       </section>

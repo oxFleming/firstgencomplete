@@ -148,11 +148,13 @@ export default function Services() {
         ))}
       </nav>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20 services-fade-up">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20 services-fade-up bg-[#171717] p-5 lg:p-7 text-white relative overflow-hidden">
+        <img src="/images/luxury-stock/materials-gallery.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-18" loading="lazy" />
+        <div className="absolute inset-0 bg-black/55" />
         {proofPoints.map((proof) => (
-          <div key={proof} className="bg-white/60 border border-white/50 rounded-xl p-5 shadow-sm flex items-start gap-3">
+          <div key={proof} className="relative z-10 bg-white/10 border border-white/15 rounded-xl p-5 shadow-sm flex items-start gap-3 backdrop-blur-md">
             <CheckCircle2 className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
-            <span className="text-sm text-gray-700 font-medium">{proof}</span>
+            <span className="text-sm text-white/78 font-medium">{proof}</span>
           </div>
         ))}
       </section>
@@ -178,7 +180,7 @@ export default function Services() {
             <img
               src={service.image}
               alt={service.title}
-              className="w-full aspect-[4/3] lg:aspect-[16/11] object-cover rounded-sm shadow-md"
+              className="w-full aspect-[4/3] lg:aspect-[16/11] object-cover rounded-sm shadow-2xl"
               loading="lazy"
             />
           </div>
