@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/islands/ContactForm.tsx';
+import { ArrowRight, Landmark, MapPin, Globe2 } from 'lucide-react';
+
+const metrics = [
+  { value: '$549M', label: 'Total development value, FGIP Legacy Estate' },
+  { value: '1,500', label: 'Planned residential units in the masterplan' },
+  { value: '$285M', label: 'Phase 1 development cost' },
+  { value: '3', label: 'Touchpoints: Chicago, Houston, Lagos' },
+];
+
+const pillars = [
+  { icon: Landmark, title: 'U.S. Headquarters', body: '444 W Lake Street, Suite 1700, Chicago, Illinois 60606.' },
+  { icon: MapPin, title: 'Operating Presence', body: 'Chicago, Houston, and Lagos touchpoints for real estate activity and partnerships.' },
+  { icon: Globe2, title: 'Cross-Border Support', body: 'Development planning, procurement, finishing support, and strategic advisory across markets.' },
+];
+---
+
+<Base>
+  <!-- HERO -->
+  <section class="relative min-h-[100svh] flex flex-col justify-end overflow-hidden">
+    <img src="/images/services/header.webp" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover object-center" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/30"></div>
+
+    <div class="container-fg relative z-10 pb-14 lg:pb-20 pt-32">
+      <p class="eyebrow mb-5">Luxury homes · Estate-scale development</p>
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light leading-[0.98] tracking-tight max-w-4xl text-bone mb-7">
+        We build for people who expect more.
+      </h1>
+      <p class="text-lg md:text-xl text-bone-dim max-w-2xl leading-relaxed mb-9">
+        Custom residences, high-value renovations, and a $549M estate platform — delivered with design discipline, procurement control, and development strength.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="/contact" class="inline-flex items-center justify-center gap-3 bg-bone text-ink rounded-full px-7 py-4 font-medium tracking-wide hover:bg-brass transition-colors">
+          Book a Project Consultation <ArrowRight className="w-5 h-5" />
+        </a>
+        <a href="/invest" class="inline-flex items-center justify-center gap-3 border border-bone/40 text-bone rounded-full px-7 py-4 font-medium tracking-wide hover:bg-bone hover:text-ink transition-colors">
+          Explore FGIP Legacy Estate <ArrowRight className="w-5 h-5" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-12 max-w-4xl">
+        {metrics.map((m) => (
+          <div class="border border-line bg-surface/60 backdrop-blur px-4 py-3 rounded-xl">
+            <p class="text-2xl md:text-3xl font-heading text-bone leading-none">{m.value}</p>
+            <p class="text-[10px] md:text-xs text-bone-dim leading-snug mt-2">{m.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- POSITIONING -->
+  <section class="bg-surface border-y border-line py-20 lg:py-28">
+    <div class="container-fg grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div class="lg:col-span-5 reveal">
+        <p class="eyebrow mb-5">Corporate positioning</p>
+        <h2 class="text-4xl md:text-5xl font-light leading-tight text-bone mb-6">
+          More than a contractor. A luxury development partner with U.S. credibility.
+        </h2>
+        <p class="text-bone-dim leading-relaxed mb-8">
+          First Generation Homes combines construction delivery, high-end renovation experience, finish procurement, and development advisory under one operating platform.
+        </p>
+        <a href="/team" class="inline-flex items-center gap-2 border border-bone/40 text-bone rounded-full px-6 py-3 text-sm font-medium hover:bg-bone hover:text-ink transition-colors">
+          Meet the Leadership <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+      <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
+        {pillars.map((p) => (
+          <div class="bg-surface-2 border border-line rounded-2xl p-6">
+            <p.icon className="w-7 h-7 text-brass-soft mb-5" />
+            <h3 class="text-xl font-heading text-bone mb-3">{p.title}</h3>
+            <p class="text-sm text-bone-dim leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="bg-bone py-20 lg:py-24">
+    <div class="container-fg">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div class="reveal">
+          <p class="eyebrow mb-5" style="color:#9a7b3f">Free project consultation</p>
+          <h2 class="text-4xl md:text-5xl font-light leading-tight text-ink mb-6">
+            Tell us what you want to build, renovate, develop, or invest in.
+          </h2>
+          <p class="text-lg text-ink/70 leading-relaxed max-w-xl mb-8">
+            Share the basics and we will help you understand the right next step. The goal of the first conversation is clarity, not pressure.
+          </p>
+          <div class="space-y-3 text-ink/70">
+            <p><span class="font-medium text-ink">Email:</span> matthew.kalesanwo@fgipgroup.net</p>
+            <p><span class="font-medium text-ink">Phone:</span> +1 630 326 5117</p>
+            <p><span class="font-medium text-ink">WhatsApp:</span> +234 703 741 2354</p>
+          </div>
+        </div>
+        <div class="reveal">
+          <ContactForm client:visible />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

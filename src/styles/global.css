@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* ============================================================
+   First Generation Homes — Dark Luxury design system
+   Deep warm ink base · warm bone off-white · single brass accent
+   ============================================================ */
+@theme {
+  /* Type */
+  --font-heading: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Core palette */
+  --color-ink: #14130f;        /* near-black, warm */
+  --color-surface: #1c1a16;    /* raised dark surface */
+  --color-surface-2: #262320;  /* cards on dark */
+  --color-bone: #f4efe6;       /* warm off-white (light sections / text on dark) */
+  --color-bone-dim: #d9d2c5;   /* muted bone for secondary text on dark */
+  --color-brass: #b08d4f;      /* the single metallic accent */
+  --color-brass-soft: #c8a96a; /* lighter brass for hovers/eyebrows */
+  --color-line: #38332c;       /* hairline borders on dark */
+  --color-line-light: #e3dccd; /* hairline borders on light */
+
+  /* Legacy aliases kept so partially-migrated markup still resolves */
+  --color-brand-primary: #b08d4f;
+  --color-brand-gold: #c8a96a;
+  --color-brand-dark: #14130f;
+  --color-brand-gray: #f4efe6;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+img, video, canvas, svg { max-width: 100%; display: block; }
+
+::selection { background: var(--color-brass); color: var(--color-ink); }
+
+/* Hairline scrollbar */
+::-webkit-scrollbar { width: 0; background: transparent; }
+
+/* Eyebrow / kicker label */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-brass-soft);
+}
+
+/* Shared container */
+.container-fg { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
+@media (min-width: 640px) { .container-fg { padding-inline: 2rem; } }
+@media (min-width: 1024px) { .container-fg { padding-inline: 3rem; } }
+
+/* Scroll-reveal — pure CSS, IntersectionObserver toggles .is-visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}

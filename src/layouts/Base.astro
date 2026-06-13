@@ -1,0 +1,188 @@
+---
+import Header from '../components/islands/Header.tsx';
+import { MessageCircle } from 'lucide-react';
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'First Generation Homes LLC — Real Estate Development & Construction',
+  description = 'First Generation Homes LLC is a U.S.-based real estate development and construction company headquartered in Chicago, delivering custom homes, luxury estates, and the FGIP Legacy Estate.',
+  image = '/images/services/header.webp',
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+
+const nav = [
+  { label: 'About', path: '/' },
+  { label: 'Services', path: '/services' },
+  { label: 'Projects', path: '/portfolio' },
+  { label: 'FGIP', path: '/fgip-legacy-estate' },
+  { label: 'Leadership', path: '/team' },
+  { label: 'Contact', path: '/contact' },
+  { label: 'Investment Opportunities', path: '/invest' },
+  { label: 'Insights', path: '/insights' },
+  { label: 'FAQ', path: '/faq' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={Astro.url.href} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="First Generation Homes LLC" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:site_name" content="First Generation Homes" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Organization JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'First Generation Homes LLC',
+      alternateName: 'FGIP Homes',
+      url: 'https://www.firstgenerationhomesllc.com/',
+      logo: 'https://www.firstgenerationhomesllc.com/images/mission/our-mission1.webp',
+      description: 'First Generation Homes LLC is a global real estate development and residential construction company headquartered in Chicago, IL.',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+2347037412354',
+        contactType: 'customer service',
+        availableLanguage: ['English'],
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Chicago',
+        addressRegion: 'IL',
+        addressCountry: 'US',
+      },
+    })} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Header client:load pathname={pathname} />
+
+    <main class="w-full max-w-full overflow-x-clip">
+      <slot />
+    </main>
+
+    <footer class="bg-surface border-t border-line text-bone">
+      <div class="container-fg py-14 lg:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+          <div class="lg:col-span-4">
+            <span class="flex flex-col items-start leading-none font-heading select-none mb-6">
+              <span class="text-base font-light tracking-[0.18em] uppercase text-bone">First</span>
+              <span class="text-xl font-medium tracking-tight uppercase text-brass-soft">Generation</span>
+              <span class="text-[0.55rem] font-medium tracking-[0.5em] uppercase text-bone/60 mt-1">Homes</span>
+            </span>
+            <p class="text-bone-dim leading-relaxed max-w-sm mb-6">
+              Chicago-headquartered real estate development and construction, supporting residential delivery, renovation, procurement, and cross-border development.
+            </p>
+            <div class="flex flex-col gap-1 text-sm text-bone-dim">
+              <p>Direct Line: +1 630 326 5117</p>
+              <a href="mailto:matthew.kalesanwo@fgipgroup.net" class="text-brass-soft font-medium hover:underline">matthew.kalesanwo@fgipgroup.net</a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="flex flex-col gap-2 text-sm text-bone-dim">
+              <h4 class="text-bone font-medium text-base mb-1">Explore</h4>
+              {nav.map((l) => (
+                <a href={l.path} class="hover:text-brass-soft transition-colors">{l.label}</a>
+              ))}
+            </div>
+            <div class="flex flex-col gap-2 text-sm text-bone-dim">
+              <h4 class="text-bone font-medium text-base mb-1">Capabilities</h4>
+              <a href="/services" class="hover:text-brass-soft transition-colors">Custom Homes</a>
+              <a href="/services" class="hover:text-brass-soft transition-colors">Renovation &amp; Modernization</a>
+              <a href="/services" class="hover:text-brass-soft transition-colors">Development Support</a>
+              <a href="/services" class="hover:text-brass-soft transition-colors">Finishing &amp; Procurement</a>
+            </div>
+            <div class="flex flex-col gap-2 text-sm text-bone-dim">
+              <h4 class="text-bone font-medium text-base mb-1">Locations</h4>
+              <p>Chicago, IL<br />444 W Lake Street, Suite 1700</p>
+              <p>Houston, TX<br />United States</p>
+              <p>Lagos, NG<br />Lekki &amp; Ikeja Offices</p>
+            </div>
+            <div class="flex flex-col gap-4 text-sm text-bone-dim">
+              <div>
+                <h4 class="text-bone font-medium text-base mb-3">Social</h4>
+                <div class="flex flex-col gap-2">
+                  <a href="https://www.linkedin.com/company/first-generation-homes-llc/" target="_blank" rel="noopener noreferrer" class="hover:text-brass-soft transition-colors">LinkedIn</a>
+                  <a href="https://www.instagram.com/firstgenerationhomesllc/" target="_blank" rel="noopener noreferrer" class="hover:text-brass-soft transition-colors">Instagram</a>
+                </div>
+              </div>
+              <a href="https://wa.me/2347037412354" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-4 py-3 rounded-full font-medium hover:bg-[#20bd5a] transition-colors">
+                <MessageCircle className="w-4 h-4" /> WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-3 text-xs text-bone/50 pt-6 mt-8 border-t border-line text-center lg:text-left">
+          <p>Copyright &copy; 2026 First Generation Homes LLC. All rights reserved.</p>
+          <p>Powered by FGIP</p>
+        </div>
+      </div>
+    </footer>
+
+    <a
+      href="https://wa.me/2347037412354"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[200] bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center"
+      aria-label="Contact us on WhatsApp"
+    >
+      <MessageCircle className="w-7 h-7" />
+    </a>
+
+    <script>
+      // Lightweight scroll-reveal — no animation library needed.
+      const reveal = () => {
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+        els.forEach((el) => io.observe(el));
+      };
+      reveal();
+      document.addEventListener('astro:after-swap', reveal);
+    </script>
+  </body>
+</html>
