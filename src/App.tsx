@@ -12,6 +12,7 @@ const Invest = lazy(() => import('./Invest'));
 const Contact = lazy(() => import('./Contact'));
 const FgipLegacyEstate = lazy(() => import('./FgipLegacyEstate'));
 const Insights = lazy(() => import('./Insights'));
+const Careers = lazy(() => import('./Careers'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-white/30 backdrop-blur-3xl">
@@ -31,6 +32,7 @@ const navLinks = [
 const secondaryLinks = [
   { label: 'Investment Opportunities', path: '/invest' },
   { label: 'Insights', path: '/insights' },
+  { label: 'Careers', path: '/careers' },
   { label: 'FAQ', path: '/faq' }
 ];
 
@@ -195,9 +197,20 @@ function App() {
             </Link>
 
             <div className="hidden lg:flex items-center gap-8 xl:gap-10 text-sm font-medium tracking-widest uppercase">
-              {navLinks.map((link) => (
-                <Link key={link.path} to={link.path} onClick={() => handleNavClick(link.path)} className={`hover:text-brand-primary transition-colors ${headerSolid ? 'text-brand-dark' : 'text-white/90'}`}>{link.label}</Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => handleNavClick(link.path)}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`relative pb-1 hover:text-brand-primary transition-colors ${isActive ? 'text-brand-primary' : headerSolid ? 'text-brand-dark' : 'text-white/90'} ${isActive ? 'after:absolute after:left-0 after:right-0 after:bottom-0 after:h-0.5 after:bg-brand-primary after:rounded-full' : ''}`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
 
             <button onClick={() => setIsMenuOpen(true)} className={`lg:hidden p-2 transition-colors duration-300 ${headerSolid ? 'text-brand-dark hover:text-brand-primary' : 'text-white hover:text-white/80'}`} aria-label="Open navigation menu">
@@ -218,6 +231,7 @@ function App() {
             <Route path="/fgip" element={<FgipLegacyEstate />} />
             <Route path="/invest" element={<Invest />} />
             <Route path="/insights" element={<Insights />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<Home />} />
@@ -285,7 +299,7 @@ function App() {
             </div>
 
             <div className="flex flex-col lg:flex-row justify-between items-center gap-3 text-xs text-gray-500 pt-6 mt-8 border-t border-gray-300 text-center lg:text-left">
-              <p>Copyright &copy; 2026 First Generation Homes LLC. All rights reserved.</p>
+              <p>Copyright &copy; {new Date().getFullYear()} First Generation Homes LLC. All rights reserved.</p>
               <p>Powered by FGIP</p>
             </div>
           </div>

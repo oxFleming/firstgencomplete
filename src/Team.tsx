@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, X } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ContactSection from './components/ContactSection';
 
@@ -17,14 +18,14 @@ const teamMembers = [
     ]
   },
   {
-    name: "Mathew Kalesanwo",
+    name: "Matthew Kalesanwo",
     role: "VP, Revenue Growth & Business Development",
     img: "/images/team-images/matthew.webp",
     bio: [
-      "Matthew Kalesanwo is the Vice President of Revenue Growth and Business Development, a strategic builder, and a human-centered leader. His career has spanned continents and industries, but one principle guides it all: growth rooted in trust.",
-      "With over $500M in revenue influenced and $10M in losses reversed, he has led global teams, built partnerships from the ground up, and turned complex challenges into clear, actionable wins. But numbers alone don't define him. He believes in the power of emotional intelligence, follow-through, and the kind of leadership that listens before it leads.",
-      "He advocates for people-whether it's contractors seeking opportunity, clients navigating change, or his own family building a future. His approach blends data with empathy, strategy with sincerity, and ambition with accountability.",
-      "His story is one of resilience, responsibility, and relentless hope. Matthew's leadership is defined by his commitment to collaboration, connection, and sharing his vision for the future."
+      "With more than 20 years across retail, enterprise services, and real estate development, Matthew leads global revenue growth and business development at First Generation Homes LLC and its affiliated FGIP Group.",
+      "He ranked #1 nationally in sales for five consecutive years at The Tile Shop (NASDAQ: TTSH), then scaled a consulting and enterprise services portfolio from $4.6M to $19.5M in revenue with 35% profit growth, closing a $10M+ global contract along the way.",
+      "As founder and principal of FGIP Legacy Luxury Estate, he rescoped the project from an initial ~$350M concept into a ~$549M master-planned development platform — a 57% expansion in project value driven by redesigned phasing, product mix, and commercial strategy.",
+      "His leadership blends operational depth with a growth-first approach to sales, partnerships, and capital strategy."
     ]
   },
   {
@@ -140,6 +141,22 @@ const teamMembers = [
 
 export default function Team() {
   const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
+
+  // Close modal with Escape and lock background scroll while it is open
+  useEffect(() => {
+    if (!selectedMember) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedMember(null);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [selectedMember]);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.team-fade-up',
@@ -202,6 +219,21 @@ export default function Team() {
         ))}
       </div>
 
+      {/* Careers CTA */}
+      <div className="team-fade-up mt-16 lg:mt-24 bg-brand-dark text-white rounded-[2rem] p-8 lg:p-12 relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+          <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-3">We're Hiring</p>
+          <h2 className="text-3xl md:text-4xl font-heading font-light mb-2">Want to build with this team?</h2>
+          <p className="text-white/70 leading-relaxed max-w-xl">We accept open applications across construction, engineering, architecture, and commercial roles — no posted vacancy required.</p>
+        </div>
+        <Link
+          to="/careers"
+          className="inline-flex items-center justify-center gap-3 bg-white text-brand-dark rounded-full px-7 py-4 font-bold hover:bg-white/90 transition-colors shrink-0"
+        >
+          Apply Now <ArrowRight className="w-5 h-5 text-brand-primary" />
+        </Link>
+      </div>
+
       {/* Team Member Modal */}
       {selectedMember && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 lg:p-12">
@@ -209,7 +241,7 @@ export default function Team() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedMember(null)}
           ></div>
-          <div className="relative bg-white w-full max-w-3xl lg:max-w-5xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] lg:max-h-[80vh]">
+          <div role="dialog" aria-modal="true" aria-label={selectedMember.name} className="relative bg-white w-full max-w-3xl lg:max-w-5xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] lg:max-h-[80vh]">
             <button
               onClick={() => setSelectedMember(null)}
               className="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur-md rounded-full text-brand-dark hover:text-brand-primary hover:bg-white transition-colors"

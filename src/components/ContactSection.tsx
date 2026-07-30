@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Mail, Phone, MessageCircle, CheckCircle2 } from 'lucide-react';
 import gsap from 'gsap';
 
+const WEB3FORMS_ACCESS_KEY = '13d335cc-ed94-4fa8-bbe4-289925bdaaef';
+
 const projectTypes = [
   'Custom home construction',
   'Renovation or remodeling',
@@ -81,10 +83,13 @@ export default function ContactSection() {
           formData.message
         ].filter(Boolean).join('\n');
 
-        const response = await fetch('/api/contact', {
+        const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `New consultation request from ${formData.name}`,
+            from_name: 'First Generation Homes Website',
             name: formData.name,
             email: formData.email,
             message: enrichedMessage,
@@ -93,12 +98,12 @@ export default function ContactSection() {
 
         const result = await response.json();
 
-        if (response.ok) {
+        if (response.ok && result.success) {
           setFormStatus('Request received. We will review the details and follow up with a practical next step.');
           setFormData({ name: '', email: '', phone: '', projectType: projectTypes[0], message: '' });
           setTimeout(() => setFormStatus(''), 6000);
         } else {
-          setFormStatus(result.error || 'Failed to send message.');
+          setFormStatus(result.message || 'Failed to send message.');
         }
       } catch (error) {
         console.error(error);
@@ -168,6 +173,8 @@ export default function ContactSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <input
                   type="text"
+                  aria-label="Your name"
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => {
                     setFormData({ ...formData, name: e.target.value });
@@ -178,6 +185,8 @@ export default function ContactSection() {
                 />
                 <input
                   type="email"
+                  aria-label="Email address"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={(e) => {
                     setFormData({ ...formData, email: e.target.value });
@@ -191,12 +200,15 @@ export default function ContactSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <input
                   type="tel"
+                  aria-label="Phone or WhatsApp"
+                  autoComplete="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 transition-all text-gray-700 placeholder:text-gray-400"
                   placeholder="Phone or WhatsApp"
                 />
                 <select
+                  aria-label="Project type"
                   value={formData.projectType}
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                   className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20 transition-all text-gray-700"
@@ -207,6 +219,7 @@ export default function ContactSection() {
 
               <textarea
                 rows={6}
+                aria-label="Project details"
                 value={formData.message}
                 onChange={(e) => {
                   setFormData({ ...formData, message: e.target.value });

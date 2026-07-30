@@ -130,7 +130,7 @@ const projectCards = [
 
 const leadership = [
   { name: 'Remy Okunbena', role: 'Managing Director', img: 'remy.webp' },
-  { name: 'Mathew Kalesanwo', role: 'VP, Revenue Growth & Business Development', img: 'matthew.webp' },
+  { name: 'Matthew Kalesanwo', role: 'VP, Revenue Growth & Business Development', img: 'matthew.webp' },
   { name: 'Olufolake Olumogba', role: 'Director of Project Development & Infrastructure', img: 'olufolake.webp' },
   { name: 'Arc. Sandra Airunugba', role: 'Senior Architect and Supervisory Project Manager', img: 'sandra.webp' }
 ];

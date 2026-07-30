@@ -86,7 +86,7 @@ export default function FAQ() {
               <ChevronDown className={`w-5 h-5 text-brand-primary transition-transform duration-300 shrink-0 ${openIndex === index ? 'rotate-180' : ''}`} />
             </button>
             <div 
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-[40rem] opacity-100' : 'max-h-0 opacity-0'}`}
               aria-hidden={openIndex !== index}
             >
               <div className="px-6 pb-6 pt-2 text-gray-600 leading-relaxed border-t border-gray-50 mx-6">

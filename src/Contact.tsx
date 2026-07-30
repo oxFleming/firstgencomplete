@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Mail, Phone, MapPin, MessageCircle, CheckCircle2 } from 'lucide-react';
 import gsap from 'gsap';
 
+const WEB3FORMS_ACCESS_KEY = '13d335cc-ed94-4fa8-bbe4-289925bdaaef';
+
 const projectTypes = [
   'Custom home construction',
   'Renovation or remodeling',
@@ -77,10 +79,13 @@ export default function Contact() {
           formData.message
         ].filter(Boolean).join('\n');
 
-        const response = await fetch('/api/contact', {
+        const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `New consultation request from ${formData.name}`,
+            from_name: 'First Generation Homes Website',
             name: formData.name,
             email: formData.email,
             message: enrichedMessage,
@@ -89,12 +94,12 @@ export default function Contact() {
 
         const result = await response.json();
 
-        if (response.ok) {
+        if (response.ok && result.success) {
           setFormStatus('Request received. We will review the details and follow up with a practical next step.');
           setFormData({ name: '', email: '', phone: '', projectType: projectTypes[0], message: '' });
           setTimeout(() => setFormStatus(''), 6000);
         } else {
-          setFormStatus(result.error || 'Failed to send message.');
+          setFormStatus(result.message || 'Failed to send message.');
         }
       } catch (error) {
         console.error(error);
