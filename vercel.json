@@ -1,4 +1,23 @@
 {
+  "redirects": [
+    { "source": "/about-us/leadership", "destination": "/team", "permanent": true },
+    { "source": "/about-us/leadership/", "destination": "/team", "permanent": true },
+    { "source": "/about-us/core-values", "destination": "/", "permanent": true },
+    { "source": "/about-us/core-values/", "destination": "/", "permanent": true },
+    { "source": "/about-us", "destination": "/", "permanent": true },
+    { "source": "/about-us/", "destination": "/", "permanent": true },
+    { "source": "/about-us/:path*", "destination": "/", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/contact-us/", "destination": "/contact", "permanent": true },
+    { "source": "/news", "destination": "/insights", "permanent": true },
+    { "source": "/news/", "destination": "/insights", "permanent": true },
+    { "source": "/news/:path*", "destination": "/insights", "permanent": true },
+    { "source": "/project/:path*", "destination": "/portfolio", "permanent": true },
+    { "source": "/project-types/:path*", "destination": "/services", "permanent": true },
+    { "source": "/author/:path*", "destination": "/", "permanent": true },
+    { "source": "/category/:path*", "destination": "/insights", "permanent": true },
+    { "source": "/tag/:path*", "destination": "/insights", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/|assets/|images/|videos/|.*\\..*).*)",
