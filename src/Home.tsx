@@ -327,6 +327,12 @@ export default function Home() {
             <p className="text-white/72 leading-relaxed mb-8">
               First Generation Homes combines construction delivery, high-end renovation experience, finish procurement, and development advisory under one operating platform.
             </p>
+            <div className="border-l-2 border-brand-primary pl-5 mb-8">
+              <p className="text-brand-primary text-xs font-bold tracking-widest uppercase mb-2">Track Record of Growth</p>
+              <p className="text-white/80 leading-relaxed">
+                Expanded flagship project value from ~$350M to ~$549M under current leadership.
+              </p>
+            </div>
             <Button onClick={() => handleNavigate('/team')} className="border-white/60 text-white hover:bg-white hover:text-brand-dark">Meet the Leadership</Button>
           </div>
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4 fade-up relative z-10">
